@@ -5,16 +5,28 @@
          xml:id="ch.ideale-bilaterale-bindungen">
   <title>Ideale Bilaterale Bindungen</title>
 
-  <!-- ── VL15 (Kap5) ────────────────────────────────────────────────── -->
+  <para>In den bisherigen Kapiteln haben wir Systeme betrachtet, die sich vollständig durch
+    Minimalkoordinaten beschreiben lassen — die Bindungen waren implizit durch die Wahl der
+    Koordinaten erfüllt. In vielen praktischen Anwendungen ist es jedoch vorteilhaft oder sogar
+    notwendig, Bindungen <emphasis>explizit</emphasis> als Gleichungen zu formulieren und die
+    zugehörigen Zwangskräfte mitzuberechnen. Dieses Kapitel entwickelt die mathematische
+    Theorie idealer bilateraler Bindungen und zeigt, wie die Bewegungsgleichungen in
+    verschiedenen Formulierungen gewonnen werden können.</para>
 
-  <section xml:id="sec.vl15kap5-klassifizierung-von-bindungen">
-    <title>1. Klassifizierung von Bindungen</title>
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
 
-    <table xml:id="tab.vl15kap5-klassifizierung">
+  <section xml:id="sec.klassifizierung-bindungen">
+    <title>Klassifizierung von Bindungen</title>
+
+    <para>Bindungen lassen sich nach zwei Kriterien klassifizieren: nach ihrer Zeitabhängigkeit
+      (skleronom vs. rheonom) und nach der Ebene, auf der sie formuliert werden (geometrisch
+      vs. kinematisch).</para>
+
+    <table xml:id="tab.klassifizierung">
       <title>Klassifizierung von Bindungen</title>
       <tgroup cols="3">
         <thead>
-          <row><entry/><entry>skleronom</entry><entry>rheonom</entry></row>
+          <row><entry/><entry>skleronom (zeitunabh.)</entry><entry>rheonom (zeitabh.)</entry></row>
         </thead>
         <tbody>
           <row>
@@ -31,128 +43,239 @@
       </tgroup>
     </table>
 
-    <para>Holonome Bindung: geometrische und elementar integrierbare kinematische. Nichtholonome Bindung: nicht elementar auf Lageebene integrierbare.</para>
+    <para>Eine Bindung heißt <emphasis role="bold">holonom</emphasis>, wenn sie entweder
+      geometrisch ist oder als kinematische Bindung elementar auf Lageebene integriert werden
+      kann. Andernfalls heißt sie <emphasis role="bold">nichtholonom</emphasis> — ein
+      klassisches Beispiel ist die Rollbedingung eines Rades auf einer Ebene.</para>
 
-    <para>Mehrere geometrische Bindungen: <inlineequation><alt>$\vec{g}(\vec{q}, t) = 0$</alt></inlineequation>. Mehrere kinematische Bindungen: <inlineequation><alt>$W^T(\vec{q}, t)\,\dot{\vec{q}} + \vec{\chi}(\vec{q}, t) = 0$</alt></inlineequation>.</para>
+    <para>Mehrere Bindungen desselben Typs werden kompakt zusammengefasst: geometrische als
+      <inlineequation><alt>$\vec{g}(\vec{q}, t) = \vec{0}$</alt></inlineequation>, kinematische
+      als <inlineequation><alt>$W^T(\vec{q}, t)\,\dot{\vec{q}} + \vec{\chi}(\vec{q}, t) = \vec{0}$</alt></inlineequation>.</para>
   </section>
 
-  <section xml:id="sec.vl15kap5-ueberfuehrung-bindungen">
-    <title>Überführung von Bindungen zwischen Ebenen</title>
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
 
-    <para>Geometrische auf Geschwindigkeitsebene: <inlineequation><alt>$\dot{\vec{g}} = \frac{\partial \vec{g}}{\partial \vec{q}}\,\dot{\vec{q}} + \frac{\partial \vec{g}}{\partial t} = 0$</alt></inlineequation></para>
+  <section xml:id="sec.ueberfuehrung-bindungen">
+    <title>Überführung zwischen den Ebenen</title>
 
-    <para>Geschwindigkeits- auf Beschleunigungsebene: <inlineequation><alt>$\dot{\vec{\gamma}} = W^T\,\ddot{\vec{q}} + \dot{W}^T\,\dot{\vec{q}} + \dot{\vec{\chi}} = 0$</alt></inlineequation></para>
+    <para>Geometrische Bindungen können durch Zeitableitung auf die Geschwindigkeitsebene
+      überführt werden:</para>
+
+    <informalequation><alt>\[ \dot{\vec{g}} = \frac{\partial \vec{g}}{\partial \vec{q}}\,\dot{\vec{q}} + \frac{\partial \vec{g}}{\partial t} = \vec{0}. \]</alt></informalequation>
+
+    <para>Ebenso lassen sich kinematische Bindungen durch nochmalige Ableitung auf die
+      Beschleunigungsebene bringen:</para>
+
+    <informalequation><alt>\[ \dot{\vec{\gamma}} = W^T\,\ddot{\vec{q}} + \dot{W}^T\,\dot{\vec{q}} + \dot{\vec{\chi}} = \vec{0}. \]</alt></informalequation>
+
+    <para>Diese Überführung spielt eine zentrale Rolle bei der Indexreduktion (siehe unten). Zu
+      beachten ist, dass beim Differenzieren Information verloren geht: Die Geschwindigkeitsbindung
+      ist schwächer als die Lagebindung, da sie nur die Ableitung, nicht den absoluten Wert
+      einschränkt.</para>
   </section>
 
-  <!-- ── VL16 (Kap5) ────────────────────────────────────────────────── -->
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
 
-  <section xml:id="sec.vl16kap5-einschub-lineare-algebra">
-    <title>2. Einschub Lineare Algebra</title>
+  <section xml:id="sec.lineare-algebra">
+    <title>Einschub: Lineare Algebra</title>
 
-    <para>Kern, Bild, Rang einer linearen Abbildung. Dimensionsformel: <inlineequation><alt>$\dim V = \dim \operatorname{Kern}(A) + \dim \operatorname{Im}(A)$</alt></inlineequation>.</para>
+    <para>Für das Verständnis der Struktur gebundener Systeme benötigen wir einige Begriffe
+      der linearen Algebra.</para>
 
-    <formalpara xml:id="vl16kap5-def-annihilatorraum">
+    <para>Für eine Matrix <inlineequation><alt>$W \in \mathbb{R}^{f \times m}$</alt></inlineequation>
+      bezeichnen <inlineequation><alt>$\operatorname{Kern}(W^T) = \{\vec{v} \mid W^T\vec{v} = \vec{0}\}$</alt></inlineequation>
+      den Kern und <inlineequation><alt>$\operatorname{Im}(W) = \{W\vec{\lambda} \mid \vec{\lambda} \in \mathbb{R}^m\}$</alt></inlineequation>
+      das Bild. Die Dimensionsformel besagt:</para>
+
+    <informalequation><alt>\[ \dim \operatorname{Kern}(W^T) + \operatorname{Rg}(W) = f. \]</alt></informalequation>
+
+    <formalpara role="definition" xml:id="def.annihilatorraum">
       <title>Definition: Annihilatorraum</title>
-      <para><inlineequation><alt>$U^0 := \{\vec{\alpha} \in \mathbb{R}^f \mid \vec{v}^T \vec{\alpha} = 0, \;\forall \vec{v} \in U\}$</alt></inlineequation>. Es gilt: <inlineequation><alt>$\dim \mathbb{R}^f = \dim U + \dim U^0$</alt></inlineequation>.</para>
+      <para>Für einen Unterraum <inlineequation><alt>$U \subseteq \mathbb{R}^f$</alt></inlineequation>
+        ist der <emphasis role="bold">Annihilatorraum</emphasis> definiert als
+        <inlineequation><alt>$U^0 := \{\vec{\alpha} \in \mathbb{R}^f \mid \vec{v}^T \vec{\alpha} = 0, \;\forall \vec{v} \in U\}$</alt></inlineequation>.
+        Es gilt die Dimensionsbeziehung
+        <inlineequation><alt>$\dim U + \dim U^0 = f$</alt></inlineequation>.</para>
     </formalpara>
+
+    <para>Der Annihilatorraum ist das orthogonale Komplement bezüglich der euklidischen
+      Bilinearform — er enthält genau die Vektoren, die auf jedem Element von
+      <inlineequation><alt>$U$</alt></inlineequation> senkrecht stehen.</para>
   </section>
 
-  <section xml:id="sec.vl16kap5-vertraegliche-virtuelle-verschiebungen">
-    <title>3. Verträgliche virtuelle Verschiebungen</title>
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
 
-    <formalpara xml:id="vl16kap5-def-vertraegliche-verschiebungen">
+  <section xml:id="sec.vertraegliche-verschiebungen">
+    <title>Verträgliche virtuelle Verschiebungen</title>
+
+    <formalpara role="definition" xml:id="def.vertraegliche-verschiebungen">
       <title>Definition</title>
-      <para>Der Unterraum verträglicher virtueller Verschiebungen ist <inlineequation><alt>$V_\mathrm{vertr.} = \operatorname{Kern}(W^T)$</alt></inlineequation>.</para>
-    </formalpara>
-  </section>
-
-  <section xml:id="sec.vl16kap5-ideale-bindungen">
-    <title>4. Ideale Bindungen</title>
-
-    <formalpara xml:id="vl16kap5-def-ideale-bindung">
-      <title>Definition</title>
-      <para>Eine zweiseitige Bindung ist ideal, falls <inlineequation><alt>$\delta W^z = \delta\vec{q}^T\vec{f}^z = 0 \quad \forall\,\delta\vec{q} \in V_\mathrm{vertr.}$</alt></inlineequation> (Prinzip von d'Alembert-Lagrange).</para>
+      <para>Der Unterraum der <emphasis role="bold">verträglichen virtuellen
+        Verschiebungen</emphasis> besteht aus allen virtuellen Verschiebungen, die die
+        linearisierten Bindungsbedingungen erfüllen:
+        <inlineequation><alt>$V_\mathrm{vertr.} = \operatorname{Kern}(W^T)$</alt></inlineequation>.</para>
     </formalpara>
 
-    <formalpara xml:id="vl16kap5-satz-ideale-bindungen">
-      <title>Satz</title>
-      <para>Ein Satz von <inlineequation><alt>$m$</alt></inlineequation> Bindungen ist genau dann ideal, wenn <inlineequation><alt>$\vec{f}^z = W\vec{\lambda}$</alt></inlineequation>, d.h. <inlineequation><alt>$V_\mathrm{vertr.}^0 = \operatorname{Im} W$</alt></inlineequation>.</para>
+    <para>Die Dimension dieses Unterraums entspricht der Zahl der verbleibenden Freiheitsgrade:
+      <inlineequation><alt>$\dim V_\mathrm{vertr.} = f - \operatorname{Rg}(W)$</alt></inlineequation>.</para>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+
+  <section xml:id="sec.ideale-bindungen">
+    <title>Ideale Bindungen und das d'Alembert-Lagrange-Prinzip</title>
+
+    <formalpara role="definition" xml:id="def.ideale-bindung">
+      <title>Definition: Ideale bilaterale Bindung</title>
+      <para>Eine zweiseitige Bindung ist <emphasis role="bold">ideal</emphasis>, wenn die
+        zugehörigen Zwangskräfte bei allen verträglichen virtuellen Verschiebungen keine
+        virtuelle Arbeit leisten:
+        <inlineequation><alt>$\delta W^z = \delta\vec{q}^T\vec{f}^z = 0 \quad \forall\,\delta\vec{q} \in V_\mathrm{vertr.}$</alt></inlineequation>.
+        Dies ist das <emphasis role="bold">Prinzip von d'Alembert-Lagrange</emphasis>.</para>
     </formalpara>
+
+    <formalpara role="theorem" xml:id="thm.ideale-bindungen">
+      <title>Satz: Struktur idealer Zwangskräfte</title>
+      <para>Ein Satz von <inlineequation><alt>$m$</alt></inlineequation> Bindungen ist genau dann
+        ideal, wenn die Zwangskräfte in der Form
+        <inlineequation><alt>$\vec{f}^z = W\vec{\lambda}$</alt></inlineequation> darstellbar
+        sind. Äquivalent: Der Raum der Zwangskräfte ist der Annihilatorraum der verträglichen
+        Verschiebungen, also
+        <inlineequation><alt>$V_\mathrm{vertr.}^0 = \operatorname{Im}(W)$</alt></inlineequation>.</para>
+    </formalpara>
+
+    <para>Der Vektor <inlineequation><alt>$\vec{\lambda} \in \mathbb{R}^m$</alt></inlineequation>
+      enthält die <emphasis role="bold">Lagrange-Multiplikatoren</emphasis> — sie geben die
+      Stärke der Zwangskräfte an und werden zusammen mit den Beschleunigungen bestimmt.</para>
   </section>
 
-  <!-- ── VL17 ────────────────────────────────────────────────────────── -->
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
 
-  <section xml:id="sec.vl17-lagrange-1-art">
-    <title>Lagrangesche Gleichungen 1. Art</title>
+  <section xml:id="sec.lagrange-1-art">
+    <title>Lagrange'sche Gleichungen 1. Art</title>
 
-    <equation xml:id="eq.vl17-lagrange1">
-      <alt>\[ M(\vec{q},t)\,\ddot{\vec{q}} - \vec{h}(\vec{q},\dot{\vec{q}},t) - W(\vec{q},t)\,\vec{\lambda} = 0, \qquad \vec{g}(\vec{q},t) = 0 \]</alt>
+    <para>Ergänzt man die Bewegungsgleichungen um die Zwangskraftterme und die
+      Bindungsgleichungen, so erhält man die
+      <emphasis role="bold">Lagrange'schen Gleichungen 1. Art</emphasis> (Lagrange, 1788):</para>
+
+    <equation xml:id="eq.lagrange1">
+      <alt>\[ M(\vec{q},t)\,\ddot{\vec{q}} - \vec{h}(\vec{q},\dot{\vec{q}},t) - W(\vec{q},t)\,\vec{\lambda} = \vec{0}, \qquad \vec{g}(\vec{q},t) = \vec{0}. \]</alt>
     </equation>
 
-    <para>Lagrange 1788. Dies ist ein differentialalgebraisches System (DAE) vom Index 3.</para>
+    <para>Dieses System besteht aus <inlineequation><alt>$f$</alt></inlineequation>
+      Differentialgleichungen und <inlineequation><alt>$m$</alt></inlineequation> algebraischen
+      Gleichungen — es ist ein <emphasis role="bold">differentialalgebraisches System (DAE)</emphasis>
+      vom Index 3.</para>
 
-    <section xml:id="sec.vl17-index-reduktion-geschw">
-      <title>Überführung auf Geschwindigkeitsebene (Index 2)</title>
-      <informalequation><alt>\[ M\,\ddot{\vec{q}} - \vec{h} - W\,\vec{\lambda} = 0, \qquad W^T\,\dot{\vec{q}} + \vec{\chi} = 0 \]</alt></informalequation>
+    <section xml:id="sec.index-reduktion-geschw">
+      <title>Indexreduktion auf Geschwindigkeitsebene (Index 2)</title>
+
+      <para>Durch Ableitung der Lagebindungen erhält man ein System vom Index 2:</para>
+
+      <informalequation><alt>\[ M\,\ddot{\vec{q}} - \vec{h} - W\,\vec{\lambda} = \vec{0}, \qquad W^T\,\dot{\vec{q}} + \vec{\chi} = \vec{0}. \]</alt></informalequation>
     </section>
 
-    <section xml:id="sec.vl17-index-reduktion-beschl">
-      <title>Übergang auf Beschleunigungsebene (Index 1)</title>
-      <informalequation><alt>\[ M\,\ddot{\vec{q}} - \vec{h} - W\,\vec{\lambda} = 0, \qquad W^T\,\ddot{\vec{q}} + \vec{\bar{s}} = 0 \]</alt></informalequation>
+    <section xml:id="sec.index-reduktion-beschl">
+      <title>Indexreduktion auf Beschleunigungsebene (Index 1)</title>
+
+      <para>Nochmalige Ableitung liefert ein System vom Index 1:</para>
+
+      <informalequation><alt>\[ M\,\ddot{\vec{q}} - \vec{h} - W\,\vec{\lambda} = \vec{0}, \qquad W^T\,\ddot{\vec{q}} + \vec{\bar{s}} = \vec{0}. \]</alt></informalequation>
     </section>
 
-    <section xml:id="sec.vl17-berechnung-qddot-lambda">
-      <title>Berechnung von <inlineequation><alt>$\ddot{\vec{q}}$</alt></inlineequation> und <inlineequation><alt>$\vec{\lambda}$</alt></inlineequation></title>
+    <section xml:id="sec.berechnung-qddot-lambda">
+      <title>Berechnung von Beschleunigungen und Zwangskräften</title>
 
-      <para>Als lineares Gleichungssystem:</para>
-      <informalequation><alt>\[ \begin{pmatrix} M &amp; -W \\ W^T &amp; 0 \end{pmatrix} \begin{pmatrix} \ddot{\vec{q}} \\ \vec{\lambda} \end{pmatrix} = \begin{pmatrix} \vec{h} \\ -\vec{\bar{s}} \end{pmatrix} \]</alt></informalequation>
+      <para>Das Index-1-System kann als lineares Gleichungssystem für die Unbekannten
+        <inlineequation><alt>$\ddot{\vec{q}}$</alt></inlineequation> und
+        <inlineequation><alt>$\vec{\lambda}$</alt></inlineequation> geschrieben werden:</para>
 
-      <para>Oder: <inlineequation><alt>$G\vec{\lambda} + \vec{\eta} = 0$</alt></inlineequation> mit <inlineequation><alt>$G = W^T M^{-1} W$</alt></inlineequation>, <inlineequation><alt>$\vec{\lambda} = -G^{-1}\vec{\eta}$</alt></inlineequation>.</para>
+      <informalequation><alt>\[ \begin{pmatrix} M &amp; -W \\ W^T &amp; 0 \end{pmatrix} \begin{pmatrix} \ddot{\vec{q}} \\ \vec{\lambda} \end{pmatrix} = \begin{pmatrix} \vec{h} \\ -\vec{\bar{s}} \end{pmatrix}. \]</alt></informalequation>
+
+      <para>Alternativ lassen sich die Lagrange-Multiplikatoren durch Auflösen eliminieren.
+        Mit <inlineequation><alt>$G = W^T M^{-1} W$</alt></inlineequation> ergibt sich
+        <inlineequation><alt>$\vec{\lambda} = -G^{-1}\vec{\eta}$</alt></inlineequation>,
+        wobei <inlineequation><alt>$G$</alt></inlineequation> stets regulär ist, wenn die
+        Bindungen unabhängig sind und
+        <inlineequation><alt>$M$</alt></inlineequation> positiv definit.</para>
     </section>
   </section>
 
-  <section xml:id="sec.vl17-minimalkoordinaten">
-    <title>5. Übergang auf neue Minimalkoordinaten</title>
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
 
-    <para>Wähle <inlineequation><alt>$\vec{z} \in \mathbb{R}^n$</alt></inlineequation> (<inlineequation><alt>$n = f - \operatorname{Rg} W$</alt></inlineequation>) so, dass mit <inlineequation><alt>$\vec{q} = \vec{q}(\vec{z}, t)$</alt></inlineequation> die Bindungen identisch erfüllt sind.</para>
+  <section xml:id="sec.neue-minimalkoordinaten">
+    <title>Übergang auf neue Minimalkoordinaten</title>
 
-    <informalequation><alt>\[ \dot{\vec{q}} = B(\vec{z},t)\,\dot{\vec{z}} + \vec{\beta}(\vec{z},t), \qquad B = \frac{\partial \vec{q}}{\partial \vec{z}} \]</alt></informalequation>
+    <para>Wenn ein System durch Bindungen eingeschränkt wird, kann man neue Minimalkoordinaten
+      <inlineequation><alt>$\vec{z} \in \mathbb{R}^n$</alt></inlineequation> mit
+      <inlineequation><alt>$n = f - \operatorname{Rg}(W)$</alt></inlineequation> einführen,
+      so dass die Bindungen identisch erfüllt sind. Es gelte
+      <inlineequation><alt>$\vec{q} = \vec{q}(\vec{z}, t)$</alt></inlineequation>, dann ist:</para>
 
-    <para>Projizierte Gleichungen:</para>
-    <equation xml:id="eq.vl18-proj-gesperrt">
-      <alt>\[ \underbrace{B^T M B}_{\tilde{M}}\,\ddot{\vec{z}} - \underbrace{(B^T \bar{h} - B^T M \dot{\nu})}_{\tilde{h}} = 0 \]</alt>
+    <informalequation><alt>\[ \dot{\vec{q}} = B(\vec{z},t)\,\dot{\vec{z}} + \vec{\beta}(\vec{z},t), \qquad B = \frac{\partial \vec{q}}{\partial \vec{z}}. \]</alt></informalequation>
+
+    <para>Durch Projektion mit <inlineequation><alt>$B^T$</alt></inlineequation> werden die
+      Zwangskräfte eliminiert und man erhält:</para>
+
+    <equation xml:id="eq.proj-neue-minimalkoordinaten">
+      <alt>\[ \underbrace{B^T M B}_{\tilde{M}}\,\ddot{\vec{z}} - \underbrace{(B^T \vec{h} - B^T M \dot{B}\,\dot{\vec{z}})}_{\tilde{h}} = \vec{0}. \]</alt>
     </equation>
+
+    <para>Die Matrix <inlineequation><alt>$\tilde{M}$</alt></inlineequation> ist wiederum
+      symmetrisch und positiv definit, sodass die Gleichung nach
+      <inlineequation><alt>$\ddot{\vec{z}}$</alt></inlineequation> aufgelöst werden kann.</para>
   </section>
 
-  <!-- ── VL18 ────────────────────────────────────────────────────────── -->
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
 
-  <section xml:id="sec.vl18-uebergang-neue-minimalgeschwindigkeiten">
-    <title>6. Übergang auf neue Minimalgeschwindigkeiten</title>
+  <section xml:id="sec.neue-minimalgeschwindigkeiten">
+    <title>Übergang auf neue Minimalgeschwindigkeiten</title>
 
-    <para>Wähle <inlineequation><alt>$\vec{u} \in \mathbb{R}^n$</alt></inlineequation> so, dass mit <inlineequation><alt>$\dot{\vec{q}} = B(\vec{q}, t)\,\vec{u} + \vec{\beta}(\vec{q}, t)$</alt></inlineequation> die Bindungen identisch erfüllt sind.</para>
+    <para>Alternativ zum Wechsel der Koordinaten kann man auch neue
+      <emphasis role="bold">Minimalgeschwindigkeiten</emphasis>
+      <inlineequation><alt>$\vec{u} \in \mathbb{R}^n$</alt></inlineequation> einführen, die
+      die Bindungen auf Geschwindigkeitsebene identisch erfüllen:</para>
 
-    <para>Resultierende Gleichungen:</para>
-
-    <equation xml:id="eq.vl18-kinematik">
-      <alt>\[ \dot{\vec{q}} = B(\vec{q}, t)\,\vec{u} + \vec{\beta}(\vec{q}, t) \]</alt>
+    <equation xml:id="eq.kinematik-neue-geschw">
+      <alt>\[ \dot{\vec{q}} = B(\vec{q}, t)\,\vec{u} + \vec{\beta}(\vec{q}, t). \]</alt>
     </equation>
 
-    <equation xml:id="eq.vl18-kinetik">
-      <alt>\[ \tilde{M}(\vec{q}, t)\,\dot{\vec{u}} - \tilde{h}(\vec{q}, \vec{u}, t) = 0 \]</alt>
+    <para>Die Bewegungsgleichungen nehmen dann die Form an:</para>
+
+    <equation xml:id="eq.kinetik-neue-geschw">
+      <alt>\[ \tilde{M}(\vec{q}, t)\,\dot{\vec{u}} - \tilde{h}(\vec{q}, \vec{u}, t) = \vec{0}. \]</alt>
     </equation>
 
-    <para>Als System erster Ordnung:</para>
-    <equation xml:id="eq.vl18-zustandsform">
-      <alt>\[ \dot{\vec{x}} = \vec{f}(\vec{x}, t) \]</alt>
+    <para>Zusammen mit der kinematischen Gleichung bilden sie ein System erster Ordnung in
+      den Zustandsvariablen
+      <inlineequation><alt>$\vec{x} = (\vec{q}^T, \vec{u}^T)^T$</alt></inlineequation>:</para>
+
+    <equation xml:id="eq.zustandsform">
+      <alt>\[ \dot{\vec{x}} = \vec{f}(\vec{x}, t). \]</alt>
     </equation>
+
+    <para>Diese Zustandsform ist der natürliche Ausgangspunkt für die numerische
+      Zeitintegration der Bewegungsgleichungen.</para>
   </section>
 
-  <section xml:id="sec.vl18-anwendung-projizierte-ne">
-    <title>Anwendung auf projizierte Newton-Euler Gleichungen</title>
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
 
-    <para>Auswertung: Berechne <inlineequation><alt>$\vec{v}_P(\vec{q}, \vec{u}, t)$</alt></inlineequation> und <inlineequation><alt>$\vec{\Omega}(\vec{q}, \vec{u}, t)$</alt></inlineequation>, klammere <inlineequation><alt>$\vec{u}$</alt></inlineequation> aus, lese <inlineequation><alt>$\tilde{J}$</alt></inlineequation> ab, bestimme <inlineequation><alt>$\dot{\vec{p}}$</alt></inlineequation> und <inlineequation><alt>$\dot{\vec{N}}_S$</alt></inlineequation>.</para>
+  <section xml:id="sec.anwendung-projizierte-ne">
+    <title>Anwendung auf die projizierten Newton-Euler-Gleichungen</title>
 
-    <para>Derselbe Übergang auf neue Minimalgeschwindigkeiten kann auch auf die Hamel-Boltzmann Gleichungen angewendet werden.</para>
+    <para>Der Übergang auf neue Minimalgeschwindigkeiten lässt sich direkt auf die projizierten
+      Newton-Euler-Gleichungen aus Kapitel 2 anwenden. Die Vorgehensweise ist: Man berechnet
+      <inlineequation><alt>$\vec{v}_P(\vec{q}, \vec{u}, t)$</alt></inlineequation> und
+      <inlineequation><alt>$\vec{\Omega}(\vec{q}, \vec{u}, t)$</alt></inlineequation>, klammert
+      <inlineequation><alt>$\vec{u}$</alt></inlineequation> aus, liest die modifizierten
+      Jacobi-Matrizen <inlineequation><alt>$\tilde{J}$</alt></inlineequation> ab und bestimmt
+      die Impulse <inlineequation><alt>$\dot{\vec{p}}$</alt></inlineequation> und Dralle
+      <inlineequation><alt>$\dot{\vec{N}}_S$</alt></inlineequation>.</para>
+
+    <para>Derselbe Formalismus kann auch auf die Hamel-Boltzmann-Gleichungen (Kapitel 3)
+      angewendet werden. In beiden Fällen ist das Ergebnis ein System gewöhnlicher
+      Differentialgleichungen erster Ordnung, das mit Standardverfahren der numerischen
+      Mathematik integriert werden kann.</para>
   </section>
 
 </chapter>

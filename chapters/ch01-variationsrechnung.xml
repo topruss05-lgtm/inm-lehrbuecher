@@ -5,58 +5,115 @@
          xml:id="ch.variationsrechnung">
   <title>Variationsrechnung</title>
 
-  <!-- ── VL1 ─────────────────────────────────────────────────────────── -->
+  <para>Die Variationsrechnung ist eines der elegantesten Werkzeuge der mathematischen Physik.
+    Während die gewöhnliche Analysis nach Extrema von Funktionen sucht — also nach Punkten, an denen
+    eine Funktion maximal oder minimal wird —, fragt die Variationsrechnung nach ganzen
+    <emphasis role="bold">Kurven</emphasis> oder <emphasis role="bold">Funktionen</emphasis>, die
+    ein bestimmtes Integral extremal machen. Diese Fragestellung taucht in der Mechanik auf
+    natürliche Weise auf: Welchen Weg nimmt ein Teilchen? Welche Trajektorie minimiert die
+    Wirkung? Dieses Kapitel legt die mathematischen Grundlagen, die später zur Herleitung der
+    Lagrange'schen Gleichungen führen werden.</para>
 
-  <section xml:id="sec.vl1-vorbemerkungen">
-    <title>1. Vorbemerkungen</title>
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
 
-    <para>Sei <inlineequation><alt>$x \in \mathbb{R}$</alt></inlineequation> und <inlineequation><alt>$f\colon \mathbb{R} \to \mathbb{R}$</alt></inlineequation>, <inlineequation><alt>$x \mapsto f(x)$</alt></inlineequation> <emphasis role="color-cyan">(Euler (1734))</emphasis></para>
+  <section xml:id="sec.ableitungen-und-differentiale">
+    <title>Ableitungen und Differentiale — ein historischer Überblick</title>
 
-    <informalequation>
-      <alt>\[ f'(x) = \frac{\partial f}{\partial x} \sim \text{(Leibniz 1675)} \]</alt>
-    </informalequation>
+    <para>Bevor wir uns der Variationsrechnung selbst zuwenden, lohnt ein kurzer Blick auf die
+      Notationskonventionen für Ableitungen, die in der analytischen Mechanik ständig verwendet
+      werden. Ihre Wurzeln reichen bis in die Anfänge der Infinitesimalrechnung zurück.</para>
 
-    <para><inlineequation><alt>$f'$</alt></inlineequation> <emphasis role="color-cyan">(Lagrange 1770)</emphasis></para>
-
-    <para>Sei <inlineequation><alt>$t \in \mathbb{R}$</alt></inlineequation> und <inlineequation><alt>$y\colon \mathbb{R} \to \mathbb{R}$</alt></inlineequation>, <inlineequation><alt>$t \mapsto y(t)$</alt></inlineequation></para>
-
-    <informalequation>
-      <alt>\[ \frac{dy}{dt} = \dot{y}(t) \quad \text{(Newton 1665)} \]</alt>
-    </informalequation>
-
-    <para>Sei <inlineequation><alt>$x, y \in \mathbb{R}$</alt></inlineequation> und <inlineequation><alt>$f\colon \mathbb{R} \times \mathbb{R} \to \mathbb{R}$</alt></inlineequation>, <inlineequation><alt>$(x,y) \mapsto f(x,y)$</alt></inlineequation></para>
-
-    <informalequation>
-      <alt>\[ f_x = \frac{\partial f}{\partial x} \;;\quad f_y = \frac{\partial f}{\partial y} \qquad \text{(Legendre 1786)} \]</alt>
-    </informalequation>
-
-    <para>Sei <inlineequation><alt>$\vec{x} \in \mathbb{R}^n$</alt></inlineequation> und <inlineequation><alt>$f\colon \mathbb{R}^n \to \mathbb{R}$</alt></inlineequation>, <inlineequation><alt>$\vec{x} \mapsto f(\vec{x})$</alt></inlineequation></para>
+    <para>Für eine skalare Funktion <inlineequation><alt>$f\colon \mathbb{R} \to \mathbb{R}$</alt></inlineequation>,
+      <inlineequation><alt>$x \mapsto f(x)$</alt></inlineequation>, schreiben wir die Ableitung wahlweise als</para>
 
     <informalequation>
-      <alt>\[ \frac{\partial f}{\partial \vec{x}} := \left( \frac{\partial f}{\partial x_1}, \frac{\partial f}{\partial x_2}, \ldots, \frac{\partial f}{\partial x_n} \right) \text{ Zeilenvektor der Länge } n \qquad \text{(Jacobi 1896)} \]</alt>
+      <alt>\[ f'(x) = \frac{\partial f}{\partial x} = \frac{df}{dx}. \]</alt>
     </informalequation>
 
-    <para><inlineequation><alt>$\left(\frac{\partial f}{\partial \vec{x}}\right)^T$</alt></inlineequation> Spaltenvektor (oder Tupel) der Länge <inlineequation><alt>$n$</alt></inlineequation></para>
+    <para>Die Strichnotation <inlineequation><alt>$f'$</alt></inlineequation> geht auf
+      <emphasis>Lagrange (1770)</emphasis> zurück, die Bruchschreibweise auf
+      <emphasis>Leibniz (1675)</emphasis>, und die Bezeichnung der Variablen mit
+      <inlineequation><alt>$x$</alt></inlineequation> und
+      <inlineequation><alt>$f(x)$</alt></inlineequation> auf <emphasis>Euler (1734)</emphasis>.
+      Hängt eine Größe von der Zeit ab — etwa die Position
+      <inlineequation><alt>$y(t)$</alt></inlineequation> eines Teilchens —, so benutzen wir
+      Newtons Punktnotation <emphasis>(Newton, 1665)</emphasis>:</para>
 
-    <example xml:id="ex.vl1-gradient-quadratische-form">
-      <title>Beispiel: Gradient einer quadratischen Form</title>
-      <para><inlineequation><alt>$f(\vec{x}) = \vec{x}^T A \vec{x}$</alt></inlineequation> mit <inlineequation><alt>$A \in \mathbb{R}^{n \times n}$</alt></inlineequation></para>
+    <informalequation>
+      <alt>\[ \dot{y}(t) = \frac{dy}{dt}. \]</alt>
+    </informalequation>
+
+    <para>Für eine Funktion zweier Variablen
+      <inlineequation><alt>$f\colon \mathbb{R}^2 \to \mathbb{R}$</alt></inlineequation>,
+      <inlineequation><alt>$(x,y) \mapsto f(x,y)$</alt></inlineequation>, bezeichnen die partiellen
+      Ableitungen <emphasis>(Legendre, 1786)</emphasis>:</para>
+
+    <informalequation>
+      <alt>\[ f_x = \frac{\partial f}{\partial x}, \qquad f_y = \frac{\partial f}{\partial y}. \]</alt>
+    </informalequation>
+
+    <para>Die Verallgemeinerung auf vektorwertige Argumente führt zum
+      <emphasis role="bold">Gradienten</emphasis>. Für
+      <inlineequation><alt>$f\colon \mathbb{R}^n \to \mathbb{R}$</alt></inlineequation>,
+      <inlineequation><alt>$\vec{x} \mapsto f(\vec{x})$</alt></inlineequation>, definieren wir
+      den Gradienten als Zeilenvektor <emphasis>(Jacobi, 1896)</emphasis>:</para>
+
+    <equation xml:id="eq.gradient">
+      <alt>\[ \frac{\partial f}{\partial \vec{x}} := \left( \frac{\partial f}{\partial x_1},\; \frac{\partial f}{\partial x_2},\; \ldots,\; \frac{\partial f}{\partial x_n} \right) \in \mathbb{R}^{1 \times n}. \]</alt>
+    </equation>
+
+    <para>Durch Transponieren erhalten wir den Spaltenvektor
+      <inlineequation><alt>$\left(\frac{\partial f}{\partial \vec{x}}\right)^T \in \mathbb{R}^{n \times 1}$</alt></inlineequation>.</para>
+
+    <example xml:id="ex.gradient-quadratische-form">
+      <title>Gradient einer quadratischen Form</title>
+      <para>Sei <inlineequation><alt>$A \in \mathbb{R}^{n \times n}$</alt></inlineequation> eine beliebige Matrix und
+        <inlineequation><alt>$f(\vec{x}) = \vec{x}^T A\, \vec{x}$</alt></inlineequation>. Dann gilt:</para>
       <informalequation>
-        <alt>\[ \frac{\partial f}{\partial \vec{x}} = \vec{x}^T (A + A^T), \quad \text{Bew: Aufgabe 1.1} \]</alt>
+        <alt>\[ \frac{\partial f}{\partial \vec{x}} = \vec{x}^T (A + A^T). \]</alt>
       </informalequation>
     </example>
+  </section>
 
-    <para>Sei <inlineequation><alt>$\vec{x} \in \mathbb{R}^n$</alt></inlineequation> und <inlineequation><alt>$\vec{f}\colon \mathbb{R}^n \to \mathbb{R}^m$</alt></inlineequation>, <inlineequation><alt>$\vec{x} \mapsto \vec{f}(\vec{x})$</alt></inlineequation></para>
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
 
-    <informalequation>
-      <alt>\[ \frac{\partial \vec{f}}{\partial \vec{x}} := \begin{pmatrix} \frac{\partial f_1}{\partial \vec{x}} \\ \vdots \\ \frac{\partial f_m}{\partial \vec{x}} \end{pmatrix} = \begin{pmatrix} \frac{\partial f_1}{\partial x_1} &amp; \cdots &amp; \frac{\partial f_1}{\partial x_n} \\ \vdots &amp; &amp; \vdots \\ \frac{\partial f_m}{\partial x_1} &amp; \cdots &amp; \frac{\partial f_m}{\partial x_n} \end{pmatrix} \in \mathbb{R}^{m \times n} \quad \underbrace{m \text{ Zeilen}}_{n \text{ Spalten}} \]</alt>
-    </informalequation>
+  <section xml:id="sec.jacobi-matrizen">
+    <title>Jacobi-Matrizen und die Kettenregel</title>
 
-    <para>Sei <inlineequation><alt>$\vec{f}\colon \mathbb{R}^n \supseteq X \to Y \subseteq \mathbb{R}^m$</alt></inlineequation>, <inlineequation><alt>$\vec{x} \mapsto \vec{y} = \vec{f}(\vec{x})$</alt></inlineequation></para>
-    <para><inlineequation><alt>$\vec{g}\colon \mathbb{R}^m \supseteq Y \to Z \subseteq \mathbb{R}^p$</alt></inlineequation>, <inlineequation><alt>$\vec{y} \mapsto \vec{z} = \vec{g}(\vec{y})$</alt></inlineequation></para>
-    <para><inlineequation><alt>$\vec{g} \circ \vec{f}\colon \mathbb{R}^n \supseteq X \to Z \subseteq \mathbb{R}^p$</alt></inlineequation>, <inlineequation><alt>$\vec{x} \to \vec{z} = \vec{g} \circ \vec{f}(\vec{x})$</alt></inlineequation> <inlineequation><alt>$= \vec{g}(\vec{f}(\vec{x}))$</alt></inlineequation></para>
+    <para>Das Konzept des Gradienten lässt sich auf vektorwertige Abbildungen erweitern. Sei
+      <inlineequation><alt>$\vec{f}\colon \mathbb{R}^n \to \mathbb{R}^m$</alt></inlineequation>,
+      <inlineequation><alt>$\vec{x} \mapsto \vec{f}(\vec{x})$</alt></inlineequation>. Die
+      <emphasis role="bold">Jacobi-Matrix</emphasis> (oder Funktionalmatrix) ist definiert als</para>
 
-    <figure xml:id="fig.vl1-komposition">
+    <equation xml:id="eq.jacobi-matrix">
+      <alt>\[ \frac{\partial \vec{f}}{\partial \vec{x}} := \begin{pmatrix} \frac{\partial f_1}{\partial x_1} &amp; \cdots &amp; \frac{\partial f_1}{\partial x_n} \\ \vdots &amp; \ddots &amp; \vdots \\ \frac{\partial f_m}{\partial x_1} &amp; \cdots &amp; \frac{\partial f_m}{\partial x_n} \end{pmatrix} \in \mathbb{R}^{m \times n}. \]</alt>
+    </equation>
+
+    <para>Jede Zeile der Jacobi-Matrix ist der Gradient einer Komponentenfunktion
+      <inlineequation><alt>$f_i$</alt></inlineequation>.</para>
+
+    <para>Betrachten wir nun die Komposition zweier Abbildungen
+      <inlineequation><alt>$\vec{f}\colon X \subseteq \mathbb{R}^n \to Y \subseteq \mathbb{R}^m$</alt></inlineequation>
+      und
+      <inlineequation><alt>$\vec{g}\colon Y \subseteq \mathbb{R}^m \to Z \subseteq \mathbb{R}^p$</alt></inlineequation>,
+      also <inlineequation><alt>$\vec{z} = \vec{g}(\vec{f}(\vec{x}))$</alt></inlineequation>.
+      Die <emphasis role="bold">mehrdimensionale Kettenregel</emphasis> besagt:</para>
+
+    <equation xml:id="eq.kettenregel">
+      <alt>\[ \frac{\partial (\vec{g} \circ \vec{f})}{\partial \vec{x}}(\vec{x}) = \frac{\partial \vec{g}}{\partial \vec{y}}\bigg|_{\vec{y} = \vec{f}(\vec{x})} \cdot \frac{\partial \vec{f}}{\partial \vec{x}}(\vec{x}). \]</alt>
+    </equation>
+
+    <para>Die Jacobi-Matrix der Komposition ist also das Matrizenprodukt der einzelnen
+      Jacobi-Matrizen. In der Mechanik wird häufig die Funktion mit ihrer Variablen identifiziert —
+      man schreibt <inlineequation><alt>$\vec{y} = \vec{y}(\vec{x})$</alt></inlineequation> statt
+      <inlineequation><alt>$\vec{y} = \vec{f}(\vec{x})$</alt></inlineequation>. Die Kettenregel
+      nimmt dann die kompakte Form an:</para>
+
+    <equation xml:id="eq.kettenregel-kurzform">
+      <alt>\[ \frac{\partial \vec{z}}{\partial \vec{x}} = \frac{\partial \vec{z}}{\partial \vec{y}} \cdot \frac{\partial \vec{y}}{\partial \vec{x}}. \]</alt>
+    </equation>
+
+    <figure xml:id="fig.komposition">
       <title>Komposition von Abbildungen</title>
       <mediaobject>
         <textobject>
@@ -66,282 +123,507 @@
     </figure>
   </section>
 
-  <section xml:id="sec.vl1-jacobi-matrizen">
-    <title>Jacobi-Matrizen (Funktionalmatrizen)</title>
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
 
-    <para><inlineequation><alt>$\frac{\partial \vec{f}}{\partial \vec{x}}(\vec{x}) \in \mathbb{R}^{m \times n}$</alt></inlineequation>, <inlineequation><alt>$\frac{\partial \vec{g}}{\partial \vec{y}}(\vec{y}) \in \mathbb{R}^{p \times m}$</alt></inlineequation></para>
+  <section xml:id="sec.vektorraeume-und-funktionale">
+    <title>Vektorräume und Funktionale</title>
 
-    <informalequation>
-      <alt>\[ \frac{\partial (\vec{g} \circ \vec{f})}{\partial \vec{x}}(\vec{x}) \in \mathbb{R}^{p \times n} \]</alt>
-    </informalequation>
+    <para>Die Variationsrechnung operiert nicht auf endlichdimensionalen Räumen wie
+      <inlineequation><alt>$\mathbb{R}^n$</alt></inlineequation>, sondern auf Räumen von
+      <emphasis>Funktionen</emphasis>. Um diese präzise behandeln zu können, brauchen wir
+      den Begriff des Vektorraums und des Funktionals.</para>
 
-    <equation xml:id="eq.vl1-kettenregel">
-      <alt>\[ \frac{\partial (\vec{g} \circ \vec{f})}{\partial \vec{x}}(\vec{x}) = \frac{\partial \vec{g}(\vec{y})}{\partial \vec{y}}(\vec{f}(\vec{x})) \cdot \frac{\partial \vec{f}(\vec{x})}{\partial \vec{x}}(\vec{x}) = \left. \frac{\partial \vec{g}(\vec{y})}{\partial \vec{y}} \right|_{\vec{y} = \vec{f}(\vec{x})} \cdot \frac{\partial \vec{f}(\vec{x})}{\partial \vec{x}}(\vec{x}) \qquad \text{(Kettenregel)} \]</alt>
-    </equation>
-
-    <para>Oft Doppelbenennung von Funktion und Variable <inlineequation><alt>$(\vec{f} = \vec{y}, \; \vec{g} = \vec{z})$</alt></inlineequation></para>
-
-    <para>Funktionen: <inlineequation><alt>$\vec{y} = \vec{y}(\vec{x})$</alt></inlineequation>, <inlineequation><alt>$\vec{z} = \vec{z}(\vec{y}) = (\vec{z} \circ \vec{y})(\vec{x}) = \vec{z}(\vec{y}(\vec{x})) = \vec{z}(\vec{x})$</alt></inlineequation></para>
-
-    <para>Jacobis: <inlineequation><alt>$\frac{\partial \vec{y}}{\partial \vec{x}}(\vec{x})$</alt></inlineequation>, <inlineequation><alt>$\frac{\partial \vec{z}}{\partial \vec{y}}(\vec{y})$</alt></inlineequation>, <inlineequation><alt>$\frac{\partial \vec{z}}{\partial \vec{x}}(\vec{x})$</alt></inlineequation></para>
-
-    <equation xml:id="eq.vl1-kettenregel-kurzform">
-      <alt>\[ \frac{\partial (\vec{z} \circ \vec{y})}{\partial \vec{x}} = \frac{\partial \vec{z}}{\partial \vec{x}}(\vec{x}) = \frac{\partial \vec{z}}{\partial \vec{y}}(\vec{y}(\vec{x})) \cdot \frac{\partial \vec{y}}{\partial \vec{x}}(\vec{x}) = \frac{\partial \vec{z}}{\partial \vec{y}} \cdot \frac{\partial \vec{y}}{\partial \vec{x}}(\vec{x}) \]</alt>
-    </equation>
-
-    <formalpara role="definition" xml:id="def.vl1-vektorraum">
+    <formalpara role="definition" xml:id="def.vektorraum">
       <title>Definition: Vektorraum</title>
-      <para>Eine Menge <inlineequation><alt>$V$</alt></inlineequation> heißt Vektorraum über <inlineequation><alt>$\mathbb{R}$</alt></inlineequation>, wenn (i) für beliebige <inlineequation><alt>$a, b, c \in V$</alt></inlineequation> die Axiome der Addition (kommutativ, assoziativ, neutrales und inverses Element) und (ii) eine Skalarmultiplikation mit den Axiomen der Distributivität, Assoziativität und Neutralität der Eins erklärt ist.</para>
+      <para>Eine Menge <inlineequation><alt>$V$</alt></inlineequation> heißt
+        <emphasis role="bold">Vektorraum</emphasis> über
+        <inlineequation><alt>$\mathbb{R}$</alt></inlineequation>, wenn für beliebige
+        <inlineequation><alt>$a, b, c \in V$</alt></inlineequation> die Axiome der Addition
+        (Kommutativität, Assoziativität, neutrales und inverses Element) sowie eine
+        Skalarmultiplikation mit den Axiomen der Distributivität, Assoziativität und
+        Neutralität der Eins erklärt sind.</para>
     </formalpara>
 
-    <para>Handelt es sich bei den Vektoren um Funktionen <inlineequation><alt>$\vec{f}\colon \mathbb{R} \supseteq D \to \mathbb{R}^m$</alt></inlineequation>, dann spricht man von einem (reellen) <emphasis role="bold">Funktionenraum</emphasis>.</para>
+    <para>Besteht ein Vektorraum aus Funktionen
+      <inlineequation><alt>$\vec{f}\colon D \subseteq \mathbb{R} \to \mathbb{R}^m$</alt></inlineequation>,
+      so spricht man von einem <emphasis role="bold">Funktionenraum</emphasis>. Typische
+      Beispiele sind der Raum aller stetigen Funktionen auf einem Intervall oder der Raum
+      aller differenzierbaren Funktionen einer bestimmten Ordnung.</para>
 
-    <formalpara role="definition" xml:id="def.vl1-funktional">
+    <formalpara role="definition" xml:id="def.funktional">
       <title>Definition: Funktional</title>
-      <para>Sei <inlineequation><alt>$V$</alt></inlineequation> Vektorraum über <inlineequation><alt>$\mathbb{R}$</alt></inlineequation> und <inlineequation><alt>$D \subseteq V$</alt></inlineequation>. Abbildung <inlineequation><alt>$I\colon D \to \mathbb{R}$</alt></inlineequation>, die jedem Vektor <inlineequation><alt>$v \in D$</alt></inlineequation> eine reelle Zahl <inlineequation><alt>$I(v)$</alt></inlineequation> zuordnet, heißt <emphasis role="bold">Funktional</emphasis> auf <inlineequation><alt>$D$</alt></inlineequation>.</para>
+      <para>Sei <inlineequation><alt>$V$</alt></inlineequation> ein Vektorraum über
+        <inlineequation><alt>$\mathbb{R}$</alt></inlineequation> und
+        <inlineequation><alt>$D \subseteq V$</alt></inlineequation>. Eine Abbildung
+        <inlineequation><alt>$I\colon D \to \mathbb{R}$</alt></inlineequation>, die jedem
+        Element <inlineequation><alt>$v \in D$</alt></inlineequation> eine reelle Zahl
+        <inlineequation><alt>$I(v)$</alt></inlineequation> zuordnet, heißt
+        <emphasis role="bold">Funktional</emphasis> auf
+        <inlineequation><alt>$D$</alt></inlineequation>.</para>
     </formalpara>
+
+    <para>Anschaulich gesprochen: Ein Funktional ist eine „Funktion von Funktionen" — es ordnet
+      einer ganzen Kurve eine einzelne Zahl zu. Die folgenden Beispiele verdeutlichen dieses
+      Konzept.</para>
   </section>
 
-  <section xml:id="sec.vl1-beispiele-funktionale">
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+
+  <section xml:id="sec.beispiele-funktionale">
     <title>Beispiele für Funktionale</title>
 
-    <example xml:id="ex.vl1-norm">
+    <example xml:id="ex.norm">
       <title>Norm</title>
-      <para><inlineequation><alt>$V = \mathbb{R}^n$</alt></inlineequation>, <inlineequation><alt>$I\colon V \to \mathbb{R}$</alt></inlineequation>, <inlineequation><alt>$I(\vec{v}) := \|\vec{v}\|$</alt></inlineequation></para>
+      <para>Auf <inlineequation><alt>$V = \mathbb{R}^n$</alt></inlineequation> ist die
+        euklidische Norm <inlineequation><alt>$I(\vec{v}) := \|\vec{v}\|$</alt></inlineequation>
+        ein Funktional — sie ordnet jedem Vektor seine Länge zu.</para>
     </example>
 
-    <example xml:id="ex.vl1-stellenfunktional">
-      <title>Stellenfunktional</title>
-      <para>Sei <inlineequation><alt>$\alpha \in \mathbb{R}$</alt></inlineequation> fest, <inlineequation><alt>$V$</alt></inlineequation> Vektorraum aller Funktionen, <inlineequation><alt>$f\colon \mathbb{R} \to \mathbb{R}$</alt></inlineequation></para>
-      <informalequation><alt>\[ I\colon V \to \mathbb{R}, \quad I(f) := f(\alpha) \]</alt></informalequation>
+    <example xml:id="ex.stellenfunktional">
+      <title>Stellenfunktional (Punktauswertung)</title>
+      <para>Sei <inlineequation><alt>$\alpha \in \mathbb{R}$</alt></inlineequation> fest und
+        <inlineequation><alt>$V$</alt></inlineequation> der Raum aller Funktionen
+        <inlineequation><alt>$f\colon \mathbb{R} \to \mathbb{R}$</alt></inlineequation>. Dann
+        definiert</para>
+      <informalequation><alt>\[ I(f) := f(\alpha) \]</alt></informalequation>
+      <para>ein Funktional: Jeder Funktion wird ihr Wert an der Stelle
+        <inlineequation><alt>$\alpha$</alt></inlineequation> zugeordnet.</para>
     </example>
 
-    <example xml:id="ex.vl1-bestimmtes-integral">
+    <example xml:id="ex.bestimmtes-integral">
       <title>Bestimmtes Integral</title>
-      <para><inlineequation><alt>$V$</alt></inlineequation> Vektorraum aller stetigen Funktionen <inlineequation><alt>$f\colon [a,b] \to \mathbb{R}$</alt></inlineequation></para>
+      <para>Auf dem Raum aller stetigen Funktionen
+        <inlineequation><alt>$f\colon [a,b] \to \mathbb{R}$</alt></inlineequation> ist</para>
       <informalequation><alt>\[ I(f) = \int_a^b f(x)\, dx \]</alt></informalequation>
-      <figure xml:id="fig.vl1-bestimmtes-integral">
+      <para>ein Funktional — es ordnet jeder Funktion die Fläche unter ihrer Kurve zu.</para>
+      <figure xml:id="fig.bestimmtes-integral">
         <title>Bestimmtes Integral als Fläche unter der Kurve</title>
         <mediaobject><textobject><phrase>Koordinatensystem mit Kurve f von a bis b. Die Fläche zwischen Kurve und x-Achse ist schraffiert und mit I(f) beschriftet.</phrase></textobject></mediaobject>
       </figure>
     </example>
 
-    <example xml:id="ex.vl1-bogenlaenge">
+    <example xml:id="ex.bogenlaenge">
       <title>Bogenlänge</title>
-      <para><inlineequation><alt>$V$</alt></inlineequation> Vektorraum aller <inlineequation><alt>$C^1$</alt></inlineequation>-Funktionen <inlineequation><alt>$f\colon [a,b] \to \mathbb{R}$</alt></inlineequation></para>
+      <para>Auf dem Raum der stetig differenzierbaren Funktionen
+        <inlineequation><alt>$f\colon [a,b] \to \mathbb{R}$</alt></inlineequation> definiert</para>
       <informalequation><alt>\[ I(f) = \int_a^b \sqrt{1 + f'(x)^2}\, dx \]</alt></informalequation>
-      <figure xml:id="fig.vl1-bogenlaenge">
+      <para>die Bogenlänge des Graphen von <inlineequation><alt>$f$</alt></inlineequation>.
+        Die Formel ergibt sich aus dem infinitesimalen Linienelement
+        <inlineequation><alt>$ds = \sqrt{dx^2 + dy^2} = \sqrt{1 + f'^2}\, dx$</alt></inlineequation>.</para>
+      <figure xml:id="fig.bogenlaenge">
         <title>Bogenlänge und infinitesimales Linienelement</title>
         <mediaobject><textobject><phrase>Kurve mit infinitesimalem Dreieck: Katheten dx und dy = f' dx, Hypotenuse ds. Herleitung: ds = sqrt(1 + f'^2) dx.</phrase></textobject></mediaobject>
       </figure>
     </example>
+
+    <para>In all diesen Beispielen bildet das Funktional eine Funktion (oder einen Vektor) auf
+      eine reelle Zahl ab. Die zentrale Frage der Variationsrechnung lautet: Für welche Funktion
+      wird ein gegebenes Funktional <emphasis>extremal</emphasis>?</para>
   </section>
 
-  <!-- ── VL2 ─────────────────────────────────────────────────────────── -->
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
 
-  <section xml:id="sec.vl2-brachistochrone">
-    <title>5. Brachistochrone Problem (A.1.2)</title>
+  <section xml:id="sec.brachistochrone">
+    <title>Das Brachistochrone-Problem</title>
 
-    <para>a) Gesucht: Betrag der Geschwindigkeit <inlineequation><alt>$\|\dot{\vec{r}}_m\|$</alt></inlineequation></para>
+    <para>Ein berühmtes historisches Beispiel motiviert die gesamte Variationsrechnung:
+      <emphasis>Johann Bernoulli</emphasis> stellte 1696 die Frage, welche Kurve ein Massenpunkt
+      durchlaufen muss, um unter dem Einfluss der Schwerkraft in kürzester Zeit von einem Punkt
+      <inlineequation><alt>$A$</alt></inlineequation> zu einem tieferliegenden Punkt
+      <inlineequation><alt>$B$</alt></inlineequation> zu gelangen. Dieses Problem — das
+      <emphasis role="bold">Brachistochrone-Problem</emphasis> (griech.: brachistos = kürzest,
+      chronos = Zeit) — führte zur Geburt der Variationsrechnung.</para>
 
-    <informalequation><alt>\[ {}_I\vec{r}_{Am} = \begin{pmatrix} x(t) \\ y(x(t)) \end{pmatrix} \]</alt></informalequation>
+    <para>Wir beschreiben die Kurve als Funktion <inlineequation><alt>$y(x)$</alt></inlineequation>
+      mit <inlineequation><alt>$A = (0,0)$</alt></inlineequation> und
+      <inlineequation><alt>$B = (x_B, y_B)$</alt></inlineequation>, wobei die
+      <inlineequation><alt>$y$</alt></inlineequation>-Achse nach unten zeigt. Der Ortsvektor
+      eines Punktes auf der Kurve ist</para>
 
-    <informalequation><alt>\[ {}_I\dot{\vec{r}}_m = \begin{pmatrix} 1 \\ y'(x) \end{pmatrix} \dot{x}, \qquad \|{}_I\dot{\vec{r}}_m\|^2 = (1 + y'(x)^2)\,\dot{x}^2 \]</alt></informalequation>
+    <informalequation><alt>\[ {}_I\vec{r}_{Am} = \begin{pmatrix} x(t) \\ y(x(t)) \end{pmatrix}. \]</alt></informalequation>
 
-    <para>b) Gesucht: Durchlaufzeit <inlineequation><alt>$T(y)$</alt></inlineequation>. Über Energieerhaltung:</para>
+    <para>Die Geschwindigkeit ergibt sich durch Ableitung nach der Zeit:</para>
 
-    <informalequation><alt>\[ dt = \sqrt{\frac{1 + y'^2}{2gy}}\,dx \]</alt></informalequation>
+    <informalequation><alt>\[ {}_I\dot{\vec{r}}_m = \begin{pmatrix} 1 \\ y'(x) \end{pmatrix} \dot{x}, \qquad \|{}_I\dot{\vec{r}}_m\|^2 = (1 + y'(x)^2)\,\dot{x}^2. \]</alt></informalequation>
 
-    <para>Finde die Kurve <inlineequation><alt>$y(x)$</alt></inlineequation> von <inlineequation><alt>$A = (0,0)$</alt></inlineequation> nach <inlineequation><alt>$B = (x_B, y_B)$</alt></inlineequation> so, dass</para>
+    <para>Über die Energieerhaltung
+      <inlineequation><alt>$\tfrac{1}{2}m\,v^2 = m\,g\,y$</alt></inlineequation> lässt sich das
+      infinitesimale Zeitelement ausdrücken als</para>
 
-    <equation xml:id="eq.vl2-brachistochrone-funktional">
-      <alt>\[ T(y) = \int_0^{x_B} \sqrt{\frac{1 + y'(x)^2}{2g\,y(x)}}\,dx \longrightarrow \text{minimal} \]</alt>
+    <informalequation><alt>\[ dt = \sqrt{\frac{1 + y'^2}{2gy}}\,dx. \]</alt></informalequation>
+
+    <para>Die Gesamtdurchlaufzeit ist somit ein Funktional der Kurvenform
+      <inlineequation><alt>$y(x)$</alt></inlineequation>:</para>
+
+    <equation xml:id="eq.brachistochrone-funktional">
+      <alt>\[ T(y) = \int_0^{x_B} \sqrt{\frac{1 + y'(x)^2}{2g\,y(x)}}\,dx \longrightarrow \text{minimal!} \]</alt>
     </equation>
+
+    <para>Um dieses Problem zu lösen, benötigen wir ein allgemeines Werkzeug: die
+      Euler-Gleichung der Variationsrechnung.</para>
   </section>
 
-  <section xml:id="sec.vl2-euler-gleichung">
-    <title>2. Die Euler-Gleichung der Variationsrechnung</title>
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
 
-    <para>Die Variationsrechnung untersucht Probleme der Form:</para>
+  <section xml:id="sec.euler-gleichung">
+    <title>Die Euler-Gleichung der Variationsrechnung</title>
 
-    <formalpara role="definition" xml:id="def.vl2-variationsproblem">
+    <para>Wir formulieren nun das allgemeine Variationsproblem und leiten die notwendige Bedingung
+      für seine Lösung her.</para>
+
+    <formalpara role="definition" xml:id="def.variationsproblem">
       <title>Variationsproblem</title>
-      <para>Finde <inlineequation><alt>$y(x)$</alt></inlineequation> mit <inlineequation><alt>$y(x_0) = y_0$</alt></inlineequation>, <inlineequation><alt>$y(x_1) = y_1$</alt></inlineequation>, so dass <inlineequation><alt>$I(y) = \int_{x_0}^{x_1} F(x,\, y(x),\, y'(x))\,dx \longrightarrow \text{stationär}$</alt></inlineequation>. Dabei heißt <inlineequation><alt>$F(x, y, y')$</alt></inlineequation> Lagrange-Funktion.</para>
+      <para>Gesucht ist eine Funktion <inlineequation><alt>$y(x)$</alt></inlineequation> mit
+        festen Randwerten <inlineequation><alt>$y(x_0) = y_0$</alt></inlineequation> und
+        <inlineequation><alt>$y(x_1) = y_1$</alt></inlineequation>, so dass das Funktional
+        <inlineequation><alt>$I(y) = \int_{x_0}^{x_1} F(x,\, y(x),\, y'(x))\,dx$</alt></inlineequation>
+        stationär wird. Die Funktion
+        <inlineequation><alt>$F(x, y, y')$</alt></inlineequation> heißt
+        <emphasis role="bold">Lagrange-Funktion</emphasis> (des Variationsproblems).</para>
     </formalpara>
 
-    <para>Idee zur Lösung: Betrachte beliebige Kurvenscharen <inlineequation><alt>$\eta(\varepsilon, x)$</alt></inlineequation> mit <inlineequation><alt>$\eta(\varepsilon_0, x) = y(x)$</alt></inlineequation> und Randbedingungen <inlineequation><alt>$\eta(\varepsilon, x_0) = y_0$</alt></inlineequation>, <inlineequation><alt>$\eta(\varepsilon, x_1) = y_1$</alt></inlineequation>.</para>
+    <para>Die Idee zur Lösung besteht darin, das Problem auf die gewöhnliche Analysis
+      zurückzuführen. Dazu betrachten wir eine einparametrige Kurvenschar
+      <inlineequation><alt>$\eta(\varepsilon, x)$</alt></inlineequation>, die für den
+      Parameterwert <inlineequation><alt>$\varepsilon_0$</alt></inlineequation> mit der
+      gesuchten Extremalen <inlineequation><alt>$y(x)$</alt></inlineequation> übereinstimmt
+      und die Randbedingungen für alle
+      <inlineequation><alt>$\varepsilon$</alt></inlineequation> erfüllt:</para>
 
-    <equation xml:id="eq.vl2-stationaritaetsbedingung">
-      <alt>\[ h'(\varepsilon_0) = 0 \qquad \forall \text{ möglichen Scharen } \eta(\varepsilon, x) \]</alt>
+    <informalequation><alt>\[ \eta(\varepsilon_0, x) = y(x), \qquad \eta(\varepsilon, x_0) = y_0, \qquad \eta(\varepsilon, x_1) = y_1. \]</alt></informalequation>
+
+    <para>Setzen wir <inlineequation><alt>$\eta$</alt></inlineequation> in das Funktional ein,
+      wird <inlineequation><alt>$I$</alt></inlineequation> zu einer gewöhnlichen Funktion von
+      <inlineequation><alt>$\varepsilon$</alt></inlineequation>: <inlineequation><alt>$h(\varepsilon) := I(\eta(\varepsilon, \cdot))$</alt></inlineequation>.
+      Die Stationaritätsbedingung lautet dann:</para>
+
+    <equation xml:id="eq.stationaritaetsbedingung">
+      <alt>\[ h'(\varepsilon_0) = 0 \qquad \text{für alle zulässigen Kurvenscharen } \eta(\varepsilon, x). \]</alt>
     </equation>
 
-    <para>Ausführen von <inlineequation><alt>$h'(\varepsilon_0) = 0$</alt></inlineequation> mit partieller Integration ergibt:</para>
+    <para>Berechnet man <inlineequation><alt>$h'(\varepsilon_0)$</alt></inlineequation>
+      explizit und wendet partielle Integration an, so erhält man:</para>
 
-    <informalequation><alt>\[ 0 = \int_{x_0}^{x_1} \left( \frac{\partial F}{\partial y} - \frac{d}{dx}\!\left(\frac{\partial F}{\partial y'}\right) \right) \eta_\varepsilon(\varepsilon_0, x)\,dx \qquad \forall \text{ beliebigen Scharen } \eta(\varepsilon, x) \]</alt></informalequation>
+    <informalequation><alt>\[ 0 = \int_{x_0}^{x_1} \left( \frac{\partial F}{\partial y} - \frac{d}{dx}\!\left(\frac{\partial F}{\partial y'}\right) \right) \eta_\varepsilon(\varepsilon_0, x)\,dx \qquad \text{für alle zulässigen } \eta. \]</alt></informalequation>
+
+    <para>Da dies für <emphasis>alle</emphasis> zulässigen Variationen gelten muss, können wir
+      das Fundamentallemma der Variationsrechnung anwenden.</para>
   </section>
 
-  <!-- ── VL3 ─────────────────────────────────────────────────────────── -->
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
 
-  <section xml:id="sec.vl3-fundamentallemma">
-    <title>Fundamental-Lemma der Variationsrechnung</title>
+  <section xml:id="sec.fundamentallemma">
+    <title>Das Fundamentallemma der Variationsrechnung</title>
 
-    <formalpara role="theorem" xml:id="thm.vl3-fundamentallemma">
-      <title>Fundamental-Lemma</title>
-      <para>Gilt für eine stetige Funktion <inlineequation><alt>$f\colon [a,b] \to \mathbb{R}$</alt></inlineequation>, dass <inlineequation><alt>$\int_a^b f(x)\,g(x)\,dx = 0$</alt></inlineequation> für jede glatte Funktion <inlineequation><alt>$g(x)$</alt></inlineequation> mit <inlineequation><alt>$g(a) = g(b) = 0$</alt></inlineequation>, dann <inlineequation><alt>$f = 0$</alt></inlineequation>.</para>
+    <para>Das Fundamentallemma bildet das logische Bindeglied zwischen der integralen
+      Stationaritätsbedingung und der punktweisen Euler-Gleichung.</para>
+
+    <formalpara role="theorem" xml:id="thm.fundamentallemma">
+      <title>Fundamentallemma</title>
+      <para>Sei <inlineequation><alt>$f\colon [a,b] \to \mathbb{R}$</alt></inlineequation>
+        stetig. Gilt
+        <inlineequation><alt>$\int_a^b f(x)\,g(x)\,dx = 0$</alt></inlineequation> für jede
+        glatte Funktion <inlineequation><alt>$g(x)$</alt></inlineequation> mit
+        <inlineequation><alt>$g(a) = g(b) = 0$</alt></inlineequation>, so folgt
+        <inlineequation><alt>$f \equiv 0$</alt></inlineequation> auf
+        <inlineequation><alt>$[a,b]$</alt></inlineequation>.</para>
     </formalpara>
 
-    <formalpara role="proof" xml:id="proof.vl3-fundamentallemma">
-      <title>Beweis (Widerspruchsbeweis)</title>
-      <para>(i) Annahme: <inlineequation><alt>$f(x_0) > 0$</alt></inlineequation>. (ii) Stetigkeit liefert Intervall <inlineequation><alt>$\mathcal{I}$</alt></inlineequation> mit <inlineequation><alt>$f > 0$</alt></inlineequation>. (iii) Wähle <inlineequation><alt>$g > 0$</alt></inlineequation> auf <inlineequation><alt>$\mathcal{I}$</alt></inlineequation>, sonst null. (iv) Dann <inlineequation><alt>$\int_a^b f g\,dx > 0$</alt></inlineequation> — Widerspruch.</para>
+    <formalpara role="proof" xml:id="proof.fundamentallemma">
+      <title>Beweis (durch Widerspruch)</title>
+      <para>Angenommen, es existiert ein Punkt
+        <inlineequation><alt>$x_0 \in (a,b)$</alt></inlineequation> mit
+        <inlineequation><alt>$f(x_0) > 0$</alt></inlineequation>. Da
+        <inlineequation><alt>$f$</alt></inlineequation> stetig ist, gibt es ein Intervall
+        <inlineequation><alt>$\mathcal{I} \subset (a,b)$</alt></inlineequation> um
+        <inlineequation><alt>$x_0$</alt></inlineequation>, auf dem
+        <inlineequation><alt>$f > 0$</alt></inlineequation> gilt. Wir wählen nun eine
+        glatte Testfunktion <inlineequation><alt>$g$</alt></inlineequation>, die auf
+        <inlineequation><alt>$\mathcal{I}$</alt></inlineequation> positiv und außerhalb null
+        ist (z.B. eine passend skalierte Glockenkurve). Dann ist
+        <inlineequation><alt>$\int_a^b f\,g\,dx = \int_{\mathcal{I}} f\,g\,dx > 0$</alt></inlineequation>
+        — ein Widerspruch zur Voraussetzung. Analog für
+        <inlineequation><alt>$f(x_0) &lt; 0$</alt></inlineequation>. Also ist
+        <inlineequation><alt>$f \equiv 0$</alt></inlineequation>.</para>
     </formalpara>
   </section>
 
-  <section xml:id="sec.vl3-euler-gleichung">
-    <title>Euler-Gleichung der Variationsrechnung</title>
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
 
-    <equation xml:id="eq.vl3-euler-gleichung">
-      <alt>\[ F = F(x, y, y'):\quad \frac{\partial F}{\partial y} - \frac{d}{dx}\!\left(\frac{\partial F}{\partial y'}\right) = 0 \]</alt>
+  <section xml:id="sec.euler-gleichung-herleitung">
+    <title>Die Euler-Gleichung</title>
+
+    <para>Mit dem Fundamentallemma folgt aus der integralen Stationaritätsbedingung unmittelbar
+      die <emphasis role="bold">Euler-Gleichung der Variationsrechnung</emphasis>:</para>
+
+    <equation xml:id="eq.euler-gleichung">
+      <alt>\[ \frac{\partial F}{\partial y} - \frac{d}{dx}\!\left(\frac{\partial F}{\partial y'}\right) = 0. \]</alt>
     </equation>
 
-    <para>Lösungen <inlineequation><alt>$y(x)$</alt></inlineequation> der Euler-Gleichung heißen <emphasis role="underline">Extremalen</emphasis>.</para>
+    <para>Lösungen <inlineequation><alt>$y(x)$</alt></inlineequation> dieser Gleichung heißen
+      <emphasis role="bold">Extremalen</emphasis>. Die Euler-Gleichung ist eine gewöhnliche
+      Differentialgleichung zweiter Ordnung für <inlineequation><alt>$y(x)$</alt></inlineequation>
+      und stellt die notwendige Bedingung dafür dar, dass das Funktional
+      <inlineequation><alt>$I(y)$</alt></inlineequation> einen stationären Wert annimmt.</para>
   </section>
 
-  <section xml:id="sec.vl3-sonderfaelle">
-    <title>Sonderfälle</title>
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
 
-    <section xml:id="sec.vl3-sonderfall-a">
-      <title>a) F hängt nicht explizit von y ab</title>
-      <para><inlineequation><alt>$F = F(x, y')$</alt></inlineequation>: <inlineequation><alt>$F_{y'}(x, y'(x)) = \text{const.}$</alt></inlineequation></para>
+  <section xml:id="sec.sonderfaelle">
+    <title>Sonderfälle der Euler-Gleichung</title>
+
+    <para>In vielen praktischen Anwendungen hat die Lagrange-Funktion
+      <inlineequation><alt>$F$</alt></inlineequation> eine spezielle Struktur, die die
+      Euler-Gleichung erheblich vereinfacht.</para>
+
+    <section xml:id="sec.sonderfall-kein-y">
+      <title>Fall 1: F hängt nicht von y ab</title>
+
+      <para>Ist <inlineequation><alt>$F = F(x, y')$</alt></inlineequation> (keine explizite
+        Abhängigkeit von <inlineequation><alt>$y$</alt></inlineequation>), so wird
+        <inlineequation><alt>$\frac{\partial F}{\partial y} = 0$</alt></inlineequation> und
+        die Euler-Gleichung reduziert sich auf</para>
+
+      <informalequation><alt>\[ \frac{d}{dx}\!\left(\frac{\partial F}{\partial y'}\right) = 0 \qquad \Longrightarrow \qquad F_{y'}(x, y'(x)) = \text{const.} \]</alt></informalequation>
+
+      <para>Die Ableitung <inlineequation><alt>$F_{y'}$</alt></inlineequation> ist also ein
+        erstes Integral der Bewegung.</para>
     </section>
 
-    <section xml:id="sec.vl3-sonderfall-b">
-      <title>b) F hängt nicht von y' ab</title>
-      <para><inlineequation><alt>$F = F(x, y)$</alt></inlineequation>: <inlineequation><alt>$F_y(x, y(x)) = 0$</alt></inlineequation> ist bereits implizite Darstellung der Extremalen.</para>
+    <section xml:id="sec.sonderfall-kein-yprime">
+      <title>Fall 2: F hängt nicht von y' ab</title>
+
+      <para>Ist <inlineequation><alt>$F = F(x, y)$</alt></inlineequation>, so vereinfacht sich
+        die Euler-Gleichung zu</para>
+
+      <informalequation><alt>\[ F_y(x, y(x)) = 0, \]</alt></informalequation>
+
+      <para>einer impliziten Gleichung, die direkt die Extremale bestimmt — ohne dass eine
+        Differentialgleichung gelöst werden muss.</para>
     </section>
 
-    <section xml:id="sec.vl3-sonderfall-c">
-      <title>c) F hängt nicht explizit von x ab</title>
-      <para><inlineequation><alt>$F = F(y, y')$</alt></inlineequation>: <inlineequation><alt>$F - F_{y'}\, y' = \text{const.}$</alt></inlineequation></para>
+    <section xml:id="sec.sonderfall-kein-x">
+      <title>Fall 3: F hängt nicht explizit von x ab (Beltrami-Identität)</title>
+
+      <para>Ist <inlineequation><alt>$F = F(y, y')$</alt></inlineequation>, so lässt sich zeigen,
+        dass die Größe</para>
+
+      <equation xml:id="eq.beltrami">
+        <alt>\[ F - y'\, F_{y'} = \text{const.} \]</alt>
+      </equation>
+
+      <para>entlang jeder Extremalen erhalten bleibt. Diese Beziehung, bekannt als
+        <emphasis role="bold">Beltrami-Identität</emphasis>, liefert ein erstes Integral und
+        reduziert die Ordnung der Differentialgleichung von zwei auf eins.</para>
     </section>
   </section>
 
-  <section xml:id="sec.vl3-brachistochrone-loesung">
-    <title>Lösung Brachistochronenproblem</title>
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
 
-    <para>Mit Sonderfall (c) und der Substitution <inlineequation><alt>$y'(x) = \cot(\varphi/2)$</alt></inlineequation>:</para>
+  <section xml:id="sec.brachistochrone-loesung">
+    <title>Lösung des Brachistochrone-Problems</title>
 
-    <equation xml:id="eq.vl3-brachistochrone-loesung">
-      <alt>\[ x(\varphi) = \frac{K^2}{2}\,(\varphi - \sin\varphi) + \alpha, \qquad Y(\varphi) = \frac{K^2}{2}\,(1 - \cos\varphi) \]</alt>
+    <para>Wir können nun das Brachistochrone-Problem aus der Einleitung lösen. Da die
+      Lagrange-Funktion
+      <inlineequation><alt>$F = \sqrt{(1 + y'^2)/(2gy)}$</alt></inlineequation> nicht
+      explizit von <inlineequation><alt>$x$</alt></inlineequation> abhängt, liegt Sonderfall 3
+      vor. Die Beltrami-Identität liefert nach der Substitution
+      <inlineequation><alt>$y'(x) = \cot(\varphi/2)$</alt></inlineequation> die
+      Parameterdarstellung:</para>
+
+    <equation xml:id="eq.brachistochrone-loesung">
+      <alt>\[ x(\varphi) = \frac{K^2}{2}\,(\varphi - \sin\varphi) + \alpha, \qquad y(\varphi) = \frac{K^2}{2}\,(1 - \cos\varphi). \]</alt>
     </equation>
 
-    <para>Dies ist die Parameterdarstellung einer <emphasis role="bold">Zykloide</emphasis>.</para>
+    <para>Dies ist die Parameterdarstellung einer <emphasis role="bold">Zykloide</emphasis> — jener
+      Kurve, die ein Punkt auf dem Rand eines rollenden Kreises mit Radius
+      <inlineequation><alt>$K^2/2$</alt></inlineequation> beschreibt. Die schnellste
+      Rutschbahn ist also keine Gerade, sondern eine Zykloide.</para>
 
-    <figure xml:id="fig.vl3-zykloide">
-      <title>Zykloide</title>
+    <figure xml:id="fig.zykloide">
+      <title>Zykloide — die Lösung des Brachistochrone-Problems</title>
       <mediaobject><textobject><phrase>Ein Kreis mit Radius K^2/2 rollt entlang einer horizontalen Linie. Die resultierende Zykloidenkurve zeigt mehrere Bögen.</phrase></textobject></mediaobject>
     </figure>
   </section>
 
-  <!-- ── VL4 ─────────────────────────────────────────────────────────── -->
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
 
-  <section xml:id="sec.vl4-variationsrechnung-und-gewoehnliche-dgln">
-    <title>3. Variationsrechnung und gewöhnliche DGLn</title>
+  <section xml:id="sec.variationsrechnung-und-dgln">
+    <title>Variationsrechnung und gewöhnliche Differentialgleichungen</title>
 
-    <para>Gegeben: DGL der Form <inlineequation><alt>$a_2(x) y'' + a_1(x) y' + a_0(x) y = f(x)$</alt></inlineequation>. Gesucht: Zugehöriges Variationsproblem.</para>
+    <para>Es besteht ein enger Zusammenhang zwischen Variationsproblemen und gewöhnlichen
+      Differentialgleichungen: Zu manchen DGLn lässt sich ein Variationsproblem finden, dessen
+      Euler-Gleichung genau diese DGL ist.</para>
 
-    <para>Schritt 1: Selbstadjungierte Form herstellen mit <inlineequation><alt>$p(x) = e^{\int \frac{a_1}{a_2} dx}$</alt></inlineequation>.</para>
+    <para>Gegeben sei eine DGL der Form
+      <inlineequation><alt>$a_2(x)\,y'' + a_1(x)\,y' + a_0(x)\,y = f(x)$</alt></inlineequation>.
+      Um das zugehörige Variationsproblem zu konstruieren, gehen wir in zwei Schritten vor:</para>
 
-    <para>Schritt 2: Lagrange-Funktion finden:</para>
+    <para><emphasis role="bold">Schritt 1:</emphasis> Herstellen der selbstadjungierten Form durch
+      Multiplikation mit dem integrierenden Faktor
+      <inlineequation><alt>$p(x) = e^{\int \frac{a_1}{a_2}\, dx}$</alt></inlineequation>.</para>
 
-    <equation xml:id="eq.vl4-lagrange-fkt">
-      <alt>\[ F(x,y,y') = \frac{1}{2} p(x) {y'}^2 - \frac{1}{2} q(x) y^2 + h(x) y \]</alt>
+    <para><emphasis role="bold">Schritt 2:</emphasis> Identifikation der zugehörigen Lagrange-Funktion:</para>
+
+    <equation xml:id="eq.lagrange-fkt-dgl">
+      <alt>\[ F(x,y,y') = \frac{1}{2}\, p(x)\, {y'}^2 - \frac{1}{2}\, q(x)\, y^2 + h(x)\, y. \]</alt>
     </equation>
+
+    <para>Die Euler-Gleichung dieses Variationsproblems reproduziert dann exakt die
+      ursprüngliche Differentialgleichung in selbstadjungierter Form.</para>
   </section>
 
-  <section xml:id="sec.vl4-randbedingungen">
-    <title>4. Randbedingungen</title>
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
 
-    <formalpara role="rule" xml:id="def.vl4-grundregel">
+  <section xml:id="sec.randbedingungen">
+    <title>Randbedingungen</title>
+
+    <para>Bisher haben wir feste Randwerte vorausgesetzt:
+      <inlineequation><alt>$y(x_0) = y_0$</alt></inlineequation> und
+      <inlineequation><alt>$y(x_1) = y_1$</alt></inlineequation>. In vielen physikalischen
+      Problemen ist der Endpunkt jedoch nicht vollständig vorgegeben. Die grundlegende Idee
+      lautet:</para>
+
+    <formalpara role="rule" xml:id="def.grundregel-randbedingungen">
       <title>Grundregel</title>
-      <para>Was bekannt ist, braucht nicht variiert zu werden. Was unbekannt ist, variiert man, um das Funktional stationär zu machen.</para>
+      <para>Was bekannt ist, braucht nicht variiert zu werden. Was unbekannt ist, wird variiert,
+        um das Funktional stationär zu machen.</para>
     </formalpara>
 
-    <section xml:id="sec.vl4-natuerliche-randbedingung">
-      <title>a) Natürliche Randbedingung</title>
-      <para>Bei freiem <inlineequation><alt>$y(x_1)$</alt></inlineequation>:</para>
-      <equation xml:id="eq.vl4-natuerliche-rb">
-        <alt>\[ F_{y'}(x_1, y(x_1), y'(x_1)) = 0 \]</alt>
+    <section xml:id="sec.natuerliche-randbedingung">
+      <title>Natürliche Randbedingung</title>
+
+      <para>Ist der Endwert <inlineequation><alt>$y(x_1)$</alt></inlineequation> frei (d.h. nicht
+        vorgegeben), so liefert die Variation neben der Euler-Gleichung eine zusätzliche
+        Bedingung am Rand:</para>
+
+      <equation xml:id="eq.natuerliche-rb">
+        <alt>\[ F_{y'}(x_1,\, y(x_1),\, y'(x_1)) = 0. \]</alt>
+      </equation>
+
+      <para>Diese Bedingung heißt <emphasis role="bold">natürliche Randbedingung</emphasis>, weil
+        sie nicht von außen auferlegt wird, sondern sich natürlich aus der Stationarität des
+        Funktionals ergibt.</para>
+    </section>
+
+    <section xml:id="sec.transversalitaetsbedingung">
+      <title>Transversalitätsbedingung</title>
+
+      <para>Endet die Kurve nicht an einem festen Punkt, sondern auf einer vorgegebenen Kurve
+        <inlineequation><alt>$f(x)$</alt></inlineequation>, so tritt an die Stelle der
+        natürlichen Randbedingung die <emphasis role="bold">Transversalitätsbedingung</emphasis>:</para>
+
+      <equation xml:id="eq.transversalitaetsbedingung">
+        <alt>\[ F_{y'}(b,\, y(b),\, y'(b)) + \frac{F(b,\, y(b),\, y'(b))}{f'(b) - y'(b)} = 0. \]</alt>
       </equation>
     </section>
 
-    <section xml:id="sec.vl4-transversalitaetsbedingung">
-      <title>b) Transversalitätsbedingung</title>
-      <para>Bei Endpunkt auf gegebener Kurve <inlineequation><alt>$f(x)$</alt></inlineequation>:</para>
-      <equation xml:id="eq.vl4-transversalitaetsbedingung">
-        <alt>\[ F_{y'}(b, y(b), y'(b)) + \frac{F(b, y(b), y'(b))}{f'(b) - y'(b)} = 0 \]</alt>
+    <section xml:id="sec.modifizierte-randbedingungen">
+      <title>Modifizierte Randbedingungen</title>
+
+      <para>Wird das Funktional um einen Randterm ergänzt —</para>
+
+      <informalequation><alt>\[ I(y) = \int_{x_0}^{x_1} F(x, y, y')\, dx - H(y(x_1)) \longrightarrow \text{stat.} \]</alt></informalequation>
+
+      <para>mit <inlineequation><alt>$y(x_0) = y_0$</alt></inlineequation> fest und
+        <inlineequation><alt>$y(x_1)$</alt></inlineequation> frei —, so lautet die
+        Stationaritätsbedingung am rechten Rand:</para>
+
+      <equation xml:id="eq.mod-rb">
+        <alt>\[ F_{y'}(x_1,\, y(x_1),\, y'(x_1)) = H'(y(x_1)). \]</alt>
       </equation>
+
+      <para>Die natürliche Randbedingung ist der Spezialfall
+        <inlineequation><alt>$H \equiv 0$</alt></inlineequation>.</para>
     </section>
   </section>
 
-  <section xml:id="sec.vl4-variation-mit-hoeheren-ableitungen">
-    <title>5. Variation mit höheren Ableitungen</title>
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
 
-    <para>Für <inlineequation><alt>$F(x, y, y', y'', \dots, y^{(n)})$</alt></inlineequation> unter <inlineequation><alt>$2n$</alt></inlineequation> Randbedingungen:</para>
+  <section xml:id="sec.hoehere-ableitungen">
+    <title>Variationsprobleme mit höheren Ableitungen</title>
 
-    <equation xml:id="eq.vl5-euler-lagrange-hoehere-ordnung">
-      <alt>\[ F_y - \frac{d}{dx} F_{y'} + \frac{d^2}{dx^2} F_{y''} - \frac{d^3}{dx^3} F_{y'''} \;\dots\; (-1)^n \frac{d^n}{dx^n} F_{y^{(n)}} = 0 \]</alt>
+    <para>Hängt die Lagrange-Funktion nicht nur von
+      <inlineequation><alt>$y$</alt></inlineequation> und
+      <inlineequation><alt>$y'$</alt></inlineequation>, sondern auch von höheren Ableitungen
+      <inlineequation><alt>$y'', \ldots, y^{(n)}$</alt></inlineequation> ab, so wird die
+      Euler-Gleichung zu einer Differentialgleichung der Ordnung
+      <inlineequation><alt>$2n$</alt></inlineequation>:</para>
+
+    <equation xml:id="eq.euler-lagrange-hoehere-ordnung">
+      <alt>\[ F_y - \frac{d}{dx} F_{y'} + \frac{d^2}{dx^2} F_{y''} - \frac{d^3}{dx^3} F_{y'''} + \cdots + (-1)^n \frac{d^n}{dx^n} F_{y^{(n)}} = 0. \]</alt>
     </equation>
+
+    <para>Für die eindeutige Lösung werden entsprechend
+      <inlineequation><alt>$2n$</alt></inlineequation> Randbedingungen benötigt.</para>
   </section>
 
-  <!-- ── VL5 ─────────────────────────────────────────────────────────── -->
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
 
-  <section xml:id="sec.vl5-modifizierte-randbedingungen">
-    <title>4c) Modifizierte Randbedingungen</title>
+  <section xml:id="sec.mehrere-variablen">
+    <title>Variation mit Funktionen mehrerer Variablen</title>
 
-    <para>Gesucht <inlineequation><alt>$y(x)$</alt></inlineequation> mit <inlineequation><alt>$y(x_0) = y_0$</alt></inlineequation> und <inlineequation><alt>$y(x_1)$</alt></inlineequation> frei so, dass <inlineequation><alt>$I(y) = \int_{x_0}^{x_1} F(x, y, y') \, dx - H(y(x_1)) \to \text{stat.}$</alt></inlineequation></para>
+    <para>Hängt die gesuchte Funktion von mehreren unabhängigen Variablen ab — etwa
+      <inlineequation><alt>$w(x,y)$</alt></inlineequation> auf einem Gebiet
+      <inlineequation><alt>$G \subset \mathbb{R}^2$</alt></inlineequation> mit glattem Rand
+      <inlineequation><alt>$\partial G$</alt></inlineequation> —, so betrachten wir das
+      Funktional</para>
 
-    <para>Stationaritätsbedingung:</para>
-    <equation xml:id="eq.vl5-mod-rb-transversalitaet">
-      <alt>\[ F_{y'}(x_1, y(x_1), y'(x_1)) = H'(y(x_1)) \]</alt>
+    <equation xml:id="eq.funktional-2d">
+      <alt>\[ I(w) = \int_G F(x,\, y,\, w,\, w_x,\, w_y)\, dA \longrightarrow \text{stat.} \]</alt>
     </equation>
+
+    <para>Die zugehörige Euler-Lagrange-Gleichung lautet:</para>
+
+    <equation xml:id="eq.euler-lagrange-2d">
+      <alt>\[ F_w - \frac{\partial}{\partial x} F_{w_x} - \frac{\partial}{\partial y} F_{w_y} = 0. \]</alt>
+    </equation>
+
+    <para>Viele Gleichungen der mathematischen Physik — etwa die Laplace-Gleichung, die
+      Wellengleichung oder die Minimalflächengleichung — lassen sich als Euler-Lagrange-Gleichungen
+      geeigneter Funktionale schreiben.</para>
   </section>
 
-  <section xml:id="sec.vl5-variation-mehrere-variablen">
-    <title>6. Variation mit Funktionen mehrerer Variablen</title>
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
 
-    <para>Sei <inlineequation><alt>$G \subset \mathbb{R}^2$</alt></inlineequation> ein Gebiet mit glattem Rand <inlineequation><alt>$\partial G$</alt></inlineequation>. Gesucht ist <inlineequation><alt>$w(x,y)$</alt></inlineequation> so, dass</para>
+  <section xml:id="sec.mehrere-funktionen">
+    <title>Variation mit mehreren Funktionen</title>
 
-    <equation xml:id="eq.vl5-funktional-2d">
-      <alt>\[ I(w) = \int_G F(x, y, w, w_x, w_y) \, dA \to \text{stat.} \]</alt>
+    <para>Für die Mechanik besonders wichtig ist der Fall, dass nicht eine einzelne Funktion,
+      sondern ein ganzer Vektor von Funktionen
+      <inlineequation><alt>$\vec{q}(t) = (q_1(t), \ldots, q_n(t))^\top$</alt></inlineequation>
+      gesucht wird. Das Funktional lautet dann</para>
+
+    <informalequation><alt>\[ I(\vec{q}) = \int_{t_0}^{t_1} L(t, \vec{q}, \dot{\vec{q}})\, dt \longrightarrow \text{stat.} \]</alt></informalequation>
+
+    <para>und die Euler-Lagrange-Gleichungen nehmen die vektorielle Form an:</para>
+
+    <equation xml:id="eq.euler-lagrange-vektoriell">
+      <alt>\[ \frac{\partial L}{\partial \vec{q}} - \frac{d}{dt}\!\left(\frac{\partial L}{\partial \dot{\vec{q}}}\right) = \vec{0}. \]</alt>
     </equation>
 
-    <para>Euler-Lagrange-Gleichung im <inlineequation><alt>$\mathbb{R}^2$</alt></inlineequation>:</para>
+    <para>Hier wird <inlineequation><alt>$L$</alt></inlineequation> bereits als
+      <emphasis role="bold">Lagrange-Funktion</emphasis> des mechanischen Systems bezeichnet —
+      die Brücke zur Lagrange'schen Mechanik (Kapitel 3) ist geschlagen.</para>
 
-    <equation xml:id="eq.vl5-euler-lagrange-2d">
-      <alt>\[ F_w - \frac{\partial}{\partial x} F_{w_x} - \frac{\partial}{\partial y} F_{w_y} = 0 \]</alt>
+    <para>Der Sonderfall, dass <inlineequation><alt>$L$</alt></inlineequation> nicht explizit
+      von <inlineequation><alt>$t$</alt></inlineequation> abhängt, führt auf ein erhaltenes
+      Integral:</para>
+
+    <equation xml:id="eq.energieerhaltung">
+      <alt>\[ L - \frac{\partial L}{\partial \dot{\vec{q}}}\, \dot{\vec{q}} =: -H_0 = \text{const.} \]</alt>
     </equation>
+
+    <para>Wie wir in Kapitel 3 sehen werden, entspricht diese Erhaltungsgröße unter bestimmten
+      Voraussetzungen der Gesamtenergie des Systems.</para>
   </section>
 
-  <section xml:id="sec.vl5-variation-mehrere-funktionen">
-    <title>7. Variation mit mehreren Funktionen</title>
-
-    <para>Gesucht <inlineequation><alt>$\vec{q}(t) = (q_1(t), \dots, q_n(t))^\top$</alt></inlineequation> so, dass <inlineequation><alt>$I(\vec{q}) = \int_{t_0}^{t_1} L(t, \vec{q}, \dot{\vec{q}}) \, dt \to \text{stat.}$</alt></inlineequation></para>
-
-    <equation xml:id="eq.vl5-euler-lagrange-vektoriell">
-      <alt>\[ \frac{\partial L}{\partial \vec{q}} - \frac{d}{dt}\left(\frac{\partial L}{\partial \dot{\vec{q}}}\right) = 0 \]</alt>
-    </equation>
-
-    <para>Sonderfall c) — <inlineequation><alt>$L$</alt></inlineequation> hängt nicht explizit von <inlineequation><alt>$t$</alt></inlineequation> ab:</para>
-
-    <equation xml:id="eq.vl5-energieerhaltung">
-      <alt>\[ L - \left(\frac{\partial L}{\partial \dot{\vec{q}}}\right) \dot{\vec{q}} =: -H_0 = \text{const} \]</alt>
-    </equation>
-  </section>
-
-  <!-- ── Wichtige Konzepte ───────────────────────────────────────────── -->
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
 
   <section xml:id="sec.kap1-wichtige-konzepte">
-    <title>Wichtige Konzepte</title>
+    <title>Zusammenfassung der wichtigsten Ergebnisse</title>
+
+    <para>Die folgende Übersicht fasst die zentralen Gleichungen dieses Kapitels zusammen.</para>
 
     <formalpara xml:id="kap1-konzepte-euler-gleichung" role="definition">
       <title>Allgemeine Euler-Gleichung</title>
@@ -349,17 +631,17 @@
     </formalpara>
 
     <formalpara xml:id="kap1-konzepte-sonderfall-1" role="definition">
-      <title>Sonderfall 1: <inlineequation><alt>$F = F(x, y')$</alt></inlineequation></title>
-      <para><inlineequation><alt>$\frac{d}{dx}\!\left(\frac{\partial F}{\partial y'}\right) = 0$</alt></inlineequation></para>
+      <title>Sonderfall 1: <inlineequation><alt>$F = F(x, y')$</alt></inlineequation> — kein y</title>
+      <para><inlineequation><alt>$\frac{d}{dx}\!\left(\frac{\partial F}{\partial y'}\right) = 0 \quad \Longrightarrow \quad F_{y'} = \text{const.}$</alt></inlineequation></para>
     </formalpara>
 
     <formalpara xml:id="kap1-konzepte-sonderfall-2" role="definition">
-      <title>Sonderfall 2: <inlineequation><alt>$F = F(y, y')$</alt></inlineequation> (Beltrami-Identität)</title>
+      <title>Sonderfall 2: <inlineequation><alt>$F = F(y, y')$</alt></inlineequation> — Beltrami-Identität</title>
       <para><inlineequation><alt>$F - y'\,\frac{\partial F}{\partial y'} = C$</alt></inlineequation></para>
     </formalpara>
 
     <formalpara xml:id="kap1-konzepte-sonderfall-3" role="definition">
-      <title>Sonderfall 3: <inlineequation><alt>$F = F(x, y)$</alt></inlineequation></title>
+      <title>Sonderfall 3: <inlineequation><alt>$F = F(x, y)$</alt></inlineequation> — kein y'</title>
       <para><inlineequation><alt>$\frac{\partial F}{\partial y} = 0$</alt></inlineequation></para>
     </formalpara>
   </section>

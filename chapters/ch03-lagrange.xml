@@ -5,110 +5,210 @@
          xml:id="ch.lagrangesche-dynamik">
   <title>Lagrange'sche Dynamik</title>
 
-  <!-- ── VL12 (Kap3) ────────────────────────────────────────────────── -->
+  <para>Die projizierten Newton-Euler-Gleichungen aus Kapitel 2 liefern Bewegungsgleichungen
+    in Minimalkoordinaten, erfordern jedoch die explizite Berechnung von Jacobi-Matrizen und
+    die komponentenweise Aufstellung der Newton-Euler-Gleichungen jedes Körpers. Die
+    Lagrange'sche Formulierung bietet einen eleganteren Zugang: Anstatt Kräfte und Trägheiten
+    einzeln zu berechnen, genügt es, zwei skalare Funktionen anzugeben — die kinetische Energie
+    <inlineequation><alt>$T$</alt></inlineequation> und die potentielle Energie
+    <inlineequation><alt>$V$</alt></inlineequation>. Die Bewegungsgleichungen folgen dann auf
+    rein analytischem Weg.</para>
 
-  <section xml:id="sec.vl12kap3-einfuehrung">
-    <title>1. Einführung</title>
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
 
-    <para>Gesucht: Bewegungsgleichungen für Systeme mit <inlineequation><alt>$f$</alt></inlineequation> Freiheitsgraden unter idealen bilateralen holonomen rheonomen Bindungen. Das System <inlineequation><alt>$S$</alt></inlineequation> darf sich zusammensetzen aus starren Körpern, Punktmassen und diskretisierten Kontinuen.</para>
+  <section xml:id="sec.lagrange-einfuehrung">
+    <title>Voraussetzungen</title>
+
+    <para>Wir betrachten Systeme mit <inlineequation><alt>$f$</alt></inlineequation>
+      Freiheitsgraden unter idealen bilateralen holonomen rheonomen Bindungen. Das System
+      <inlineequation><alt>$S$</alt></inlineequation> darf sich aus starren Körpern,
+      Punktmassen und diskretisierten Kontinuen zusammensetzen. Die Beschreibung erfolgt
+      in Minimalkoordinaten
+      <inlineequation><alt>$\vec{q}(t) \in \mathbb{R}^f$</alt></inlineequation>.</para>
   </section>
 
-  <section xml:id="sec.vl12kap3-zentralgleichung-lagrange2">
-    <title>2. Zentralgleichung und Lagrange II</title>
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
 
-    <para>Lagrange'sche Zentralgleichung:</para>
+  <section xml:id="sec.zentralgleichung-lagrange2">
+    <title>Von der Zentralgleichung zu den Lagrange-Gleichungen 2. Art</title>
 
-    <equation xml:id="eq.vl12kap3-zentralgleichung">
-      <alt>\[ \delta W = \int_S \delta \vec{s} \cdot d\vec{F} + \delta T - \left( \int_S \delta \vec{s} \cdot \dot{\vec{s}} \, dm \right)^\cdot = 0 \quad \forall\, \delta \vec{s} \]</alt>
+    <para>Den Ausgangspunkt bildet die Lagrange'sche Zentralgleichung, die sich direkt aus dem
+      Prinzip der virtuellen Arbeit (PvA) herleiten lässt:</para>
+
+    <equation xml:id="eq.zentralgleichung">
+      <alt>\[ \delta W = \int_S \delta \vec{s} \cdot d\vec{F} + \delta T - \left( \int_S \delta \vec{s} \cdot \dot{\vec{s}} \, dm \right)^\cdot = 0 \quad \forall\, \delta \vec{s}. \]</alt>
     </equation>
 
-    <para>Für Minimalkoordinaten mit <inlineequation><alt>$\delta\dot{q}$</alt></inlineequation>-<inlineequation><alt>$d$</alt></inlineequation>-Vertauschung folgt:</para>
+    <para>Drückt man alles in Minimalkoordinaten aus und nutzt die Vertauschbarkeit von
+      Variation und Zeitableitung
+      (<inlineequation><alt>$\delta\dot{q} = (\delta q)^\cdot$</alt></inlineequation>), so
+      erhält man die <emphasis role="bold">Lagrange-Gleichungen 2. Art</emphasis>:</para>
 
-    <equation xml:id="eq.vl12kap3-lagrange2-vorlaeufig">
-      <alt>\[ \frac{d}{dt}\left(\frac{\partial T}{\partial \dot{\vec{q}}}\right)^T - \left(\frac{\partial T}{\partial \vec{q}}\right)^T = \vec{f} \]</alt>
+    <equation xml:id="eq.lagrange2-vorlaeufig">
+      <alt>\[ \frac{d}{dt}\left(\frac{\partial T}{\partial \dot{\vec{q}}}\right)^T - \left(\frac{\partial T}{\partial \vec{q}}\right)^T = \vec{f}. \]</alt>
     </equation>
 
-    <formalpara xml:id="vl12kap3-def-potentialkraft">
+    <para>Hierbei ist <inlineequation><alt>$\vec{f}$</alt></inlineequation> der Vektor der
+      generalisierten aktiven Kräfte.</para>
+
+    <formalpara role="definition" xml:id="def.potentialkraft">
       <title>Definition: Potentialkraft</title>
-      <para>Eine aktive Kraft heißt Potentialkraft, falls <inlineequation><alt>$-\vec{f}_{\mathrm{pot}} = \left(\frac{\partial V}{\partial \vec{q}}\right)^T$</alt></inlineequation> mit Potential <inlineequation><alt>$V(\vec{q},t)$</alt></inlineequation>.</para>
+      <para>Eine aktive Kraft heißt <emphasis role="bold">Potentialkraft</emphasis>, falls ein
+        Potential <inlineequation><alt>$V(\vec{q},t)$</alt></inlineequation> existiert mit
+        <inlineequation><alt>$-\vec{f}_{\mathrm{pot}} = \left(\frac{\partial V}{\partial \vec{q}}\right)^T$</alt></inlineequation>.</para>
     </formalpara>
 
-    <equation xml:id="eq.vl12kap3-lagrange2">
-      <alt>\[ \frac{d}{dt}\left(\frac{\partial T}{\partial \dot{\vec{q}}}\right)^T - \left(\frac{\partial T}{\partial \vec{q}}\right)^T + \left(\frac{\partial V}{\partial \vec{q}}\right)^T = \vec{f}_{\mathrm{NP}} \]</alt>
+    <para>Spaltet man die generalisierten Kräfte in Potentialkräfte und Nichtpotentialkräfte auf,
+      so nehmen die Gleichungen ihre klassische Form an:</para>
+
+    <equation xml:id="eq.lagrange2">
+      <alt>\[ \frac{d}{dt}\left(\frac{\partial T}{\partial \dot{\vec{q}}}\right)^T - \left(\frac{\partial T}{\partial \vec{q}}\right)^T + \left(\frac{\partial V}{\partial \vec{q}}\right)^T = \vec{f}_{\mathrm{NP}}. \]</alt>
     </equation>
 
-    <para>Lagrange'sche Gleichungen 2. Art (Lagrange 1780/1788).</para>
+    <para>Dies sind die <emphasis role="bold">Lagrange'schen Gleichungen 2. Art</emphasis>
+      (Lagrange, 1780/1788). Auf der linken Seite stehen nur Ableitungen von
+      <inlineequation><alt>$T$</alt></inlineequation> und
+      <inlineequation><alt>$V$</alt></inlineequation>, auf der rechten Seite die
+      Nichtpotentialkräfte.</para>
   </section>
 
-  <!-- ── VL13 ────────────────────────────────────────────────────────── -->
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
 
-  <section xml:id="sec.vl13-anwendung-lagrange-II-auf-mks">
-    <title>3. Anwendung von Lagrange II auf MKS</title>
+  <section xml:id="sec.anwendung-auf-mks">
+    <title>Anwendung auf Mehrkörpersysteme</title>
 
-    <para>Kinetische Energie des Starrkörpers:</para>
+    <para>Für die praktische Anwendung auf ein konkretes MKS werden die Energien
+      körperweise aufgestellt.</para>
 
-    <informalequation><alt>\[ T = \frac{1}{2}\, m\, \vec{v}_S^T\vec{v}_S + \frac{1}{2}\, \vec{\Omega}^T\, \bar{\Theta}_S\, \vec{\Omega} \]</alt></informalequation>
+    <para>Die kinetische Energie eines einzelnen Starrkörpers setzt sich aus einem
+      translatorischen und einem rotatorischen Anteil zusammen:</para>
 
-    <para>Schwerepotential: <inlineequation><alt>$V = -m\, \vec{r}_{OS} \cdot \vec{g}$</alt></inlineequation></para>
+    <informalequation><alt>\[ T = \frac{1}{2}\, m\, \vec{v}_S^T\vec{v}_S + \frac{1}{2}\, \vec{\Omega}^T\, \bar{\Theta}_S\, \vec{\Omega}. \]</alt></informalequation>
 
-    <para>Nichtpotentialkräfte über Jacobi-Matrizen:</para>
+    <para>Das Schwerepotential lautet
+      <inlineequation><alt>$V = -m\, \vec{r}_{OS} \cdot \vec{g}$</alt></inlineequation>.
+      Nichtpotentialkräfte werden über die Jacobi-Matrizen auf die generalisierten Koordinaten
+      projiziert:</para>
 
-    <equation xml:id="eq.vl13-nichtpotentialkraefte">
-      <alt>\[ \vec{f}_{NP} = J_Q^T\, \vec{F} + J_R^T\, \vec{M} \]</alt>
+    <equation xml:id="eq.nichtpotentialkraefte">
+      <alt>\[ \vec{f}_{NP} = J_Q^T\, \vec{F} + J_R^T\, \vec{M}. \]</alt>
     </equation>
 
-    <para>Bilde <inlineequation><alt>$T = \sum_j T_j$</alt></inlineequation>, <inlineequation><alt>$V = \sum_k V_k$</alt></inlineequation>, <inlineequation><alt>$\vec{f}_{NP} = \sum_l \vec{f}_{NP,l}$</alt></inlineequation> und führe jede Koordinate aus.</para>
+    <para>Die Gesamtenergien und -kräfte des Systems ergeben sich durch Summation über alle
+      Körper: <inlineequation><alt>$T = \sum_j T_j$</alt></inlineequation>,
+      <inlineequation><alt>$V = \sum_k V_k$</alt></inlineequation>,
+      <inlineequation><alt>$\vec{f}_{NP} = \sum_l \vec{f}_{NP,l}$</alt></inlineequation>.
+      Anschließend werden die partiellen Ableitungen nach jeder generalisierten Koordinate
+      berechnet.</para>
   </section>
 
-  <section xml:id="sec.vl13-hamel-boltzmann-gleichung">
-    <title>4. Hamel-Boltzmann-Gleichung</title>
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
 
-    <para>Reparametrisierung mit Minimalgeschwindigkeiten <inlineequation><alt>$\vec{v}$</alt></inlineequation>: <inlineequation><alt>$\dot{\vec{q}} = B(\vec{q}, t)\,\vec{v} + \vec{\beta}(\vec{q}, t)$</alt></inlineequation></para>
+  <section xml:id="sec.hamel-boltzmann">
+    <title>Hamel-Boltzmann-Gleichungen</title>
 
-    <para>Übergangsgleichung (Hamel):</para>
-    <equation xml:id="eq.vl13-uebergangsgleichung">
-      <alt>\[ (\delta\vec{s})^\cdot - \delta\vec{v} = C(\vec{q}, \vec{v}, t)\,\delta\vec{s} \]</alt>
+    <para>Die Lagrange-Gleichungen 2. Art setzen voraus, dass die generalisierten
+      Geschwindigkeiten <inlineequation><alt>$\dot{\vec{q}}$</alt></inlineequation> als
+      Zeitableitung der generalisierten Koordinaten auftreten. In manchen Anwendungen ist
+      es jedoch günstiger, mit sogenannten <emphasis role="bold">Minimalgeschwindigkeiten</emphasis>
+      <inlineequation><alt>$\vec{v}$</alt></inlineequation> zu arbeiten, die über eine
+      lineare Transformation mit <inlineequation><alt>$\dot{\vec{q}}$</alt></inlineequation>
+      zusammenhängen:</para>
+
+    <informalequation><alt>\[ \dot{\vec{q}} = B(\vec{q}, t)\,\vec{v} + \vec{\beta}(\vec{q}, t). \]</alt></informalequation>
+
+    <para>Da <inlineequation><alt>$\vec{v}$</alt></inlineequation> im Allgemeinen nicht die
+      Zeitableitung einer Koordinate ist, gilt die
+      <inlineequation><alt>$\delta\dot{q}$</alt></inlineequation>-Vertauschungsregel nicht
+      mehr. Stattdessen tritt eine Korrekturmatrix
+      <inlineequation><alt>$C$</alt></inlineequation> auf, beschrieben durch die
+      Hamel'sche Übergangsgleichung:</para>
+
+    <equation xml:id="eq.uebergangsgleichung">
+      <alt>\[ (\delta\vec{s})^\cdot - \delta\vec{v} = C(\vec{q}, \vec{v}, t)\,\delta\vec{s}. \]</alt>
     </equation>
 
-    <para>Hamel-Boltzmann-Gleichung:</para>
-    <equation xml:id="eq.vl13-hamel-boltzmann-endform">
-      <alt>\[ \frac{d}{dt}\!\left(\frac{\partial \bar{T}}{\partial \vec{v}}\right)^T - B^T\!\left(\frac{\partial T}{\partial \dot{\vec{q}}}\right)^T + C^T\!\left(\frac{\partial \bar{T}}{\partial \vec{v}}\right)^T = B^T\, \vec{f} \]</alt>
+    <para>Die resultierenden <emphasis role="bold">Hamel-Boltzmann-Gleichungen</emphasis>
+      (Volterra 1898, Boltzmann 1902, Hamel 1904) lauten:</para>
+
+    <equation xml:id="eq.hamel-boltzmann">
+      <alt>\[ \frac{d}{dt}\!\left(\frac{\partial \bar{T}}{\partial \vec{v}}\right)^T - B^T\!\left(\frac{\partial T}{\partial \dot{\vec{q}}}\right)^T + C^T\!\left(\frac{\partial \bar{T}}{\partial \vec{v}}\right)^T = B^T\, \vec{f}. \]</alt>
     </equation>
 
-    <para>Volterra (1898), Hamel (1904), Boltzmann (1902).</para>
+    <para>Für <inlineequation><alt>$B = I$</alt></inlineequation> und
+      <inlineequation><alt>$\vec{\beta} = \vec{0}$</alt></inlineequation> (also
+      <inlineequation><alt>$\vec{v} = \dot{\vec{q}}$</alt></inlineequation>) reduzieren sich
+      die Hamel-Boltzmann-Gleichungen auf die Lagrange-Gleichungen 2. Art.</para>
   </section>
 
-  <!-- ── VL14 ────────────────────────────────────────────────────────── -->
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
 
-  <section xml:id="sec.vl14-prinzip-von-hamilton">
-    <title>5. Prinzip von Hamilton</title>
+  <section xml:id="sec.hamilton-prinzip">
+    <title>Das Prinzip von Hamilton</title>
 
-    <para>Ist <inlineequation><alt>$\vec{f}_{NP} = 0$</alt></inlineequation>, so ergeben mit der Lagrange-Funktion <inlineequation><alt>$L = T - V$</alt></inlineequation> die Euler-Gleichungen des Variationsproblems</para>
+    <para>Die Variationsrechnung aus Kapitel 1 und die Lagrange'sche Mechanik treffen sich im
+      <emphasis role="bold">Prinzip von Hamilton</emphasis> (1835). Wirken keine
+      Nichtpotentialkräfte (<inlineequation><alt>$\vec{f}_{NP} = 0$</alt></inlineequation>),
+      so sind die Lagrange-Gleichungen 2. Art identisch mit den Euler-Lagrange-Gleichungen
+      des Variationsproblems</para>
 
-    <equation xml:id="eq.vl14-hamilton-prinzip">
-      <alt>\[ I(\vec{q}) = \int_{t_0}^{t_1} (T - V)\,dt \to \text{stat.} \]</alt>
+    <equation xml:id="eq.hamilton-prinzip">
+      <alt>\[ I(\vec{q}) = \int_{t_0}^{t_1} (T - V)\,dt \longrightarrow \text{stat.} \]</alt>
     </equation>
 
-    <para>die Lagrange'schen Gleichungen 2. Art (Prinzip von Hamilton, 1835).</para>
+    <para>Die Lagrange-Funktion <inlineequation><alt>$L = T - V$</alt></inlineequation> spielt
+      also exakt die Rolle der Lagrange-Funktion des Variationsproblems aus Kapitel 1. Das
+      Prinzip von Hamilton besagt: Unter allen denkbaren Bewegungen zwischen zwei Zeitpunkten
+      <inlineequation><alt>$t_0$</alt></inlineequation> und
+      <inlineequation><alt>$t_1$</alt></inlineequation> ist die tatsächliche Bewegung diejenige,
+      für die das Wirkungsintegral stationär wird.</para>
+  </section>
 
-    <formalpara xml:id="vl14-def-zyklische-koordinate">
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+
+  <section xml:id="sec.zyklische-koordinaten">
+    <title>Zyklische Koordinaten und generalisierter Impuls</title>
+
+    <formalpara role="definition" xml:id="def.zyklische-koordinate">
       <title>Definition: Zyklische Koordinate</title>
-      <para>Eine Koordinate <inlineequation><alt>$q_k$</alt></inlineequation> heißt zyklisch, wenn <inlineequation><alt>$L$</alt></inlineequation> nicht explizit von <inlineequation><alt>$q_k$</alt></inlineequation> abhängt. Dann ist der generalisierte Impuls <inlineequation><alt>$\pi_k := \frac{\partial T}{\partial \dot{q}_k} = \text{const.}$</alt></inlineequation></para>
+      <para>Eine Koordinate <inlineequation><alt>$q_k$</alt></inlineequation> heißt
+        <emphasis role="bold">zyklisch</emphasis> (oder ignorierbar), wenn die Lagrange-Funktion
+        <inlineequation><alt>$L$</alt></inlineequation> nicht explizit von
+        <inlineequation><alt>$q_k$</alt></inlineequation> abhängt. In diesem Fall ist der
+        <emphasis role="bold">generalisierte Impuls</emphasis>
+        <inlineequation><alt>$\pi_k := \frac{\partial T}{\partial \dot{q}_k} = \text{const.}$</alt></inlineequation>
+        eine Erhaltungsgröße.</para>
     </formalpara>
+
+    <para>Zyklische Koordinaten stehen in engem Zusammenhang mit Symmetrien des Systems: Jede
+      kontinuierliche Symmetrie der Lagrange-Funktion führt auf eine Erhaltungsgröße (Noether-Theorem).</para>
   </section>
 
-  <section xml:id="sec.vl14-konservative-systeme">
-    <title>6. Konservative Systeme</title>
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
 
-    <formalpara xml:id="vl14-def-konservativ">
-      <title>Definition</title>
-      <para>Ein System heißt konservativ, wenn <inlineequation><alt>$E := T + V = \text{const}$</alt></inlineequation>.</para>
+  <section xml:id="sec.konservative-systeme">
+    <title>Konservative Systeme</title>
+
+    <formalpara role="definition" xml:id="def.konservativ">
+      <title>Definition: Konservatives System</title>
+      <para>Ein mechanisches System heißt <emphasis role="bold">konservativ</emphasis>, wenn die
+        Gesamtenergie <inlineequation><alt>$E := T + V = \text{const.}$</alt></inlineequation>
+        entlang jeder Lösung der Bewegungsgleichungen erhalten bleibt.</para>
     </formalpara>
 
-    <formalpara xml:id="vl14-satz-konservativ">
-      <title>Satz</title>
-      <para>Ein System ist konservativ, wenn (1) <inlineequation><alt>$\vec{f}_{NP} = 0$</alt></inlineequation>, (2) <inlineequation><alt>$T$</alt></inlineequation> und <inlineequation><alt>$V$</alt></inlineequation> nicht explizit von <inlineequation><alt>$t$</alt></inlineequation> abhängen, (3) <inlineequation><alt>$T = \frac{1}{2}\,\dot{\vec{q}}^T M(\vec{q})\,\dot{\vec{q}}$</alt></inlineequation> quadratisch in <inlineequation><alt>$\dot{\vec{q}}$</alt></inlineequation> ist.</para>
+    <formalpara role="theorem" xml:id="thm.konservativ">
+      <title>Satz: Hinreichende Bedingungen für Energieerhaltung</title>
+      <para>Ein System ist konservativ, wenn die folgenden drei Bedingungen gleichzeitig
+        erfüllt sind: (1) Es wirken keine Nichtpotentialkräfte
+        (<inlineequation><alt>$\vec{f}_{NP} = 0$</alt></inlineequation>). (2) Die kinetische
+        und potentielle Energie hängen nicht explizit von der Zeit ab. (3) Die kinetische
+        Energie ist eine rein quadratische Form in den generalisierten Geschwindigkeiten:
+        <inlineequation><alt>$T = \frac{1}{2}\,\dot{\vec{q}}^T M(\vec{q})\,\dot{\vec{q}}$</alt></inlineequation>.</para>
     </formalpara>
+
+    <para>Die dritte Bedingung ist genau dann erfüllt, wenn die Bindungen skleronom (zeitunabhängig)
+      sind. Bei rheonomen Bindungen kann selbst in Abwesenheit von Nichtpotentialkräften Energie
+      zu- oder abgeführt werden.</para>
   </section>
 
 </chapter>
