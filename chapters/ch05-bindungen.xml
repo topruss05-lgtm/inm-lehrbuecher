@@ -1,0 +1,158 @@
+<chapter xmlns="http://docbook.org/ns/docbook"
+         xmlns:xlink="http://www.w3.org/1999/xlink"
+         version="5.0"
+         xml:lang="de"
+         xml:id="ch.ideale-bilaterale-bindungen">
+  <title>Ideale Bilaterale Bindungen</title>
+
+  <!-- ── VL15 (Kap5) ────────────────────────────────────────────────── -->
+
+  <section xml:id="sec.vl15kap5-klassifizierung-von-bindungen">
+    <title>1. Klassifizierung von Bindungen</title>
+
+    <table xml:id="tab.vl15kap5-klassifizierung">
+      <title>Klassifizierung von Bindungen</title>
+      <tgroup cols="3">
+        <thead>
+          <row><entry/><entry>skleronom</entry><entry>rheonom</entry></row>
+        </thead>
+        <tbody>
+          <row>
+            <entry>geometrisch</entry>
+            <entry><inlineequation><alt>$g(\vec{q}) = 0$</alt></inlineequation></entry>
+            <entry><inlineequation><alt>$g(\vec{q}, t) = 0$</alt></inlineequation></entry>
+          </row>
+          <row>
+            <entry>kinematisch</entry>
+            <entry><inlineequation><alt>$\vec{w}^T(\vec{q})\,\dot{\vec{q}} = 0$</alt></inlineequation></entry>
+            <entry><inlineequation><alt>$\vec{w}^T(\vec{q}, t)\,\dot{\vec{q}} + \chi(\vec{q}, t) = 0$</alt></inlineequation></entry>
+          </row>
+        </tbody>
+      </tgroup>
+    </table>
+
+    <para>Holonome Bindung: geometrische und elementar integrierbare kinematische. Nichtholonome Bindung: nicht elementar auf Lageebene integrierbare.</para>
+
+    <para>Mehrere geometrische Bindungen: <inlineequation><alt>$\vec{g}(\vec{q}, t) = 0$</alt></inlineequation>. Mehrere kinematische Bindungen: <inlineequation><alt>$W^T(\vec{q}, t)\,\dot{\vec{q}} + \vec{\chi}(\vec{q}, t) = 0$</alt></inlineequation>.</para>
+  </section>
+
+  <section xml:id="sec.vl15kap5-ueberfuehrung-bindungen">
+    <title>Überführung von Bindungen zwischen Ebenen</title>
+
+    <para>Geometrische auf Geschwindigkeitsebene: <inlineequation><alt>$\dot{\vec{g}} = \frac{\partial \vec{g}}{\partial \vec{q}}\,\dot{\vec{q}} + \frac{\partial \vec{g}}{\partial t} = 0$</alt></inlineequation></para>
+
+    <para>Geschwindigkeits- auf Beschleunigungsebene: <inlineequation><alt>$\dot{\vec{\gamma}} = W^T\,\ddot{\vec{q}} + \dot{W}^T\,\dot{\vec{q}} + \dot{\vec{\chi}} = 0$</alt></inlineequation></para>
+  </section>
+
+  <!-- ── VL16 (Kap5) ────────────────────────────────────────────────── -->
+
+  <section xml:id="sec.vl16kap5-einschub-lineare-algebra">
+    <title>2. Einschub Lineare Algebra</title>
+
+    <para>Kern, Bild, Rang einer linearen Abbildung. Dimensionsformel: <inlineequation><alt>$\dim V = \dim \operatorname{Kern}(A) + \dim \operatorname{Im}(A)$</alt></inlineequation>.</para>
+
+    <formalpara xml:id="vl16kap5-def-annihilatorraum">
+      <title>Definition: Annihilatorraum</title>
+      <para><inlineequation><alt>$U^0 := \{\vec{\alpha} \in \mathbb{R}^f \mid \vec{v}^T \vec{\alpha} = 0, \;\forall \vec{v} \in U\}$</alt></inlineequation>. Es gilt: <inlineequation><alt>$\dim \mathbb{R}^f = \dim U + \dim U^0$</alt></inlineequation>.</para>
+    </formalpara>
+  </section>
+
+  <section xml:id="sec.vl16kap5-vertraegliche-virtuelle-verschiebungen">
+    <title>3. Verträgliche virtuelle Verschiebungen</title>
+
+    <formalpara xml:id="vl16kap5-def-vertraegliche-verschiebungen">
+      <title>Definition</title>
+      <para>Der Unterraum verträglicher virtueller Verschiebungen ist <inlineequation><alt>$V_\mathrm{vertr.} = \operatorname{Kern}(W^T)$</alt></inlineequation>.</para>
+    </formalpara>
+  </section>
+
+  <section xml:id="sec.vl16kap5-ideale-bindungen">
+    <title>4. Ideale Bindungen</title>
+
+    <formalpara xml:id="vl16kap5-def-ideale-bindung">
+      <title>Definition</title>
+      <para>Eine zweiseitige Bindung ist ideal, falls <inlineequation><alt>$\delta W^z = \delta\vec{q}^T\vec{f}^z = 0 \quad \forall\,\delta\vec{q} \in V_\mathrm{vertr.}$</alt></inlineequation> (Prinzip von d'Alembert-Lagrange).</para>
+    </formalpara>
+
+    <formalpara xml:id="vl16kap5-satz-ideale-bindungen">
+      <title>Satz</title>
+      <para>Ein Satz von <inlineequation><alt>$m$</alt></inlineequation> Bindungen ist genau dann ideal, wenn <inlineequation><alt>$\vec{f}^z = W\vec{\lambda}$</alt></inlineequation>, d.h. <inlineequation><alt>$V_\mathrm{vertr.}^0 = \operatorname{Im} W$</alt></inlineequation>.</para>
+    </formalpara>
+  </section>
+
+  <!-- ── VL17 ────────────────────────────────────────────────────────── -->
+
+  <section xml:id="sec.vl17-lagrange-1-art">
+    <title>Lagrangesche Gleichungen 1. Art</title>
+
+    <equation xml:id="eq.vl17-lagrange1">
+      <alt>\[ M(\vec{q},t)\,\ddot{\vec{q}} - \vec{h}(\vec{q},\dot{\vec{q}},t) - W(\vec{q},t)\,\vec{\lambda} = 0, \qquad \vec{g}(\vec{q},t) = 0 \]</alt>
+    </equation>
+
+    <para>Lagrange 1788. Dies ist ein differentialalgebraisches System (DAE) vom Index 3.</para>
+
+    <section xml:id="sec.vl17-index-reduktion-geschw">
+      <title>Überführung auf Geschwindigkeitsebene (Index 2)</title>
+      <informalequation><alt>\[ M\,\ddot{\vec{q}} - \vec{h} - W\,\vec{\lambda} = 0, \qquad W^T\,\dot{\vec{q}} + \vec{\chi} = 0 \]</alt></informalequation>
+    </section>
+
+    <section xml:id="sec.vl17-index-reduktion-beschl">
+      <title>Übergang auf Beschleunigungsebene (Index 1)</title>
+      <informalequation><alt>\[ M\,\ddot{\vec{q}} - \vec{h} - W\,\vec{\lambda} = 0, \qquad W^T\,\ddot{\vec{q}} + \vec{\bar{s}} = 0 \]</alt></informalequation>
+    </section>
+
+    <section xml:id="sec.vl17-berechnung-qddot-lambda">
+      <title>Berechnung von <inlineequation><alt>$\ddot{\vec{q}}$</alt></inlineequation> und <inlineequation><alt>$\vec{\lambda}$</alt></inlineequation></title>
+
+      <para>Als lineares Gleichungssystem:</para>
+      <informalequation><alt>\[ \begin{pmatrix} M &amp; -W \\ W^T &amp; 0 \end{pmatrix} \begin{pmatrix} \ddot{\vec{q}} \\ \vec{\lambda} \end{pmatrix} = \begin{pmatrix} \vec{h} \\ -\vec{\bar{s}} \end{pmatrix} \]</alt></informalequation>
+
+      <para>Oder: <inlineequation><alt>$G\vec{\lambda} + \vec{\eta} = 0$</alt></inlineequation> mit <inlineequation><alt>$G = W^T M^{-1} W$</alt></inlineequation>, <inlineequation><alt>$\vec{\lambda} = -G^{-1}\vec{\eta}$</alt></inlineequation>.</para>
+    </section>
+  </section>
+
+  <section xml:id="sec.vl17-minimalkoordinaten">
+    <title>5. Übergang auf neue Minimalkoordinaten</title>
+
+    <para>Wähle <inlineequation><alt>$\vec{z} \in \mathbb{R}^n$</alt></inlineequation> (<inlineequation><alt>$n = f - \operatorname{Rg} W$</alt></inlineequation>) so, dass mit <inlineequation><alt>$\vec{q} = \vec{q}(\vec{z}, t)$</alt></inlineequation> die Bindungen identisch erfüllt sind.</para>
+
+    <informalequation><alt>\[ \dot{\vec{q}} = B(\vec{z},t)\,\dot{\vec{z}} + \vec{\beta}(\vec{z},t), \qquad B = \frac{\partial \vec{q}}{\partial \vec{z}} \]</alt></informalequation>
+
+    <para>Projizierte Gleichungen:</para>
+    <equation xml:id="eq.vl18-proj-gesperrt">
+      <alt>\[ \underbrace{B^T M B}_{\tilde{M}}\,\ddot{\vec{z}} - \underbrace{(B^T \bar{h} - B^T M \dot{\nu})}_{\tilde{h}} = 0 \]</alt>
+    </equation>
+  </section>
+
+  <!-- ── VL18 ────────────────────────────────────────────────────────── -->
+
+  <section xml:id="sec.vl18-uebergang-neue-minimalgeschwindigkeiten">
+    <title>6. Übergang auf neue Minimalgeschwindigkeiten</title>
+
+    <para>Wähle <inlineequation><alt>$\vec{u} \in \mathbb{R}^n$</alt></inlineequation> so, dass mit <inlineequation><alt>$\dot{\vec{q}} = B(\vec{q}, t)\,\vec{u} + \vec{\beta}(\vec{q}, t)$</alt></inlineequation> die Bindungen identisch erfüllt sind.</para>
+
+    <para>Resultierende Gleichungen:</para>
+
+    <equation xml:id="eq.vl18-kinematik">
+      <alt>\[ \dot{\vec{q}} = B(\vec{q}, t)\,\vec{u} + \vec{\beta}(\vec{q}, t) \]</alt>
+    </equation>
+
+    <equation xml:id="eq.vl18-kinetik">
+      <alt>\[ \tilde{M}(\vec{q}, t)\,\dot{\vec{u}} - \tilde{h}(\vec{q}, \vec{u}, t) = 0 \]</alt>
+    </equation>
+
+    <para>Als System erster Ordnung:</para>
+    <equation xml:id="eq.vl18-zustandsform">
+      <alt>\[ \dot{\vec{x}} = \vec{f}(\vec{x}, t) \]</alt>
+    </equation>
+  </section>
+
+  <section xml:id="sec.vl18-anwendung-projizierte-ne">
+    <title>Anwendung auf projizierte Newton-Euler Gleichungen</title>
+
+    <para>Auswertung: Berechne <inlineequation><alt>$\vec{v}_P(\vec{q}, \vec{u}, t)$</alt></inlineequation> und <inlineequation><alt>$\vec{\Omega}(\vec{q}, \vec{u}, t)$</alt></inlineequation>, klammere <inlineequation><alt>$\vec{u}$</alt></inlineequation> aus, lese <inlineequation><alt>$\tilde{J}$</alt></inlineequation> ab, bestimme <inlineequation><alt>$\dot{\vec{p}}$</alt></inlineequation> und <inlineequation><alt>$\dot{\vec{N}}_S$</alt></inlineequation>.</para>
+
+    <para>Derselbe Übergang auf neue Minimalgeschwindigkeiten kann auch auf die Hamel-Boltzmann Gleichungen angewendet werden.</para>
+  </section>
+
+</chapter>

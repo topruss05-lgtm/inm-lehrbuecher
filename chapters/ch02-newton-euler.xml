@@ -1,0 +1,184 @@
+<chapter xmlns="http://docbook.org/ns/docbook"
+         xmlns:xlink="http://www.w3.org/1999/xlink"
+         version="5.0"
+         xml:lang="de"
+         xml:id="ch.projizierte-newton-euler">
+  <title>Projizierte Newton-Euler-Gleichungen</title>
+
+  <!-- ── VL6 ─────────────────────────────────────────────────────────── -->
+
+  <section xml:id="sec.vl6-einfuehrung">
+    <title>1. Einführung</title>
+
+    <para>Gesucht: Bewegungsgleichungen für Mehrkörpersysteme (MKS) aus <inlineequation><alt>$n$</alt></inlineequation> starren Körpern mit <inlineequation><alt>$f$</alt></inlineequation> Freiheitsgraden unter idealen zweiseitigen zeitabhängigen Bindungen auf Lageebene, das über Minimalkoordinaten <inlineequation><alt>$\vec{q}(t) \in \mathbb{R}^f$</alt></inlineequation> beschrieben wird.</para>
+
+    <figure xml:id="fig.vl6-methodik-skizze">
+      <title>Methodik: Vom MKS zu den Bewegungsgleichungen</title>
+      <mediaobject><textobject><phrase>Mehrkörpersystem mit zwei Körpern S_1 und S_2, verbunden durch Drehgelenke. Generalisierte Koordinaten alpha und beta. Darstellung der körperfesten Koordinatensysteme und des Inertialsystems.</phrase></textobject></mediaobject>
+    </figure>
+  </section>
+
+  <section xml:id="sec.vl6-virtuelle-verschiebungen">
+    <title>2. Virtuelle Verschiebungen</title>
+
+    <formalpara role="definition" xml:id="def.vl6-virtuelle-verschiebungen">
+      <title>Definition: Virtuelle Verschiebungen</title>
+      <para>Virtuelle Verschiebungen sind Differenzen von gedachter beliebig benachbarter generalisierter Lage <inlineequation><alt>$\vec{q}^*$</alt></inlineequation> und tatsächlicher Lage <inlineequation><alt>$\vec{q}$</alt></inlineequation> bei festgehaltener Zeit <inlineequation><alt>$t$</alt></inlineequation>.</para>
+    </formalpara>
+
+    <equation xml:id="eq.vl6-virtuelle-verschiebung">
+      <alt>\[\delta\vec{q}(t) := \hat{\vec{q}}_\varepsilon(\varepsilon_0, t)\,\delta\varepsilon\]</alt>
+    </equation>
+
+    <para>Eigenschaften: (i) infinitesimal klein, (ii) bei festgehaltener Zeit, (iii) beliebig in ihrer Richtung.</para>
+  </section>
+
+  <section xml:id="sec.vl6-virtuelle-arbeit">
+    <title>Virtuelle Arbeit</title>
+
+    <para>Die virtuelle Arbeit ist ein lineares Funktional:</para>
+    <informalequation><alt>\[\delta W_F(\delta\vec{r}_P) = \vec{F} \cdot \delta\vec{r}_P, \qquad \delta W_M(\delta\vec{\phi}) = \vec{M} \cdot \delta\vec{\phi}, \qquad \delta W_f(\delta\vec{q}) = \vec{f}^{\,T} \delta\vec{q}\]</alt></informalequation>
+  </section>
+
+  <!-- ── VL7 ─────────────────────────────────────────────────────────── -->
+
+  <section xml:id="sec.vl7-wiederholung-eulersche-differentiationsregel">
+    <title>3. Wiederholung der Euler'schen Differentiationsregel</title>
+
+    <para>Koordinatensysteme: I (Inertial), K (Körperfest), B (beliebig).</para>
+
+    <para>Drehgeschwindigkeiten: <inlineequation><alt>${}_B \tilde{\omega}_{BD} = \dot{A}_{BD}\; A_{BD}^{T}$</alt></inlineequation></para>
+
+    <equation xml:id="eq.vl7-eulersche-diff-regel">
+      <alt>\[ {}_B(\dot{\vec{c}}) = ({}_B \vec{c})^{\boldsymbol{\cdot}} + {}_B \tilde{\omega}_{IB} \times {}_B \vec{c} \]</alt>
+    </equation>
+  </section>
+
+  <section xml:id="sec.vl7-wiederholung-starrkoerperkinematik">
+    <title>4. Wiederholung Starrkörperkinematik</title>
+
+    <equation xml:id="eq.vl7-geschwindigkeit-starr">
+      <alt>\[ \vec{v}_Q = \vec{v}_P + \vec{\Omega} \times \vec{r}_{PQ} \]</alt>
+    </equation>
+
+    <equation xml:id="eq.vl7-beschleunigung-starr">
+      <alt>\[ \vec{a}_Q = \vec{a}_P + \vec{\Psi} \times \vec{r}_{PQ} + \vec{\Omega} \times (\vec{\Omega} \times \vec{r}_{PQ}) \]</alt>
+    </equation>
+  </section>
+
+  <!-- ── VL8 ─────────────────────────────────────────────────────────── -->
+
+  <section xml:id="sec.vl8-virtuelle-starrkoerperverschiebungen">
+    <title>5. Virtuelle Starrkörperverschiebungen</title>
+
+    <equation xml:id="eq.vl8-virtuelle-verschiebung-stern">
+      <alt>\[ \delta\vec{r}_Q = \delta\vec{r}_P + \delta\vec{\phi} \times \vec{r}_{PQ} \]</alt>
+    </equation>
+
+    <para>wobei <inlineequation><alt>$\delta\vec{\phi}$</alt></inlineequation> die virtuelle Starrkörperverdrehung ist.</para>
+  </section>
+
+  <section xml:id="sec.vl8-wiederholung-starrkoerperkinetik">
+    <title>6. Wiederholung Starrkörperkinetik</title>
+
+    <para>Newton-Euler-Gleichungen:</para>
+
+    <equation xml:id="eq.vl8-impulssatz">
+      <title>Impulssatz</title>
+      <alt>\[ m \cdot \vec{a}_S = \vec{F}^{a,K} \]</alt>
+    </equation>
+
+    <equation xml:id="eq.vl8-drallsatz">
+      <title>Drallsatz</title>
+      <alt>\[ \bar{\Theta}_P\,\vec{\Psi} + \vec{\Omega} \times \bar{\Theta}_P\,\vec{\Omega} + m\,\vec{r}_{PS} \times \vec{a}_P = \vec{M}_P^{a,K} \]</alt>
+    </equation>
+  </section>
+
+  <!-- ── VL9 ─────────────────────────────────────────────────────────── -->
+
+  <section xml:id="sec.vl9-prinzipien-der-mechanik">
+    <title>7. Prinzipien der Mechanik</title>
+
+    <formalpara xml:id="vl9-axiom-I">
+      <title>Axiom I: Prinzip der virtuellen Arbeit (PvA)</title>
+      <para><inlineequation><alt>$\delta W = \int_{S} \delta\vec{s} \cdot (\mathrm{d}\vec{F} - \ddot{\vec{s}}\,\mathrm{d}m) \doteq 0 \quad \forall\,\delta\vec{s},\;\forall\,t$</alt></inlineequation></para>
+    </formalpara>
+
+    <formalpara xml:id="vl9-axiom-II">
+      <title>Axiom II: Variationelles Wechselwirkungsprinzip (vWwP)</title>
+      <para><inlineequation><alt>$\delta W^{i,K} = \int_{K} \delta\vec{s}_{\mathrm{rg}}\cdot\mathrm{d}\vec{F}^{i,K} \doteq 0 \quad \forall\,\delta\vec{s}_{\mathrm{rg}},\;\forall\,K \in \mathcal{S}$</alt></inlineequation></para>
+    </formalpara>
+  </section>
+
+  <section xml:id="sec.vl9-impuls-drallsatz-pvA">
+    <title>8. Impuls- und Drallsatz über PvA</title>
+
+    <para>Aus PvA + vWwP folgen für Starrkörper-Subsysteme Impuls- und Drallsatz.</para>
+  </section>
+
+  <section xml:id="sec.vl9-minimalkoordinaten">
+    <title>9. Minimalkoordinaten</title>
+
+    <formalpara xml:id="vl9-def-bindung">
+      <title>Definition: Bindung</title>
+      <para>Eine Bindung ist eine Einschränkung der Bewegungsfreiheit zusammen mit Kräften, die diese unter allen Umständen realisieren können.</para>
+    </formalpara>
+
+    <formalpara xml:id="vl9-def-ideale-bindung">
+      <title>Definition: Ideale Bindung</title>
+      <para>Eine Bindung heißt ideal, wenn die Bindungskräfte unter allen verträglichen virtuellen Verschiebungen keine virtuelle Arbeit erbringen.</para>
+    </formalpara>
+  </section>
+
+  <!-- ── VL10 ────────────────────────────────────────────────────────── -->
+
+  <section xml:id="sec.vl10-kinematik-starrer-mks">
+    <title>10. Kinematik starrer MKS in Minimalkoordinaten</title>
+
+    <formalpara xml:id="vl10-def-minimalkoordinaten">
+      <title>Definition: Minimalkoordinaten</title>
+      <para>Ein minimaler Satz von <inlineequation><alt>$f$</alt></inlineequation> Koordinaten <inlineequation><alt>$\vec{q}(t) \in \mathbb{R}^f$</alt></inlineequation>, mit dem die Lagen aller Punkte eindeutig beschrieben werden können.</para>
+    </formalpara>
+
+    <para>Translation:</para>
+    <equation xml:id="eq.vl10-geschwindigkeit-translation">
+      <alt>\[ {}_I\vec{v}_P = {}_I\bar{J}_P\, \dot{\vec{q}} + {}_I\bar{v}_P, \qquad {}_I\delta\vec{r}_P = {}_I\bar{J}_P\, \delta\vec{q}, \qquad {}_I\vec{a}_P = {}_I\bar{J}_P\, \ddot{\vec{q}} + {}_I\bar{h}_P \]</alt>
+    </equation>
+
+    <para>Rotation:</para>
+    <equation xml:id="eq.vl10-winkelgeschwindigkeit">
+      <alt>\[ {}_I\vec{\Omega} = {}_I\bar{J}_R\, \dot{\vec{q}} + {}_I\bar{v}_R, \qquad {}_I\delta\vec{\Phi} = {}_I\bar{J}_R\, \delta\vec{q}, \qquad {}_I\vec{\Psi} = {}_I\bar{J}_R\, \ddot{\vec{q}} + {}_I\bar{h}_R \]</alt>
+    </equation>
+  </section>
+
+  <!-- ── VL11 ────────────────────────────────────────────────────────── -->
+
+  <section xml:id="sec.vl11-projizierte-newton-euler-gleichung">
+    <title>11. Projizierte Newton-Euler Gleichungen</title>
+
+    <para>Gegeben: MKS aus <inlineequation><alt>$n$</alt></inlineequation> starren Körpern mit <inlineequation><alt>$f$</alt></inlineequation> Freiheitsgraden unter idealen Lagebindungen.</para>
+
+    <para>Über PvA mit verträglichen virtuellen Verschiebungen:</para>
+
+    <equation xml:id="eq.vl11-projizierte-NE">
+      <alt>\[ 0 = \sum_{j=1}^{n} \bigl[ \bar{J}_S^T \, \dot{\vec{p}} + \bar{J}_R^T \, (\dot{\vec{L}}_O + \vec{r}_{PO} \times \dot{\vec{p}}) - \bar{J}_Q^T \, \vec{F}^a - \bar{J}_R^T \, \vec{M}_Q^a \bigr]_j \]</alt>
+    </equation>
+
+    <para>Struktur: <inlineequation><alt>$M\ddot{\vec{q}} + \bar{g} - \bar{f} = 0$</alt></inlineequation> mit <inlineequation><alt>$M = M^T$</alt></inlineequation> symmetrisch und positiv definit.</para>
+  </section>
+
+  <section xml:id="sec.vl11-passive-aktive-kraefte">
+    <title>Passive und aktive Kräfte</title>
+
+    <para>Passive Kräfte <inlineequation><alt>$\vec{f}^P$</alt></inlineequation> erbringen keine virtuelle Arbeit für beliebige verträgliche Verschiebungen. In den projizierten Gleichungen sind nur aktive Kräfte zu berücksichtigen.</para>
+  </section>
+
+  <!-- ── VL12 (Kap2) ────────────────────────────────────────────────── -->
+
+  <section xml:id="sec.vl12kap2-klassifizierung-kraefte">
+    <title>Klassifizierung von Kräften</title>
+
+    <para>Aktive Kräfte: eingeprägte Kräfte (mit Kraftgesetzen). Passive Kräfte: Zwangskräfte (werden rausprojiziert).</para>
+  </section>
+
+</chapter>

@@ -1,0 +1,9 @@
+{
+  "name": "dynamik-preview",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "mkdir -p build && /usr/bin/xsltproc --xinclude -o build/index.html docbook2html.xsl book.xml",
+    "preview": "node server.mjs"
+  }
+}

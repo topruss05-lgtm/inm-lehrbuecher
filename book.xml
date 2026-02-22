@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<book xmlns="http://docbook.org/ns/docbook"
+      xmlns:xi="http://www.w3.org/2001/XInclude"
+      xmlns:xlink="http://www.w3.org/1999/xlink"
+      version="5.0"
+      xml:lang="de">
+
+  <xi:include href="book-info.xml"/>
+
+  <xi:include href="chapters/ch01-variationsrechnung.xml"/>
+  <xi:include href="chapters/ch02-newton-euler.xml"/>
+  <xi:include href="chapters/ch03-lagrange.xml"/>
+  <xi:include href="chapters/ch04-kraftgesetze.xml"/>
+  <xi:include href="chapters/ch05-bindungen.xml"/>
+
+</book>

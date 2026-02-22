@@ -1,0 +1,114 @@
+<chapter xmlns="http://docbook.org/ns/docbook"
+         xmlns:xlink="http://www.w3.org/1999/xlink"
+         version="5.0"
+         xml:lang="de"
+         xml:id="ch.lagrangesche-dynamik">
+  <title>Lagrange'sche Dynamik</title>
+
+  <!-- ── VL12 (Kap3) ────────────────────────────────────────────────── -->
+
+  <section xml:id="sec.vl12kap3-einfuehrung">
+    <title>1. Einführung</title>
+
+    <para>Gesucht: Bewegungsgleichungen für Systeme mit <inlineequation><alt>$f$</alt></inlineequation> Freiheitsgraden unter idealen bilateralen holonomen rheonomen Bindungen. Das System <inlineequation><alt>$S$</alt></inlineequation> darf sich zusammensetzen aus starren Körpern, Punktmassen und diskretisierten Kontinuen.</para>
+  </section>
+
+  <section xml:id="sec.vl12kap3-zentralgleichung-lagrange2">
+    <title>2. Zentralgleichung und Lagrange II</title>
+
+    <para>Lagrange'sche Zentralgleichung:</para>
+
+    <equation xml:id="eq.vl12kap3-zentralgleichung">
+      <alt>\[ \delta W = \int_S \delta \vec{s} \cdot d\vec{F} + \delta T - \left( \int_S \delta \vec{s} \cdot \dot{\vec{s}} \, dm \right)^\cdot = 0 \quad \forall\, \delta \vec{s} \]</alt>
+    </equation>
+
+    <para>Für Minimalkoordinaten mit <inlineequation><alt>$\delta\dot{q}$</alt></inlineequation>-<inlineequation><alt>$d$</alt></inlineequation>-Vertauschung folgt:</para>
+
+    <equation xml:id="eq.vl12kap3-lagrange2-vorlaeufig">
+      <alt>\[ \frac{d}{dt}\left(\frac{\partial T}{\partial \dot{\vec{q}}}\right)^T - \left(\frac{\partial T}{\partial \vec{q}}\right)^T = \vec{f} \]</alt>
+    </equation>
+
+    <formalpara xml:id="vl12kap3-def-potentialkraft">
+      <title>Definition: Potentialkraft</title>
+      <para>Eine aktive Kraft heißt Potentialkraft, falls <inlineequation><alt>$-\vec{f}_{\mathrm{pot}} = \left(\frac{\partial V}{\partial \vec{q}}\right)^T$</alt></inlineequation> mit Potential <inlineequation><alt>$V(\vec{q},t)$</alt></inlineequation>.</para>
+    </formalpara>
+
+    <equation xml:id="eq.vl12kap3-lagrange2">
+      <alt>\[ \frac{d}{dt}\left(\frac{\partial T}{\partial \dot{\vec{q}}}\right)^T - \left(\frac{\partial T}{\partial \vec{q}}\right)^T + \left(\frac{\partial V}{\partial \vec{q}}\right)^T = \vec{f}_{\mathrm{NP}} \]</alt>
+    </equation>
+
+    <para>Lagrange'sche Gleichungen 2. Art (Lagrange 1780/1788).</para>
+  </section>
+
+  <!-- ── VL13 ────────────────────────────────────────────────────────── -->
+
+  <section xml:id="sec.vl13-anwendung-lagrange-II-auf-mks">
+    <title>3. Anwendung von Lagrange II auf MKS</title>
+
+    <para>Kinetische Energie des Starrkörpers:</para>
+
+    <informalequation><alt>\[ T = \frac{1}{2}\, m\, \vec{v}_S^T\vec{v}_S + \frac{1}{2}\, \vec{\Omega}^T\, \bar{\Theta}_S\, \vec{\Omega} \]</alt></informalequation>
+
+    <para>Schwerepotential: <inlineequation><alt>$V = -m\, \vec{r}_{OS} \cdot \vec{g}$</alt></inlineequation></para>
+
+    <para>Nichtpotentialkräfte über Jacobi-Matrizen:</para>
+
+    <equation xml:id="eq.vl13-nichtpotentialkraefte">
+      <alt>\[ \vec{f}_{NP} = J_Q^T\, \vec{F} + J_R^T\, \vec{M} \]</alt>
+    </equation>
+
+    <para>Bilde <inlineequation><alt>$T = \sum_j T_j$</alt></inlineequation>, <inlineequation><alt>$V = \sum_k V_k$</alt></inlineequation>, <inlineequation><alt>$\vec{f}_{NP} = \sum_l \vec{f}_{NP,l}$</alt></inlineequation> und führe jede Koordinate aus.</para>
+  </section>
+
+  <section xml:id="sec.vl13-hamel-boltzmann-gleichung">
+    <title>4. Hamel-Boltzmann-Gleichung</title>
+
+    <para>Reparametrisierung mit Minimalgeschwindigkeiten <inlineequation><alt>$\vec{v}$</alt></inlineequation>: <inlineequation><alt>$\dot{\vec{q}} = B(\vec{q}, t)\,\vec{v} + \vec{\beta}(\vec{q}, t)$</alt></inlineequation></para>
+
+    <para>Übergangsgleichung (Hamel):</para>
+    <equation xml:id="eq.vl13-uebergangsgleichung">
+      <alt>\[ (\delta\vec{s})^\cdot - \delta\vec{v} = C(\vec{q}, \vec{v}, t)\,\delta\vec{s} \]</alt>
+    </equation>
+
+    <para>Hamel-Boltzmann-Gleichung:</para>
+    <equation xml:id="eq.vl13-hamel-boltzmann-endform">
+      <alt>\[ \frac{d}{dt}\!\left(\frac{\partial \bar{T}}{\partial \vec{v}}\right)^T - B^T\!\left(\frac{\partial T}{\partial \dot{\vec{q}}}\right)^T + C^T\!\left(\frac{\partial \bar{T}}{\partial \vec{v}}\right)^T = B^T\, \vec{f} \]</alt>
+    </equation>
+
+    <para>Volterra (1898), Hamel (1904), Boltzmann (1902).</para>
+  </section>
+
+  <!-- ── VL14 ────────────────────────────────────────────────────────── -->
+
+  <section xml:id="sec.vl14-prinzip-von-hamilton">
+    <title>5. Prinzip von Hamilton</title>
+
+    <para>Ist <inlineequation><alt>$\vec{f}_{NP} = 0$</alt></inlineequation>, so ergeben mit der Lagrange-Funktion <inlineequation><alt>$L = T - V$</alt></inlineequation> die Euler-Gleichungen des Variationsproblems</para>
+
+    <equation xml:id="eq.vl14-hamilton-prinzip">
+      <alt>\[ I(\vec{q}) = \int_{t_0}^{t_1} (T - V)\,dt \to \text{stat.} \]</alt>
+    </equation>
+
+    <para>die Lagrange'schen Gleichungen 2. Art (Prinzip von Hamilton, 1835).</para>
+
+    <formalpara xml:id="vl14-def-zyklische-koordinate">
+      <title>Definition: Zyklische Koordinate</title>
+      <para>Eine Koordinate <inlineequation><alt>$q_k$</alt></inlineequation> heißt zyklisch, wenn <inlineequation><alt>$L$</alt></inlineequation> nicht explizit von <inlineequation><alt>$q_k$</alt></inlineequation> abhängt. Dann ist der generalisierte Impuls <inlineequation><alt>$\pi_k := \frac{\partial T}{\partial \dot{q}_k} = \text{const.}$</alt></inlineequation></para>
+    </formalpara>
+  </section>
+
+  <section xml:id="sec.vl14-konservative-systeme">
+    <title>6. Konservative Systeme</title>
+
+    <formalpara xml:id="vl14-def-konservativ">
+      <title>Definition</title>
+      <para>Ein System heißt konservativ, wenn <inlineequation><alt>$E := T + V = \text{const}$</alt></inlineequation>.</para>
+    </formalpara>
+
+    <formalpara xml:id="vl14-satz-konservativ">
+      <title>Satz</title>
+      <para>Ein System ist konservativ, wenn (1) <inlineequation><alt>$\vec{f}_{NP} = 0$</alt></inlineequation>, (2) <inlineequation><alt>$T$</alt></inlineequation> und <inlineequation><alt>$V$</alt></inlineequation> nicht explizit von <inlineequation><alt>$t$</alt></inlineequation> abhängen, (3) <inlineequation><alt>$T = \frac{1}{2}\,\dot{\vec{q}}^T M(\vec{q})\,\dot{\vec{q}}$</alt></inlineequation> quadratisch in <inlineequation><alt>$\dot{\vec{q}}$</alt></inlineequation> ist.</para>
+    </formalpara>
+  </section>
+
+</chapter>

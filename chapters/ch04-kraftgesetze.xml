@@ -1,0 +1,68 @@
+<chapter xmlns="http://docbook.org/ns/docbook"
+         xmlns:xlink="http://www.w3.org/1999/xlink"
+         version="5.0"
+         xml:lang="de"
+         xml:id="ch.einfache-gen-kraftgesetze">
+  <title>Einfache generalisierte Kraftgesetze</title>
+
+  <!-- ── VL15 (Kap4) ────────────────────────────────────────────────── -->
+
+  <section xml:id="sec.vl15kap4-einfuehrung-eindimensionale-kraftgesetze">
+    <title>1. Einführung: Eindimensionale Kraftgesetze</title>
+
+    <para>Kraftelement <inlineequation><alt>$K$</alt></inlineequation> zwischen Punkten <inlineequation><alt>$P$</alt></inlineequation> und <inlineequation><alt>$Q$</alt></inlineequation>. Generalisierte Kraft:</para>
+
+    <informalequation><alt>\[ \vec{f} = \underbrace{(\bar{J}_Q - \bar{J}_P)^T \vec{n}}_{=:\,\vec{w}} \lambda \]</alt></informalequation>
+
+    <para>mit <inlineequation><alt>$\vec{w}$</alt></inlineequation> = generalisierte Kraftrichtung, <inlineequation><alt>$\lambda$</alt></inlineequation> = skalarer Kraftwert, <inlineequation><alt>$g = \vec{n} \cdot \vec{r}_{PQ}$</alt></inlineequation> = Auslenkung.</para>
+
+    <para>Kinematische Eigenschaft:</para>
+    <equation xml:id="eq.vl15kap4-gdot">
+      <alt>\[ \dot{g} = \vec{w}^T \dot{\vec{q}} + \chi, \qquad \ddot{g} = \vec{w}^T \ddot{\vec{q}} + \xi, \qquad \delta g = \vec{w}^T \delta\vec{q} \]</alt>
+    </equation>
+
+    <equation xml:id="eq.vl15kap4-wT-identitaet">
+      <alt>\[ \vec{w}^T(\vec{q},t) = \frac{\partial g}{\partial \vec{q}} = \frac{\partial \dot{g}}{\partial \dot{\vec{q}}} = \frac{\partial \ddot{g}}{\partial \ddot{\vec{q}}} \]</alt>
+    </equation>
+  </section>
+
+  <section xml:id="sec.vl15kap4-beispiele-einfacher-kraftgesetze">
+    <title>2. Beispiele einfacher Kraftgesetze</title>
+
+    <para>Auf Lageebene (<inlineequation><alt>$-\lambda \in \mathcal{F}(g)$</alt></inlineequation>): Lineare Feder, einseitige/zweiseitige geometrische Bindung.</para>
+
+    <para>Auf Geschwindigkeitsebene (<inlineequation><alt>$-\lambda \in \mathcal{F}(\dot{g})$</alt></inlineequation>): Linearer Dämpfer, einseitige/zweiseitige kinematische Bindung, Coulomb-Reibung.</para>
+  </section>
+
+  <section xml:id="sec.vl15kap4-definition-einfacher-gen-kraefte">
+    <title>3. Definition einfacher generalisierter Kräfte</title>
+
+    <formalpara xml:id="vl15kap4-def-einfache-gen-kraft-lageebene">
+      <title>Definition: Einfache gen. Kraft auf Lageebene</title>
+      <para>Kraft <inlineequation><alt>$\vec{f} = \vec{w}\,\lambda$</alt></inlineequation> mit Auslenkung <inlineequation><alt>$g(\vec{q},t)$</alt></inlineequation> wobei <inlineequation><alt>$\frac{\partial g}{\partial \vec{q}} = \vec{w}^T$</alt></inlineequation> und Kraftgesetz <inlineequation><alt>$-\lambda \in \mathcal{F}(g)$</alt></inlineequation>.</para>
+    </formalpara>
+
+    <formalpara xml:id="vl15kap4-def-einfache-gen-kraft-geschw-ebene">
+      <title>Definition: Einfache gen. Kraft auf Geschwindigkeitsebene</title>
+      <para>Kraft <inlineequation><alt>$\vec{f} = \vec{w}\,\lambda$</alt></inlineequation> mit Auslenkungsgeschwindigkeit <inlineequation><alt>$\gamma = \vec{w}^T\dot{\vec{q}} + \chi$</alt></inlineequation> und Kraftgesetz <inlineequation><alt>$-\lambda \in \mathcal{F}(\gamma)$</alt></inlineequation>.</para>
+    </formalpara>
+
+    <formalpara xml:id="vl15kap4-anmerkung-dissipationsfunktion">
+      <title>Anmerkung: Dissipationsfunktion</title>
+      <para>Eine Funktion <inlineequation><alt>$\Phi(\vec{q},\dot{\vec{q}},t)$</alt></inlineequation> heißt Dissipationsfunktion, falls <inlineequation><alt>$-\vec{f}^T = \frac{\partial \Phi}{\partial \dot{\vec{q}}}$</alt></inlineequation>.</para>
+    </formalpara>
+  </section>
+
+  <!-- ── VL16 (Kap4) ────────────────────────────────────────────────── -->
+
+  <section xml:id="sec.vl16kap4-zusammenfassung">
+    <title>4. Zusammenfassung</title>
+
+    <para>Systeme mit einfachen generalisierten Kräften haben die Form:</para>
+
+    <informalequation><alt>\[ M(\vec{q},t)\,\ddot{\vec{q}} + \vec{g}(\vec{q},\dot{\vec{q}},t) - W(\vec{q},t)\,\vec{\lambda} = 0 \]</alt></informalequation>
+
+    <para>mit <inlineequation><alt>$g_i = g_i(\vec{q},t)$</alt></inlineequation>, <inlineequation><alt>$\dot{g}_i = \vec{w}_i^T\dot{\vec{q}} + \chi_i$</alt></inlineequation> und <inlineequation><alt>$-\lambda_i \in \mathcal{F}(g_i)$</alt></inlineequation> oder <inlineequation><alt>$-\lambda_i \in \mathcal{F}_i(\dot{g}_i)$</alt></inlineequation>.</para>
+  </section>
+
+</chapter>
