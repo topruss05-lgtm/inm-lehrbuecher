@@ -1,0 +1,179 @@
+---
+import type { ContentNode, InlineNode } from '../lib/xml/docbook-ast.js';
+
+interface Props {
+  nodes: ContentNode[];
+}
+
+const { nodes } = Astro.props;
+---
+
+{nodes.map((node) => {
+  if (node.type === 'para') {
+    return (
+      <p>
+        {node.children.map((child: InlineNode) => {
+          if (child.type === 'text') return child.content;
+          if (child.type === 'inline-math') {
+            return <span class="math-inline" data-latex={child.latex}><Fragment set:html={child.html} /></span>;
+          }
+          if (child.type === 'emphasis') {
+            if (child.role === 'bold') return <strong>{child.children.map((c: InlineNode) => c.type === 'text' ? c.content : c.type === 'inline-math' ? <span class="math-inline" data-latex={c.latex}><Fragment set:html={c.html} /></span> : '')}</strong>;
+            if (child.role === 'underline') return <span class="text-underline">{child.children.map((c: InlineNode) => c.type === 'text' ? c.content : c.type === 'inline-math' ? <span class="math-inline" data-latex={c.latex}><Fragment set:html={c.html} /></span> : '')}</span>;
+            if (child.role === 'color-cyan') return <span class="text-color-cyan">{child.children.map((c: InlineNode) => c.type === 'text' ? c.content : c.type === 'inline-math' ? <span class="math-inline" data-latex={c.latex}><Fragment set:html={c.html} /></span> : '')}</span>;
+            return <em>{child.children.map((c: InlineNode) => c.type === 'text' ? c.content : c.type === 'inline-math' ? <span class="math-inline" data-latex={c.latex}><Fragment set:html={c.html} /></span> : '')}</em>;
+          }
+          return '';
+        })}
+      </p>
+    );
+  }
+
+  if (node.type === 'display-math') {
+    return <div class="math-display" data-latex={node.latex}><Fragment set:html={node.html} /></div>;
+  }
+
+  if (node.type === 'numbered-equation') {
+    return (
+      <div class="equation-wrapper" id={node.id}>
+        {node.title && <span class="equation-title">{node.title}</span>}
+        <div class="equation-content" data-latex={node.latex}>
+          <Fragment set:html={node.html} />
+        </div>
+        <span class="equation-number">({node.number})</span>
+      </div>
+    );
+  }
+
+  if (node.type === 'formalpara') {
+    return (
+      <div class={`formalpara fp-${node.role}`} id={node.id || undefined}>
+        <p class="formalpara-title">
+          {node.title.map((t: InlineNode) => {
+            if (t.type === 'text') return t.content;
+            if (t.type === 'inline-math') return <span class="math-inline" data-latex={t.latex}><Fragment set:html={t.html} /></span>;
+            return '';
+          })}
+        </p>
+        <div class="formalpara-body">
+          <Astro.self nodes={node.body} />
+        </div>
+      </div>
+    );
+  }
+
+  if (node.type === 'example') {
+    return (
+      <div class="example-block" id={node.id || undefined}>
+        <p class="example-title">{node.title}</p>
+        <div class="example-body">
+          <Astro.self nodes={node.body} />
+        </div>
+      </div>
+    );
+  }
+
+  if (node.type === 'figure') {
+    return (
+      <figure class="figure-block" id={node.id || undefined}>
+        <div class="figure-placeholder">
+          <p class="figure-description">{node.altText}</p>
+        </div>
+        <figcaption class="figure-caption">
+          <span class="figure-caption-number">Abb. {node.number}: </span>
+          {node.title}
+        </figcaption>
+      </figure>
+    );
+  }
+
+  if (node.type === 'table') {
+    return (
+      <div class="table-wrapper" id={node.id || undefined}>
+        {node.title && <p class="table-caption">{node.title}</p>}
+        <table class="content-table">
+          {node.headers.length > 0 && (
+            <thead>
+              <tr>
+                {node.headers.map((cell: InlineNode[]) => (
+                  <th>
+                    {cell.map((n: InlineNode) => {
+                      if (n.type === 'text') return n.content;
+                      if (n.type === 'inline-math') return <span class="math-inline" data-latex={n.latex}><Fragment set:html={n.html} /></span>;
+                      return '';
+                    })}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+          )}
+          {node.rows.length > 0 && (
+            <tbody>
+              {/* Rows are flattened cells, we need to group them back into rows */}
+              {(() => {
+                const colCount = node.headers.length || 3;
+                const rowGroups: InlineNode[][][] = [];
+                for (let i = 0; i < node.rows.length; i += colCount) {
+                  rowGroups.push(node.rows.slice(i, i + colCount));
+                }
+                return rowGroups.map((row: InlineNode[][]) => (
+                  <tr>
+                    {row.map((cell: InlineNode[]) => (
+                      <td>
+                        {cell.map((n: InlineNode) => {
+                          if (n.type === 'text') return n.content;
+                          if (n.type === 'inline-math') return <span class="math-inline" data-latex={n.latex}><Fragment set:html={n.html} /></span>;
+                          return '';
+                        })}
+                      </td>
+                    ))}
+                  </tr>
+                ));
+              })()}
+            </tbody>
+          )}
+        </table>
+      </div>
+    );
+  }
+
+  if (node.type === 'ordered-list') {
+    return (
+      <ol class="content-ol">
+        {node.items.map((item: ContentNode[]) => (
+          <li><Astro.self nodes={item} /></li>
+        ))}
+      </ol>
+    );
+  }
+
+  if (node.type === 'unordered-list') {
+    return (
+      <ul class="content-ul">
+        {node.items.map((item: ContentNode[]) => (
+          <li><Astro.self nodes={item} /></li>
+        ))}
+      </ul>
+    );
+  }
+
+  if (node.type === 'section') {
+    if (node.depth === 2) {
+      return (
+        <section class="subsection-block" id={node.id}>
+          <h4 class="subsection-heading">
+            {node.title.map((t: InlineNode) => {
+              if (t.type === 'text') return t.content;
+              if (t.type === 'inline-math') return <span class="math-inline" data-latex={t.latex}><Fragment set:html={t.html} /></span>;
+              return '';
+            })}
+          </h4>
+          <Astro.self nodes={node.children} />
+          {node.subsections.map((sub) => <Astro.self nodes={[sub]} />)}
+        </section>
+      );
+    }
+  }
+
+  return null;
+})}

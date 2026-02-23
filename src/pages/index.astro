@@ -1,0 +1,45 @@
+---
+import { resolve } from 'path';
+import { parseBook } from '../lib/xml/parse-book.js';
+import { parseGlossary } from '../lib/xml/parse-glossary.js';
+import BookLayout from '../layouts/BookLayout.astro';
+import ContentRenderer from '../components/ContentRenderer.astro';
+
+const contentDir = resolve(process.cwd(), 'content');
+const book = parseBook(resolve(contentDir, 'book.xml'));
+const glossary = parseGlossary(resolve(contentDir, 'glossary.xml'));
+---
+
+<BookLayout book={book} glossary={glossary}>
+  {book.chapters.map((ch) => (
+    <article class="chapter" id={ch.id}>
+      <h2 class="chapter-heading">
+        <span class="chapter-number">{ch.number}.</span>
+        {ch.title}
+      </h2>
+
+      {/* Chapter preamble */}
+      <ContentRenderer nodes={ch.preamble} />
+
+      {/* Sections */}
+      {ch.sections.map((sec) => (
+        <section class="section-block" id={sec.id}>
+          <h3 class="section-heading">
+            {sec.title.map((t) => {
+              if (t.type === 'text') return t.content;
+              if (t.type === 'inline-math') return <span class="math-inline" data-latex={t.latex}><Fragment set:html={t.html} /></span>;
+              return '';
+            })}
+          </h3>
+
+          <ContentRenderer nodes={sec.children} />
+
+          {/* Subsections */}
+          {sec.subsections.map((sub) => (
+            <ContentRenderer nodes={[sub]} />
+          ))}
+        </section>
+      ))}
+    </article>
+  ))}
+</BookLayout>
