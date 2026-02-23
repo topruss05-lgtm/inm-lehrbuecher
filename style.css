@@ -20,17 +20,30 @@ body {
   line-height: 1.75;
   color: #1a1a1a;
   background: #fff;
+  margin: 0;
+  padding: 0;
+}
+
+/* ─── Layout Wrapper (Sidebar + Main) ──────────────────────────── */
+.layout-wrapper {
+  display: flex;
+  align-items: flex-start;
+  min-height: calc(100vh - 8rem);
+}
+
+main {
+  flex: 1;
+  min-width: 0;
   max-width: 48rem;
-  margin: 0 auto;
-  padding: 2rem 1.5rem 4rem;
+  padding: 2rem 3rem 4rem 2.5rem;
 }
 
 /* ─── Book Header ───────────────────────────────────────────────── */
 .book-header {
   text-align: center;
-  margin-bottom: 3rem;
-  padding-bottom: 2rem;
-  border-bottom: 2px solid #333;
+  margin: 0;
+  padding: 2.5rem 2rem 1.75rem;
+  border-bottom: 2px solid #222;
 }
 
 .book-header h1 {
@@ -48,49 +61,183 @@ body {
   font-style: italic;
 }
 
-/* ─── Table of Contents ─────────────────────────────────────────── */
+/* ─── Sidebar TOC ──────────────────────────────────────────────── */
 .toc {
-  margin: 0 0 3rem;
-  padding: 1.5rem 2rem;
-  background: #fafafa;
-  border: 1px solid #e0e0e0;
-  border-radius: 4px;
+  position: sticky;
+  top: 0;
+  width: 260px;
+  min-width: 260px;
+  max-height: 100vh;
+  flex-shrink: 0;
+  margin: 0;
+  padding: 0;
+  border-right: 1px solid #e5e5e5;
+  font-size: 0.82rem;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 }
 
-.toc h2 {
+/* Glossary button — pinned at top of sidebar, always visible */
+.toc-glossary-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 0.7rem 1.25rem;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid #eee;
+  cursor: pointer;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 1.2rem;
+  font-size: 0.8rem;
   font-weight: 600;
-  margin-bottom: 1rem;
+  color: #1565c0;
+  text-align: left;
+  transition: background 0.15s ease, color 0.15s ease;
+  flex-shrink: 0;
+}
+
+.toc-glossary-btn:hover {
+  background: #f0f5fa;
+  color: #0d47a1;
+}
+
+.toc-glossary-btn svg {
+  flex-shrink: 0;
+}
+
+/* TOC header — clickable toggle */
+.toc-toggle {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 0.55rem 1.25rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  user-select: none;
+  flex-shrink: 0;
+  transition: color 0.15s ease;
+  margin: 0;
+}
+
+.toc-toggle:hover {
   color: #333;
 }
 
-.toc > ol {
-  padding-left: 1.25rem;
-  counter-reset: chapter;
+.toc-toggle .toc-chevron {
+  display: inline-flex;
+  transition: transform 0.2s ease;
 }
 
-.toc > ol > li {
-  margin: 0.5rem 0;
+.toc-toggle.collapsed .toc-chevron {
+  transform: rotate(-90deg);
 }
 
-.toc ol ol {
-  padding-left: 1.25rem;
-  margin-top: 0.25rem;
+/* Scrollable TOC body — HIDDEN scrollbar */
+.toc-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0.25rem 1rem 1rem 1.25rem;
+  scrollbar-width: none;        /* Firefox */
 }
 
-.toc ol ol li {
+.toc-body::-webkit-scrollbar {
+  display: none;                /* Chrome, Safari */
+}
+
+.toc-body.collapsed {
+  display: none;
+}
+
+/* TOC list structure */
+.toc-body > ol {
+  padding-left: 0;
+  list-style: none;
+}
+
+.toc-body > ol > li {
   margin: 0.15rem 0;
-  font-size: 0.9rem;
+  position: relative;
 }
 
-.toc a {
-  color: #1565c0;
+/* Chapter link in TOC */
+.toc-body > ol > li > a {
+  display: block;
+  padding: 0.25rem 0.5rem 0.25rem 1.25rem;
+  color: #333;
   text-decoration: none;
+  font-weight: 500;
+  border-radius: 4px;
+  transition: color 0.15s ease, background 0.12s ease;
 }
 
-.toc a:hover {
-  text-decoration: underline;
+.toc-body > ol > li > a:hover {
+  color: #1565c0;
+  background: #f5f8fc;
+}
+
+/* Chapter toggle button (expand/collapse sub-sections) */
+.chapter-toggle {
+  position: absolute;
+  left: 0;
+  top: 0.25rem;
+  width: 1rem;
+  height: 1rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #bbb;
+  transition: color 0.15s ease, transform 0.2s ease;
+  transform: rotate(90deg);
+}
+
+.chapter-toggle:hover {
+  color: #555;
+}
+
+.sections-collapsed > .chapter-toggle {
+  transform: rotate(0deg);
+}
+
+/* Sub-section list */
+.toc-body ol ol {
+  padding-left: 1.25rem;
+  margin-top: 0.05rem;
+  list-style: none;
+}
+
+.toc-body ol ol li {
+  margin: 0;
+}
+
+.toc-body ol ol a {
+  display: block;
+  padding: 0.15rem 0.5rem;
+  color: #888;
+  text-decoration: none;
+  font-size: 0.76rem;
+  border-radius: 3px;
+  transition: color 0.15s ease, background 0.12s ease;
+}
+
+.toc-body ol ol a:hover {
+  color: #1565c0;
+  background: #f5f8fc;
+}
+
+/* Hide sub-sections when chapter is collapsed */
+.sections-collapsed > ol {
+  display: none;
 }
 
 /* ─── Chapter ───────────────────────────────────────────────────── */
@@ -354,14 +501,250 @@ a:hover {
   text-decoration: underline;
 }
 
+/* ─── Glossary Slide-Over Panel (non-blocking) ─────────────────── */
+.glossary-slideover {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 440px;
+  height: 100vh;
+  background: #fff;
+  border-left: 1px solid #e5e5e5;
+  box-shadow: -2px 0 12px rgba(0, 0, 0, 0.06);
+  transform: translateX(100%);
+  transition: transform 0.25s ease;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+}
+
+.glossary-slideover.open {
+  transform: translateX(0);
+}
+
+.slideover-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid #eee;
+  flex-shrink: 0;
+}
+
+.slideover-header h3 {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #111;
+  margin: 0;
+}
+
+.slideover-close {
+  background: none;
+  border: none;
+  font-size: 1.4rem;
+  color: #999;
+  cursor: pointer;
+  padding: 0.15rem 0.35rem;
+  line-height: 1;
+  border-radius: 4px;
+  transition: color 0.15s ease, background 0.15s ease;
+}
+
+.slideover-close:hover {
+  color: #333;
+  background: #f0f0f0;
+}
+
+.slideover-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0;
+  scrollbar-width: none;
+}
+
+.slideover-body::-webkit-scrollbar {
+  display: none;
+}
+
+/* ─── Glossary Appendix (page bottom) ─────────────────────────── */
+.glossary-appendix {
+  margin-top: 4rem;
+  padding-top: 2rem;
+  border-top: 2px solid #333;
+}
+
+.glossary-appendix > h2 {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #111;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #ccc;
+}
+
+/* ─── Notation Table (shared by slide-over + appendix) ─────────── */
+.notation-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+  margin: 0;
+}
+
+.notation-table th {
+  background: #f8f8f8;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #888;
+  padding: 0.5rem 0.75rem;
+  text-align: left;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.notation-table td {
+  padding: 0.45rem 0.75rem;
+  border-top: 1px solid #f0f0f0;
+  vertical-align: top;
+}
+
+.notation-symbol-cell {
+  white-space: nowrap;
+  min-width: 3rem;
+}
+
+.notation-desc-cell {
+  color: #555;
+  font-size: 0.8rem;
+}
+
+.notation-table tr.symbol-relevant {
+  background: #eef4fb;
+}
+
+.notation-table tr.symbol-relevant td:first-child {
+  font-weight: 700;
+}
+
+.notation-table tr.symbol-dimmed {
+  opacity: 0.4;
+}
+
+/* ─── Copy Context Button ──────────────────────────────────────── */
+.copy-context-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  color: #bbb;
+  cursor: pointer;
+  padding: 4px;
+  margin-left: 0.5rem;
+  border-radius: 4px;
+  vertical-align: middle;
+  transition: color 0.15s ease, background-color 0.15s ease;
+  position: relative;
+  top: -1px;
+}
+
+.copy-context-btn:hover {
+  color: #1565c0;
+  background: rgba(21, 101, 192, 0.08);
+}
+
+.copy-context-btn:active {
+  background: rgba(21, 101, 192, 0.15);
+}
+
+.copy-context-btn.copy-success {
+  color: #2e7d32;
+}
+
+/* ─── Toast Notification ──────────────────────────────────────── */
+.copy-toast {
+  position: fixed;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%) translateY(10px);
+  background: #333;
+  color: #fff;
+  padding: 0.6rem 1.25rem;
+  border-radius: 6px;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 0.85rem;
+  font-weight: 500;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  opacity: 0;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  z-index: 1000;
+  pointer-events: none;
+}
+
+.copy-toast.visible {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
 /* ─── Responsive ────────────────────────────────────────────────── */
+
+/* Tablet/Mobile: no sidebar, stacked layout */
+@media (max-width: 899px) {
+  body {
+    padding: 0 1rem 2rem;
+  }
+
+  .layout-wrapper {
+    display: block;
+  }
+
+  main {
+    max-width: 48rem;
+    margin: 0 auto;
+    padding: 1.5rem 0;
+  }
+
+  .toc {
+    position: static;
+    width: auto;
+    min-width: 0;
+    max-height: none;
+    overflow: visible;
+    margin: 0;
+    padding: 0;
+    border-right: none;
+    border-bottom: 1px solid #e5e5e5;
+    font-size: 0.88rem;
+  }
+
+  .toc-body {
+    overflow-y: visible;
+    max-height: none;
+  }
+
+  .toc-body > ol > li > a {
+    color: #1565c0;
+  }
+
+  .toc-body ol ol a {
+    color: #1565c0;
+  }
+
+  .glossary-slideover {
+    width: 100%;
+  }
+}
+
 @media (max-width: 600px) {
   html {
     font-size: 16px;
   }
 
   body {
-    padding: 1rem;
+    padding: 0 0.75rem 2rem;
   }
 
   .book-header h1 {
@@ -376,6 +759,16 @@ a:hover {
   .equation-wrapper .equation-number {
     text-align: center;
   }
+
+  .notation-table th:nth-child(3),
+  .notation-table td:nth-child(3) {
+    display: none;
+  }
+
+  .copy-context-btn {
+    padding: 8px;
+    margin-left: 0.25rem;
+  }
 }
 
 /* ─── Print ─────────────────────────────────────────────────────── */
@@ -386,8 +779,32 @@ a:hover {
     font-size: 11pt;
   }
 
+  .layout-wrapper {
+    display: block;
+  }
+
   .toc {
+    position: static;
+    width: auto;
+    min-width: 0;
+    max-height: none;
+    border-right: none;
     page-break-after: always;
+  }
+
+  .toc-glossary-btn,
+  .chapter-toggle,
+  .toc-chevron {
+    display: none !important;
+  }
+
+  .toc-body {
+    display: block !important;
+    overflow: visible;
+  }
+
+  .toc-body ol ol {
+    display: block !important;
   }
 
   .chapter {
@@ -396,5 +813,15 @@ a:hover {
 
   .formalpara, .example {
     break-inside: avoid;
+  }
+
+  .glossary-appendix {
+    page-break-before: always;
+  }
+
+  .copy-context-btn,
+  .copy-toast,
+  .glossary-slideover {
+    display: none !important;
   }
 }

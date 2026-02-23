@@ -3,7 +3,9 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "mkdir -p build && /usr/bin/xsltproc --xinclude -o build/index.html docbook2html.xsl book.xml",
+    "build:html": "mkdir -p build && /usr/bin/xsltproc --xinclude -o build/index.html docbook2html.xsl book.xml",
+    "build:glossary": "mkdir -p build && /usr/bin/xsltproc -o build/glossary.json glossary2json.xsl glossary.xml",
+    "build": "npm run build:html && npm run build:glossary",
     "preview": "node server.mjs"
   }
 }

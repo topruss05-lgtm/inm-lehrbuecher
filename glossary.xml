@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<symbol-glossary xmlns="urn:dynamik:symbols" version="1.0">
+
+  <!-- ═══ Energiegrößen ════════════════════════════════════════════ -->
+
+  <symbol id="sym-T" category="energy">
+    <latex>T</latex>
+    <name>Kinetische Energie</name>
+    <description>Gesamte kinetische Energie des Systems, zusammengesetzt aus translatorischen und rotatorischen Anteilen aller Körper.</description>
+    <unit>J</unit>
+    <see-also>sym-V sym-L sym-E</see-also>
+  </symbol>
+
+  <symbol id="sym-V" category="energy">
+    <latex>V</latex>
+    <name>Potentielle Energie</name>
+    <description>Potentielle Energie des Systems (Schwere, Federn, etc.).</description>
+    <unit>J</unit>
+    <see-also>sym-T sym-L sym-E</see-also>
+  </symbol>
+
+  <symbol id="sym-L" category="energy">
+    <latex>L</latex>
+    <name>Lagrange-Funktion</name>
+    <description>Differenz aus kinetischer und potentieller Energie: L = T - V.</description>
+    <unit>J</unit>
+    <see-also>sym-T sym-V</see-also>
+  </symbol>
+
+  <symbol id="sym-E" category="energy">
+    <latex>E</latex>
+    <name>Gesamtenergie</name>
+    <description>E = T + V. Bei konservativen Systemen eine Erhaltungsgröße.</description>
+    <unit>J</unit>
+    <see-also>sym-T sym-V</see-also>
+  </symbol>
+
+  <!-- ═══ Trägheiten ══════════════════════════════════════════════ -->
+
+  <symbol id="sym-m" category="inertia">
+    <latex>m</latex>
+    <name>Masse</name>
+    <description>Masse eines Körpers oder Massenpunkts.</description>
+    <unit>kg</unit>
+  </symbol>
+
+  <symbol id="sym-Theta-S" category="inertia">
+    <latex>\bar{\Theta}_S</latex>
+    <name>Trägheitstensor</name>
+    <description>Symmetrischer Trägheitstensor eines Körpers bezogen auf den Schwerpunkt S.</description>
+    <unit>kg·m²</unit>
+  </symbol>
+
+  <symbol id="sym-M-matrix" category="dynamics">
+    <latex>M</latex>
+    <name>Massenmatrix</name>
+    <description>Symmetrische, positiv definite Massenmatrix des Systems: M = M^T > 0.</description>
+    <context chapters="ch.projizierte-newton-euler ch.lagrangesche-dynamik ch.ideale-bilaterale-bindungen ch.einfache-gen-kraftgesetze"/>
+  </symbol>
+
+  <!-- ═══ Koordinaten und Geschwindigkeiten ═══════════════════════ -->
+
+  <symbol id="sym-f-dof" category="system">
+    <latex>f</latex>
+    <name>Freiheitsgrade</name>
+    <description>Anzahl der Freiheitsgrade des Systems.</description>
+  </symbol>
+
+  <symbol id="sym-vec-q" category="coordinates">
+    <latex>\vec{q}</latex>
+    <name>Generalisierte Koordinaten</name>
+    <description>Minimaler Satz von f Koordinaten, der die Lage des Systems eindeutig beschreibt.</description>
+    <see-also>sym-dot-vec-q sym-f-dof</see-also>
+  </symbol>
+
+  <symbol id="sym-dot-vec-q" category="coordinates">
+    <latex>\dot{\vec{q}}</latex>
+    <name>Generalisierte Geschwindigkeiten</name>
+    <description>Zeitableitungen der generalisierten Koordinaten.</description>
+    <see-also>sym-vec-q</see-also>
+  </symbol>
+
+  <symbol id="sym-vec-Omega" category="kinematics">
+    <latex>\vec{\Omega}</latex>
+    <name>Winkelgeschwindigkeit</name>
+    <description>Winkelgeschwindigkeit eines starren Körpers.</description>
+    <unit>rad/s</unit>
+  </symbol>
+
+  <!-- ═══ Kräfte ══════════════════════════════════════════════════ -->
+
+  <symbol id="sym-vec-f" category="forces">
+    <latex>\vec{f}</latex>
+    <name>Generalisierte aktive Kräfte</name>
+    <description>Vektor der generalisierten aktiven Kräfte, projiziert auf die Minimalkoordinaten.</description>
+    <see-also>sym-vec-f-NP</see-also>
+  </symbol>
+
+  <symbol id="sym-vec-f-NP" category="forces">
+    <latex>\vec{f}_{NP}</latex>
+    <name>Nichtpotentialkräfte</name>
+    <description>Generalisierte Kräfte, die nicht aus einem Potential ableitbar sind (z.B. Dämpfung, Reibung).</description>
+    <see-also>sym-vec-f</see-also>
+  </symbol>
+
+  <symbol id="sym-lambda" category="forces">
+    <latex>\lambda</latex>
+    <name>Lagrange-Multiplikator</name>
+    <description>Skalarer Kraftwert einer Bindung oder eines Kraftelements.</description>
+  </symbol>
+
+  <!-- ═══ Erhaltungsgrößen ════════════════════════════════════════ -->
+
+  <symbol id="sym-pi-k" category="conservation">
+    <latex>\pi_k</latex>
+    <name>Generalisierter Impuls</name>
+    <description>Partielle Ableitung der kinetischen Energie nach der k-ten generalisierten Geschwindigkeit: eine Erhaltungsgröße bei zyklischer Koordinate.</description>
+    <see-also>sym-T</see-also>
+  </symbol>
+
+  <!-- ═══ Variationsrechnung ═════════════════════════════════════ -->
+
+  <symbol id="sym-delta" category="variational">
+    <latex>\delta</latex>
+    <name>Variation</name>
+    <description>Virtuelle Variation; infinitesimale gedachte Änderung bei festgehaltener Zeit.</description>
+  </symbol>
+
+  <symbol id="sym-F-var" category="variational">
+    <latex>F</latex>
+    <name>Lagrange-Funktion (Variationsrechnung)</name>
+    <description>Lagrange-Funktion F(x, y, y') des Variationsproblems; nicht zu verwechseln mit der mechanischen Lagrange-Funktion L.</description>
+    <context chapters="ch.variationsrechnung"/>
+  </symbol>
+
+  <symbol id="sym-I-functional" category="variational">
+    <latex>I</latex>
+    <name>Funktional</name>
+    <description>Ordnet einer Funktion eine reelle Zahl zu: I(y) = ∫ F dx.</description>
+    <context chapters="ch.variationsrechnung"/>
+  </symbol>
+
+  <!-- ═══ Kinematik-Matrizen (Hamel-Boltzmann) ═══════════════════ -->
+
+  <symbol id="sym-B-matrix" category="kinematics">
+    <latex>B</latex>
+    <name>Transformationsmatrix</name>
+    <description>Lineare Transformation zwischen generalisierten Geschwindigkeiten und Minimalgeschwindigkeiten.</description>
+    <context chapters="ch.lagrangesche-dynamik"/>
+  </symbol>
+
+  <symbol id="sym-C-matrix" category="kinematics">
+    <latex>C</latex>
+    <name>Korrekturmatrix (Hamel)</name>
+    <description>Korrekturmatrix in den Hamel-Boltzmann-Gleichungen, beschrieben durch die Hamel'sche Übergangsgleichung.</description>
+    <context chapters="ch.lagrangesche-dynamik"/>
+  </symbol>
+
+</symbol-glossary>

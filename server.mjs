@@ -14,6 +14,9 @@ const BUILD_DIR = join(ROOT, "build");
 const XSL = join(ROOT, "docbook2html.xsl");
 const BOOK = join(ROOT, "book.xml");
 const OUTPUT = join(BUILD_DIR, "index.html");
+const GLOSSARY_XSL = join(ROOT, "glossary2json.xsl");
+const GLOSSARY_XML = join(ROOT, "glossary.xml");
+const GLOSSARY_OUT = join(BUILD_DIR, "glossary.json");
 const PORT = parseInt(process.env.PORT || "3000", 10);
 
 const MIME = {
@@ -46,6 +49,13 @@ function build() {
       `/usr/bin/xsltproc --xinclude -o "${OUTPUT}" "${XSL}" "${BOOK}"`,
       { cwd: ROOT, timeout: 15000, stdio: "pipe" }
     );
+    // Build glossary JSON
+    if (existsSync(GLOSSARY_XSL) && existsSync(GLOSSARY_XML)) {
+      execSync(
+        `/usr/bin/xsltproc -o "${GLOSSARY_OUT}" "${GLOSSARY_XSL}" "${GLOSSARY_XML}"`,
+        { cwd: ROOT, timeout: 5000, stdio: "pipe" }
+      );
+    }
     const now = new Date().toLocaleTimeString("de-DE");
     console.log(`\x1b[32m[${now}]\x1b[0m Build OK`);
     return true;
@@ -96,6 +106,10 @@ const server = createServer((req, res) => {
     filePath = OUTPUT;
   } else if (url === "/style.css") {
     filePath = join(ROOT, "style.css");
+  } else if (url === "/interactive.js") {
+    filePath = join(ROOT, "interactive.js");
+  } else if (url === "/glossary.json") {
+    filePath = join(BUILD_DIR, "glossary.json");
   } else {
     res.writeHead(404);
     res.end("Not found");
@@ -133,13 +147,19 @@ let rebuildTimer = null;
 
 watch(ROOT, { recursive: true }, (event, filename) => {
   if (!filename) return;
-  // Only react to XML and XSL changes, ignore build/ output
-  if (!filename.endsWith(".xml") && !filename.endsWith(".xsl")) return;
-  if (filename.startsWith("build")) return;
+  if (filename.startsWith("build") || filename.startsWith("node_modules")) return;
+
+  const needsBuild = filename.endsWith(".xml") || filename.endsWith(".xsl");
+  const needsReload = needsBuild || filename.endsWith(".js") || filename.endsWith(".css");
+  if (!needsReload) return;
 
   clearTimeout(rebuildTimer);
   rebuildTimer = setTimeout(() => {
-    if (build()) notifyReload();
+    if (needsBuild) {
+      if (build()) notifyReload();
+    } else {
+      notifyReload();
+    }
   }, 300);
 });
 

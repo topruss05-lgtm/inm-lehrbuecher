@@ -28,25 +28,27 @@
           <p class="subtitle"><xsl:value-of select="db:info/db:subtitle"/></p>
         </header>
 
-        <nav id="toc" class="toc" aria-label="Inhaltsverzeichnis">
-          <h2>Inhaltsverzeichnis</h2>
-          <ol>
-            <xsl:for-each select="db:chapter">
-              <li>
-                <a href="#{@xml:id}"><xsl:value-of select="db:title"/></a>
-                <ol>
-                  <xsl:for-each select="db:section">
-                    <li><a href="#{@xml:id}"><xsl:value-of select="db:title"/></a></li>
-                  </xsl:for-each>
-                </ol>
-              </li>
-            </xsl:for-each>
-          </ol>
-        </nav>
+        <div class="layout-wrapper">
+          <nav id="toc" class="toc" aria-label="Inhaltsverzeichnis">
+            <h2>Inhaltsverzeichnis</h2>
+            <ol>
+              <xsl:for-each select="db:chapter">
+                <li>
+                  <a href="#{@xml:id}"><xsl:number count="db:chapter"/><xsl:text>. </xsl:text><xsl:value-of select="db:title"/></a>
+                  <ol>
+                    <xsl:for-each select="db:section">
+                      <li><a href="#{@xml:id}"><xsl:value-of select="db:title"/></a></li>
+                    </xsl:for-each>
+                  </ol>
+                </li>
+              </xsl:for-each>
+            </ol>
+          </nav>
 
-        <main>
-          <xsl:apply-templates select="db:chapter"/>
-        </main>
+          <main>
+            <xsl:apply-templates select="db:chapter"/>
+          </main>
+        </div>
 
         <script src="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.js"
                 crossorigin="anonymous"></script>
@@ -62,8 +64,10 @@
               ignoredTags: ["script", "noscript", "style", "textarea", "pre", "code"],
               throwOnError: false
             });
+            if (window.initInteractive) window.initInteractive();
           });
         </script>
+        <script src="../interactive.js" defer="defer"></script>
       </body>
     </html>
   </xsl:template>
@@ -76,7 +80,7 @@
       <xsl:if test="@xml:id">
         <xsl:attribute name="id"><xsl:value-of select="@xml:id"/></xsl:attribute>
       </xsl:if>
-      <h2><xsl:value-of select="db:title"/></h2>
+      <h2><xsl:number count="db:chapter"/><xsl:text>. </xsl:text><xsl:value-of select="db:title"/></h2>
       <xsl:apply-templates select="*[not(self::db:title)]"/>
     </article>
   </xsl:template>
@@ -112,11 +116,17 @@
   <!-- Math: inline, display, numbered                                 -->
   <!-- ════════════════════════════════════════════════════════════════ -->
   <xsl:template match="db:inlineequation">
-    <span class="math-inline"><xsl:value-of select="db:alt"/></span>
+    <span class="math-inline">
+      <xsl:attribute name="data-latex"><xsl:value-of select="db:alt"/></xsl:attribute>
+      <xsl:value-of select="db:alt"/>
+    </span>
   </xsl:template>
 
   <xsl:template match="db:informalequation">
-    <div class="math-display"><xsl:value-of select="db:alt"/></div>
+    <div class="math-display">
+      <xsl:attribute name="data-latex"><xsl:value-of select="db:alt"/></xsl:attribute>
+      <xsl:value-of select="db:alt"/>
+    </div>
   </xsl:template>
 
   <xsl:template match="db:equation">
@@ -127,7 +137,10 @@
       <xsl:if test="db:title">
         <span class="equation-title"><xsl:value-of select="db:title"/></span>
       </xsl:if>
-      <div class="equation"><xsl:value-of select="db:alt"/></div>
+      <div class="equation">
+        <xsl:attribute name="data-latex"><xsl:value-of select="db:alt"/></xsl:attribute>
+        <xsl:value-of select="db:alt"/>
+      </div>
       <span class="equation-number">
         (<xsl:number count="db:equation" level="any"/>)
       </span>
