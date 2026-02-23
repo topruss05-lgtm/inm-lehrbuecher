@@ -1,2 +1,19 @@
-build/
+# Build output
+dist/
+
+# Dependencies
 node_modules/
+
+# Environment
+.env
+.env.*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Astro
+.astro/
+
+# Lecture source materials (large PDFs, not part of the web project)
+Vorlesungen/
