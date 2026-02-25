@@ -11,6 +11,7 @@ interface Props {
 }
 
 const { book, glossary, courseSlug, currentChapterSlug } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
 const categoryOrder = ['energy', 'inertia', 'dynamics', 'system', 'coordinates', 'kinematics', 'forces', 'conservation', 'variational'];
 const sortedGlossary = [...glossary].sort((a, b) => {
@@ -21,20 +22,20 @@ const sortedGlossary = [...glossary].sort((a, b) => {
 });
 
 function chapterUrl(ch: ChapterNode): string {
-  return `/${courseSlug}/${ch.slug}/`;
+  return `${base}/${courseSlug}/${ch.slug}/`;
 }
 ---
 
 <PlatformLayout title={book.title} subtitle={book.subtitle}>
   <header class="book-header">
-    <a href={`/${courseSlug}/`} style="text-decoration: none; color: inherit;">
+    <a href={`${base}/${courseSlug}/`} style="text-decoration: none; color: inherit;">
       <h1>{book.title}</h1>
     </a>
     <p class="subtitle">{book.subtitle}</p>
     <nav class="breadcrumb">
-      <a href="/">INM Lehrbücher</a>
+      <a href={`${base}/`}>INM Lehrbücher</a>
       <span class="breadcrumb-sep">›</span>
-      <a href={`/${courseSlug}/`}>{book.title}</a>
+      <a href={`${base}/${courseSlug}/`}>{book.title}</a>
     </nav>
   </header>
 
@@ -79,7 +80,7 @@ function chapterUrl(ch: ChapterNode): string {
             </li>
           ))}
           <li class="toc-chapter-item" style="margin-top: 0.5rem;">
-            <a class={`toc-section-link${currentChapterSlug === 'symbolverzeichnis' ? ' active' : ''}`} href={`/${courseSlug}/symbolverzeichnis/`} style="font-style: italic;">
+            <a class={`toc-section-link${currentChapterSlug === 'symbolverzeichnis' ? ' active' : ''}`} href={`${base}/${courseSlug}/symbolverzeichnis/`} style="font-style: italic;">
               Symbolverzeichnis
             </a>
           </li>

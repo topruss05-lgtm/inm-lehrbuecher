@@ -2,16 +2,19 @@
 // Pagefind search UI component
 // Uses is:inline to avoid Vite processing the dynamic import
 // (pagefind files only exist after the post-build indexing step)
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
-<div class="search-wrapper" id="search-container">
+<div class="search-wrapper" id="search-container" data-base={base}>
   <div id="search"></div>
 </div>
 
 <script is:inline>
   window.addEventListener('DOMContentLoaded', function() {
+    var container = document.getElementById('search-container');
+    var baseUrl = container ? container.getAttribute('data-base') : '';
     var script = document.createElement('script');
-    script.src = '/pagefind/pagefind-ui.js';
+    script.src = baseUrl + '/pagefind/pagefind-ui.js';
     script.onload = function() {
       new PagefindUI({
         element: '#search',

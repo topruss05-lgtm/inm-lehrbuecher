@@ -3,6 +3,7 @@ import PlatformLayout from '../layouts/PlatformLayout.astro';
 import { discoverCourses } from '../lib/xml/course-registry.js';
 
 const courses = discoverCourses();
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
 <PlatformLayout title="INM Lehrbücher">
@@ -14,7 +15,7 @@ const courses = discoverCourses();
   <main class="landing-content">
     <div class="course-grid">
       {courses.map((course) => (
-        <a href={`/${course.slug}/`} class="course-card">
+        <a href={`${base}/${course.slug}/`} class="course-card">
           <div class="course-card-inner">
             <h2 class="course-card-title">{course.book.title}</h2>
             {course.book.subtitle && (

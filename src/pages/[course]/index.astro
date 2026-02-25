@@ -17,6 +17,7 @@ interface Props {
 
 const { course } = Astro.props;
 const { book, glossary, slug } = course;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
 <CourseLayout book={book} glossary={glossary} courseSlug={slug}>
@@ -45,7 +46,7 @@ const { book, glossary, slug } = course;
 
     <div class="course-toc-full">
       {book.chapters.map((ch) => (
-        <a href={`/${slug}/${ch.slug}/`} class="course-toc-card">
+        <a href={`${base}/${slug}/${ch.slug}/`} class="course-toc-card">
           <span class="course-toc-label">
             {ch.isAppendix ? `Anhang ${ch.label}` : `Kapitel ${ch.label}`}
           </span>

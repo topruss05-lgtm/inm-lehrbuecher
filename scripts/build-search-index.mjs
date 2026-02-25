@@ -10,6 +10,7 @@ import { DOMParser } from '@xmldom/xmldom';
 
 const COURSES_DIR = resolve(process.cwd(), 'content/courses');
 const DIST_DIR = resolve(process.cwd(), 'dist');
+const BASE_PATH = (process.env.BASE_PATH || '').replace(/\/$/, '');
 const DB_NS = 'http://docbook.org/ns/docbook';
 
 // ─── Parse glossary symbols from Standard DocBook XML ────────────
@@ -105,7 +106,7 @@ async function main() {
     const symbols = parseGlossaryForSearch(glossaryPath);
     for (const sym of symbols) {
       await index.addCustomRecord({
-        url: `/${courseSlug}/symbolverzeichnis/#${sym.id}`,
+        url: `${BASE_PATH}/${courseSlug}/symbolverzeichnis/#${sym.id}`,
         content: `${sym.name}: ${sym.description}. Symbol: ${sym.latex}`,
         language: 'de',
         meta: {

@@ -34,6 +34,7 @@ const allChapters = book.chapters;
 const currentIdx = allChapters.findIndex((c) => c.slug === ch.slug);
 const prevChapter = currentIdx > 0 ? allChapters[currentIdx - 1] : null;
 const nextChapter = currentIdx < allChapters.length - 1 ? allChapters[currentIdx + 1] : null;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
 <CourseLayout book={book} glossary={glossary} courseSlug={courseSlug} currentChapterSlug={ch.slug}>
@@ -70,7 +71,7 @@ const nextChapter = currentIdx < allChapters.length - 1 ? allChapters[currentIdx
   {/* Prev/Next Navigation */}
   <nav class="chapter-nav">
     {prevChapter ? (
-      <a href={`/${courseSlug}/${prevChapter.slug}/`} class="chapter-nav-link chapter-nav-prev">
+      <a href={`${base}/${courseSlug}/${prevChapter.slug}/`} class="chapter-nav-link chapter-nav-prev">
         <span class="chapter-nav-label">Zurück</span>
         <span class="chapter-nav-title">
           {prevChapter.isAppendix ? `Anhang ${prevChapter.label}` : `${prevChapter.label}.`} {prevChapter.title}
@@ -78,7 +79,7 @@ const nextChapter = currentIdx < allChapters.length - 1 ? allChapters[currentIdx
       </a>
     ) : <div />}
     {nextChapter ? (
-      <a href={`/${courseSlug}/${nextChapter.slug}/`} class="chapter-nav-link chapter-nav-next">
+      <a href={`${base}/${courseSlug}/${nextChapter.slug}/`} class="chapter-nav-link chapter-nav-next">
         <span class="chapter-nav-label">Weiter</span>
         <span class="chapter-nav-title">
           {nextChapter.isAppendix ? `Anhang ${nextChapter.label}` : `${nextChapter.label}.`} {nextChapter.title}

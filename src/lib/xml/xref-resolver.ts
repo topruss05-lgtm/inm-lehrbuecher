@@ -13,11 +13,11 @@ export interface ResolvedXref {
  * Build a map from xml:id → { url, label } for all referenceable
  * elements in a course (chapters, sections, equations, definitions, etc.).
  */
-export function buildXrefMap(book: BookNode, courseSlug: string): Map<string, ResolvedXref> {
+export function buildXrefMap(book: BookNode, courseSlug: string, base: string = ''): Map<string, ResolvedXref> {
   const map = new Map<string, ResolvedXref>();
 
   for (const ch of book.chapters) {
-    const chapterUrl = `/${courseSlug}/${ch.slug}/`;
+    const chapterUrl = `${base}/${courseSlug}/${ch.slug}/`;
     const chapterLabel = ch.isAppendix ? `Anhang ${ch.label}` : `Kapitel ${ch.label}`;
 
     // Chapter itself

@@ -14,6 +14,7 @@ export interface CourseInfo {
 }
 
 const COURSES_DIR = resolve(process.cwd(), 'content/courses');
+const base = (import.meta.env?.BASE_URL ?? process.env.BASE_PATH ?? '').replace(/\/$/, '');
 
 export function discoverCourses(): CourseInfo[] {
   if (!existsSync(COURSES_DIR)) return [];
@@ -31,7 +32,7 @@ export function discoverCourses(): CourseInfo[] {
 
     const book = parseBook(bookPath);
     const glossary = existsSync(glossaryPath) ? parseGlossary(glossaryPath) : [];
-    const xrefMap = buildXrefMap(book, entry.name);
+    const xrefMap = buildXrefMap(book, entry.name, base);
 
     courses.push({
       slug: entry.name,
@@ -54,7 +55,7 @@ export function getCourse(slug: string): CourseInfo | undefined {
 
   const book = parseBook(bookPath);
   const glossary = existsSync(glossaryPath) ? parseGlossary(glossaryPath) : [];
-  const xrefMap = buildXrefMap(book, slug);
+  const xrefMap = buildXrefMap(book, slug, base);
 
   return { slug, contentDir: courseDir, book, glossary, xrefMap };
 }
