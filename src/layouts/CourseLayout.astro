@@ -1,6 +1,5 @@
 ---
 import PlatformLayout from './PlatformLayout.astro';
-import SearchBar from '../components/SearchBar.astro';
 import type { BookNode, ChapterNode, GlossarySymbol } from '../lib/xml/docbook-ast.js';
 
 interface Props {
@@ -27,22 +26,30 @@ function chapterUrl(ch: ChapterNode): string {
 ---
 
 <PlatformLayout title={book.title} subtitle={book.subtitle}>
-  <header class="book-header">
-    <a href={`${base}/${courseSlug}/`} style="text-decoration: none; color: inherit;">
-      <h1>{book.title}</h1>
-    </a>
-    <p class="subtitle">{book.subtitle}</p>
-    <nav class="breadcrumb">
+  <header class="top-bar" id="top-bar">
+    <button class="topbar-hamburger" id="mobile-nav-toggle" aria-label="Navigation öffnen">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+    <nav class="breadcrumb" aria-label="Breadcrumb">
       <a href={`${base}/`}>INM Lehrbücher</a>
       <span class="breadcrumb-sep">›</span>
       <a href={`${base}/${courseSlug}/`}>{book.title}</a>
     </nav>
+    <div class="topbar-actions">
+      <button class="topbar-search-trigger" id="open-search" aria-label="Suche öffnen" title="Suche (⌘K)">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <kbd class="topbar-kbd">⌘K</kbd>
+      </button>
+    </div>
   </header>
 
   <div class="layout-wrapper">
     <!-- Sidebar TOC -->
     <nav class="sidebar" id="sidebar" aria-label="Inhaltsverzeichnis" data-pagefind-ignore>
-      <SearchBar />
+      <div class="sidebar-mobile-header">
+        <span class="sidebar-mobile-title">Navigation</span>
+        <button class="sidebar-close-btn" id="sidebar-close" aria-label="Schließen">&times;</button>
+      </div>
 
       <button class="sidebar-glossary-btn" id="open-glossary">
         <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h4a2 2 0 0 1 2 2v8a1.5 1.5 0 0 0-1.5-1.5H2V3z"/><path d="M14 3h-4a2 2 0 0 0-2 2v8a1.5 1.5 0 0 1 1.5-1.5H14V3z"/></svg>
@@ -79,11 +86,6 @@ function chapterUrl(ch: ChapterNode): string {
               )}
             </li>
           ))}
-          <li class="toc-chapter-item" style="margin-top: 0.5rem;">
-            <a class={`toc-section-link${currentChapterSlug === 'symbolverzeichnis' ? ' active' : ''}`} href={`${base}/${courseSlug}/symbolverzeichnis/`} style="font-style: italic;">
-              Symbolverzeichnis
-            </a>
-          </li>
         </ol>
       </div>
     </nav>
@@ -100,6 +102,9 @@ function chapterUrl(ch: ChapterNode): string {
     <div class="slideover-header">
       <h3>Symbolverzeichnis</h3>
       <button class="slideover-close" id="close-glossary" aria-label="Schließen">&times;</button>
+    </div>
+    <div class="slideover-filter">
+      <input type="text" id="glossary-filter" placeholder="Symbol filtern..." autocomplete="off" />
     </div>
     <div class="slideover-body">
       <table class="notation-table" id="slideover-notation-table">
@@ -125,11 +130,6 @@ function chapterUrl(ch: ChapterNode): string {
     </div>
   </div>
 
-  <!-- Mobile Nav Toggle -->
-  <button class="mobile-nav-toggle" id="mobile-nav-toggle" aria-label="Navigation öffnen">
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-  </button>
-  <div class="mobile-nav-backdrop" id="mobile-nav-backdrop"></div>
 
   <!-- Embed glossary data for client-side scripts -->
   <script type="application/json" id="glossary-data" set:html={JSON.stringify(sortedGlossary)} />
@@ -166,31 +166,51 @@ function chapterUrl(ch: ChapterNode): string {
       if (bdrop) bdrop.classList.remove('visible');
     }
 
+    // ─── Glossary Filter ───────────────────────────────────────
+    var glossaryFilter = document.getElementById('glossary-filter');
+    if (glossaryFilter) {
+      glossaryFilter.addEventListener('input', function() {
+        var query = this.value.toLowerCase().trim();
+        var rows = document.querySelectorAll('#slideover-notation-table tbody tr');
+        rows.forEach(function(row) {
+          var text = (row.textContent || '').toLowerCase();
+          row.style.display = (!query || text.indexOf(query) >= 0) ? '' : 'none';
+        });
+      });
+    }
+
     var openBtn = document.getElementById('open-glossary');
     var closeBtn = document.getElementById('close-glossary');
     if (openBtn) openBtn.addEventListener('click', openGlossary);
     if (closeBtn) closeBtn.addEventListener('click', closeGlossary);
     if (bdrop) bdrop.addEventListener('click', closeGlossary);
     document.addEventListener('keydown', function(e) {
-      if (e.key === 'Escape') closeGlossary();
+      if (e.key === 'Escape') {
+        closeGlossary();
+        closeMobileNav();
+      }
     });
 
     // ─── Mobile Navigation ──────────────────────────────────────
     var sidebar = document.getElementById('sidebar');
     var mobileToggle = document.getElementById('mobile-nav-toggle');
-    var mobileBackdrop = document.getElementById('mobile-nav-backdrop');
+    var sidebarCloseBtn = document.getElementById('sidebar-close');
 
     function openMobileNav() {
       if (sidebar) sidebar.classList.add('mobile-open');
-      if (mobileBackdrop) { mobileBackdrop.classList.add('visible'); mobileBackdrop.style.display = 'block'; }
+      document.body.style.overflow = 'hidden';
     }
     function closeMobileNav() {
       if (sidebar) sidebar.classList.remove('mobile-open');
-      if (mobileBackdrop) { mobileBackdrop.classList.remove('visible'); setTimeout(function() { mobileBackdrop.style.display = 'none'; }, 300); }
+      // Only restore scroll if search modal is not open
+      var searchOpen = document.getElementById('search-modal');
+      if (!searchOpen || !searchOpen.classList.contains('open')) {
+        document.body.style.overflow = '';
+      }
     }
 
     if (mobileToggle) mobileToggle.addEventListener('click', openMobileNav);
-    if (mobileBackdrop) mobileBackdrop.addEventListener('click', closeMobileNav);
+    if (sidebarCloseBtn) sidebarCloseBtn.addEventListener('click', closeMobileNav);
 
     if (sidebar) sidebar.querySelectorAll('a').forEach(function(a) {
       a.addEventListener('click', function() {

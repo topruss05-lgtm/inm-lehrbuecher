@@ -1,0 +1,113 @@
+---
+import PlatformLayout from '../layouts/PlatformLayout.astro';
+import { discoverCourses } from '../lib/xml/course-registry.js';
+
+const courses = discoverCourses();
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+const categoryOrder = ['energy', 'inertia', 'dynamics', 'system', 'coordinates', 'kinematics', 'forces', 'conservation', 'variational'];
+const categoryNames: Record<string, string> = {
+  energy: 'Energiegrößen',
+  inertia: 'Trägheitsgrößen',
+  dynamics: 'Dynamik-Matrizen',
+  system: 'Systemgrößen',
+  coordinates: 'Koordinaten',
+  kinematics: 'Kinematik',
+  forces: 'Kräfte',
+  conservation: 'Erhaltungsgrößen',
+  variational: 'Variationsrechnung',
+};
+
+const courseGlossaries = courses.map((c) => {
+  const sorted = [...c.glossary].sort((a, b) => {
+    const ia = categoryOrder.indexOf(a.category);
+    const ib = categoryOrder.indexOf(b.category);
+    if (ia !== ib) return (ia === -1 ? 99 : ia) - (ib === -1 ? 99 : ib);
+    return a.name.localeCompare(b.name);
+  });
+  const grouped = new Map<string, typeof c.glossary>();
+  for (const sym of sorted) {
+    const cat = sym.category || 'other';
+    if (!grouped.has(cat)) grouped.set(cat, []);
+    grouped.get(cat)!.push(sym);
+  }
+  return { slug: c.slug, title: c.book.title, grouped };
+});
+---
+
+<PlatformLayout title="Symbolverzeichnis">
+  <header class="top-bar">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href={`${base}/`}>INM Lehrbücher</a>
+      <span class="breadcrumb-sep">›</span>
+      <span>Symbolverzeichnis</span>
+    </nav>
+    <div class="topbar-actions">
+      <button class="topbar-search-trigger" id="open-search" aria-label="Suche öffnen" title="Suche (⌘K)">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <kbd class="topbar-kbd">⌘K</kbd>
+      </button>
+    </div>
+  </header>
+
+  <main class="symbolverzeichnis-page">
+    <h1 class="symbolverzeichnis-title">Symbolverzeichnis</h1>
+
+    <div class="symbolverzeichnis-filter">
+      <input type="text" id="symbol-filter" placeholder="Symbol oder Name filtern..." autocomplete="off" />
+    </div>
+
+    {courseGlossaries.map((cg) => (
+      <section class="symbolverzeichnis-course" data-course={cg.slug}>
+        <h2 class="symbolverzeichnis-course-title">
+          <a href={`${base}/${cg.slug}/`}>{cg.title}</a>
+        </h2>
+        {Array.from(cg.grouped.entries()).map(([cat, symbols]) => (
+          <div class="glossary-category">
+            <h3 class="glossary-category-title">{categoryNames[cat] || cat}</h3>
+            <table class="notation-table">
+              <thead>
+                <tr>
+                  <th>Symbol</th>
+                  <th>Name</th>
+                  <th class="desc-cell">Beschreibung</th>
+                  <th>Einheit</th>
+                </tr>
+              </thead>
+              <tbody>
+                {symbols.map((sym) => (
+                  <tr id={sym.id} data-symbol-name={sym.name.toLowerCase()} data-symbol-latex={sym.latex.toLowerCase()}>
+                    <td class="symbol-cell"><Fragment set:html={sym.latexHtml} /></td>
+                    <td>{sym.name}</td>
+                    <td class="desc-cell">{sym.description}</td>
+                    <td class="unit-cell">{sym.unit || '\u2014'}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        ))}
+      </section>
+    ))}
+  </main>
+
+  <script is:inline>
+    var filterInput = document.getElementById('symbol-filter');
+    if (filterInput) {
+      filterInput.addEventListener('input', function() {
+        var query = this.value.toLowerCase().trim();
+        document.querySelectorAll('.notation-table tbody tr').forEach(function(row) {
+          var name = row.getAttribute('data-symbol-name') || '';
+          var latex = row.getAttribute('data-symbol-latex') || '';
+          var text = (row.textContent || '').toLowerCase();
+          row.style.display = (!query || name.indexOf(query) >= 0 || latex.indexOf(query) >= 0 || text.indexOf(query) >= 0) ? '' : 'none';
+        });
+        // Hide empty categories
+        document.querySelectorAll('.glossary-category').forEach(function(cat) {
+          var visibleRows = cat.querySelectorAll('tbody tr:not([style*="display: none"])');
+          cat.style.display = visibleRows.length > 0 ? '' : 'none';
+        });
+      });
+    }
+  </script>
+</PlatformLayout>

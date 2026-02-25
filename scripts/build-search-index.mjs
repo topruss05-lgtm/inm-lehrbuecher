@@ -106,7 +106,7 @@ async function main() {
     const symbols = parseGlossaryForSearch(glossaryPath);
     for (const sym of symbols) {
       await index.addCustomRecord({
-        url: `${BASE_PATH}/${courseSlug}/symbolverzeichnis/#${sym.id}`,
+        url: `${BASE_PATH}/symbolverzeichnis/#${sym.id}`,
         content: `${sym.name}: ${sym.description}. Symbol: ${sym.latex}`,
         language: 'de',
         meta: {

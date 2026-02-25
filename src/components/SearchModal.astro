@@ -1,0 +1,181 @@
+---
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<div class="search-modal-backdrop" id="search-backdrop"></div>
+<div class="search-modal" id="search-modal" role="dialog" aria-modal="true" aria-label="Suche" data-base={base}>
+  <div class="search-modal-inner">
+    <div class="search-modal-header">
+      <svg class="search-modal-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <span class="search-modal-hint">Suche...</span>
+      <button class="search-modal-close" id="close-search" aria-label="Suche schließen">&times;</button>
+    </div>
+    <div class="search-modal-body" id="search-modal-pagefind"></div>
+  </div>
+</div>
+
+<script is:inline>
+  (function() {
+    var searchInitialized = false;
+    var searchModal = document.getElementById('search-modal');
+    var searchBackdrop = document.getElementById('search-backdrop');
+    var closeSearchBtn = document.getElementById('close-search');
+
+    function initSearch() {
+      if (searchInitialized) return;
+      searchInitialized = true;
+      var baseUrl = searchModal ? searchModal.getAttribute('data-base') : '';
+      var script = document.createElement('script');
+      script.src = baseUrl + '/pagefind/pagefind-ui.js';
+      script.onload = function() {
+        new PagefindUI({
+          element: '#search-modal-pagefind',
+          showSubResults: true,
+          showImages: false,
+          translations: {
+            placeholder: 'Suche (z.B. "Drallsatz", "Lagrange")',
+            zero_results: 'Keine Ergebnisse',
+            many_results: '[COUNT] Ergebnisse',
+            one_result: '1 Ergebnis',
+            searching: 'Suche...',
+          },
+        });
+        if (searchModal) searchModal.classList.add('has-pagefind');
+        setTimeout(function() {
+          var input = searchModal && searchModal.querySelector('.pagefind-ui__search-input');
+          if (input) input.focus();
+        }, 50);
+        observeSearchResults();
+      };
+      document.head.appendChild(script);
+    }
+
+    // KaTeX rendering for search results.
+    // This processes Pagefind output (from our own build-time indexed content).
+    // KaTeX.render produces sanitized math DOM, so this is safe.
+    var katexLoaded = false;
+    var katexLoadCallbacks = [];
+
+    function ensureKaTeX(cb) {
+      if (typeof katex !== 'undefined') { cb(); return; }
+      katexLoadCallbacks.push(cb);
+      if (katexLoaded) return;
+      katexLoaded = true;
+      var s = document.createElement('script');
+      s.src = 'https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.js';
+      s.crossOrigin = 'anonymous';
+      s.onload = function() {
+        katexLoadCallbacks.forEach(function(fn) { fn(); });
+        katexLoadCallbacks = [];
+      };
+      document.head.appendChild(s);
+    }
+
+    function renderLatexInElement(el) {
+      if (typeof katex === 'undefined') return;
+      if (el.getAttribute('data-katex-done')) return;
+      el.setAttribute('data-katex-done', '1');
+
+      // Walk text nodes to find LaTeX delimiters and replace with rendered math.
+      // Uses DOM manipulation (createTreeWalker, createDocumentFragment) — no innerHTML.
+      var walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, null, false);
+      var textNodes = [];
+      var node;
+      while (node = walker.nextNode()) {
+        if (node.textContent && (node.textContent.indexOf('$') >= 0 || node.textContent.indexOf('\\') >= 0)) {
+          textNodes.push(node);
+        }
+      }
+
+      textNodes.forEach(function(textNode) {
+        var text = textNode.textContent;
+        var parts = [];
+        var lastIndex = 0;
+        var hasMatch = false;
+
+        // Combined regex: $$...$$ | \[...\] | $...$
+        var combined = /\$\$(.+?)\$\$|\\\[(.+?)\\\]|\$([^$\n]+)\$/g;
+        var match;
+        while ((match = combined.exec(text)) !== null) {
+          hasMatch = true;
+          if (match.index > lastIndex) {
+            parts.push(document.createTextNode(text.substring(lastIndex, match.index)));
+          }
+          var tex = match[1] || match[2] || match[3];
+          var isDisplay = !!(match[1] || match[2]);
+          try {
+            var span = document.createElement('span');
+            katex.render(tex.trim(), span, { throwOnError: false, displayMode: isDisplay });
+            parts.push(span);
+          } catch(e) {
+            parts.push(document.createTextNode(match[0]));
+          }
+          lastIndex = match.index + match[0].length;
+        }
+
+        if (hasMatch) {
+          if (lastIndex < text.length) {
+            parts.push(document.createTextNode(text.substring(lastIndex)));
+          }
+          var frag = document.createDocumentFragment();
+          parts.forEach(function(p) { frag.appendChild(p); });
+          textNode.parentNode.replaceChild(frag, textNode);
+        }
+      });
+    }
+
+    function observeSearchResults() {
+      var container = document.getElementById('search-modal-pagefind');
+      if (!container) return;
+      var observer = new MutationObserver(function() {
+        ensureKaTeX(function() {
+          var els = container.querySelectorAll('.pagefind-ui__result-excerpt, .pagefind-ui__result-title');
+          els.forEach(renderLatexInElement);
+        });
+      });
+      observer.observe(container, { childList: true, subtree: true });
+    }
+
+    // Open / Close
+    window.openSearch = function() {
+      initSearch();
+      if (searchModal) searchModal.classList.add('open');
+      if (searchBackdrop) searchBackdrop.classList.add('visible');
+      document.body.style.overflow = 'hidden';
+      setTimeout(function() {
+        var input = searchModal && searchModal.querySelector('.pagefind-ui__search-input');
+        if (input) input.focus();
+      }, 100);
+    };
+
+    window.closeSearch = function() {
+      if (searchModal) searchModal.classList.remove('open');
+      if (searchBackdrop) searchBackdrop.classList.remove('visible');
+      var sidebar = document.getElementById('sidebar');
+      if (!sidebar || !sidebar.classList.contains('mobile-open')) {
+        document.body.style.overflow = '';
+      }
+    };
+
+    // Wire up buttons
+    var openBtns = document.querySelectorAll('#open-search');
+    openBtns.forEach(function(btn) { btn.addEventListener('click', window.openSearch); });
+    if (closeSearchBtn) closeSearchBtn.addEventListener('click', window.closeSearch);
+    if (searchBackdrop) searchBackdrop.addEventListener('click', window.closeSearch);
+
+    // Cmd+K / Ctrl+K shortcut
+    document.addEventListener('keydown', function(e) {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault();
+        if (searchModal && searchModal.classList.contains('open')) {
+          window.closeSearch();
+        } else {
+          window.openSearch();
+        }
+      }
+      if (e.key === 'Escape' && searchModal && searchModal.classList.contains('open')) {
+        window.closeSearch();
+      }
+    });
+  })();
+</script>
