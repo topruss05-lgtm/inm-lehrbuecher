@@ -13,4 +13,6 @@
   <xi:include href="chapters/ch04-kraftgesetze.xml"/>
   <xi:include href="chapters/ch05-bindungen.xml"/>
 
+  <xi:include href="chapters/app-formelsammlung.xml"/>
+
 </book>

@@ -3,11 +3,11 @@ import { readFileSync } from 'fs';
 import { resolve, dirname } from 'path';
 import { renderMath } from './math-renderer.js';
 import type {
-  BookNode, ChapterNode, SectionNode, ContentNode, InlineNode,
+  BookNode, BookAuthor, ChapterNode, SectionNode, ContentNode, InlineNode,
   ParagraphNode, DisplayMathNode, NumberedEquationNode,
   FormalParaNode, FormalParaRole, ExampleNode, FigureNode,
   TableNode, TableCellNode, OrderedListNode, UnorderedListNode,
-  EmphasisNode, EmphasisRole,
+  EmphasisNode, EmphasisRole, XrefNode,
 } from './docbook-ast.js';
 
 const DB = 'http://docbook.org/ns/docbook';
@@ -78,6 +78,11 @@ function getId(el: Element): string {
   return el.getAttributeNS('http://www.w3.org/XML/1998/namespace', 'id') || el.getAttribute('xml:id') || '';
 }
 
+function idToSlug(id: string): string {
+  // Convert xml:id like "ch.variationsrechnung" to "variationsrechnung"
+  return id.replace(/^ch\./, '').replace(/^sec\./, '').replace(/^app\./, '');
+}
+
 // ─── Inline Parsing ─────────────────────────────────────────────
 
 function parseInlineNodes(parent: Element): InlineNode[] {
@@ -104,6 +109,9 @@ function parseInlineNodes(parent: Element): InlineNode[] {
           latex,
           html: renderMath(latex, false),
         });
+      } else if (ln === 'xref') {
+        const linkend = el.getAttribute('linkend') || '';
+        result.push({ type: 'xref', linkend } as XrefNode);
       } else if (ln === 'emphasis') {
         const role = el.getAttribute('role') || '';
         let emphRole: EmphasisRole = 'italic';
@@ -454,10 +462,14 @@ function parseChapter(el: Element, number: number): ChapterNode {
     }
   }
 
+  const id = getId(el);
   return {
     type: 'chapter',
-    id: getId(el),
+    id,
+    slug: idToSlug(id),
     number,
+    label: String(number),
+    isAppendix: false,
     title,
     preamble,
     sections,
@@ -484,6 +496,10 @@ export function parseBook(xmlPath: string): BookNode {
   let title = '';
   let subtitle = '';
   let date = '';
+  let authors: BookAuthor[] = [];
+  let copyright: BookNode['copyright'] = null;
+  let abstract = '';
+
   if (infoEl) {
     const titleEl = firstChildNS(infoEl, DB, 'title');
     const subtitleEl = firstChildNS(infoEl, DB, 'subtitle');
@@ -491,6 +507,33 @@ export function parseBook(xmlPath: string): BookNode {
     title = titleEl ? getTextContent(titleEl) : '';
     subtitle = subtitleEl ? getTextContent(subtitleEl) : '';
     date = dateEl ? getTextContent(dateEl) : '';
+
+    // Parse authors
+    for (const authorEl of childElementsNS(infoEl, DB, 'author')) {
+      const pn = firstChildNS(authorEl, DB, 'personname');
+      const aff = firstChildNS(authorEl, DB, 'affiliation');
+      authors.push({
+        firstName: pn ? getTextContent(firstChildNS(pn, DB, 'firstname') as Element || pn) : '',
+        surname: pn ? getTextContent(firstChildNS(pn, DB, 'surname') as Element || pn) : '',
+        orgName: aff ? getTextContent(firstChildNS(aff, DB, 'orgname') as Element || aff) : '',
+        orgDiv: aff ? getTextContent(firstChildNS(aff, DB, 'orgdiv') as Element || aff) : '',
+      });
+    }
+
+    // Parse copyright
+    const crEl = firstChildNS(infoEl, DB, 'copyright');
+    if (crEl) {
+      const years = childElementsNS(crEl, DB, 'year').map(y => getTextContent(y));
+      const holderEl = firstChildNS(crEl, DB, 'holder');
+      copyright = { years, holder: holderEl ? getTextContent(holderEl) : '' };
+    }
+
+    // Parse abstract
+    const absEl = firstChildNS(infoEl, DB, 'abstract');
+    if (absEl) {
+      const paraEl = firstChildNS(absEl, DB, 'para');
+      abstract = paraEl ? getTextContent(paraEl) : getTextContent(absEl);
+    }
   }
 
   // Parse chapters
@@ -499,5 +542,18 @@ export function parseBook(xmlPath: string): BookNode {
     parseChapter(ch, idx + 1)
   );
 
-  return { type: 'book', title, subtitle, date, chapters };
+  // Parse appendices
+  const appendixEls = childElementsNS(bookEl, DB, 'appendix');
+  const appendices: ChapterNode[] = appendixEls.map((app, idx) => {
+    const node = parseChapter(app, idx + 1);
+    node.isAppendix = true;
+    node.label = String.fromCharCode(65 + idx); // A, B, C, ...
+    // Ensure appendix slug is correct
+    if (!node.slug || node.slug === String(idx + 1)) {
+      node.slug = idToSlug(node.id);
+    }
+    return node;
+  });
+
+  return { type: 'book', title, subtitle, date, authors, copyright, abstract, chapters: [...chapters, ...appendices] };
 }

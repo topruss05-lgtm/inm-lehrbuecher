@@ -1,43 +1,56 @@
 ---
 import type { ContentNode, InlineNode } from '../lib/xml/docbook-ast.js';
+import type { ResolvedXref } from '../lib/xml/xref-resolver.js';
 
 interface Props {
   nodes: ContentNode[];
+  xrefMap?: Map<string, ResolvedXref>;
 }
 
-const { nodes } = Astro.props;
+const { nodes, xrefMap } = Astro.props;
+
+function renderInlineNode(n: InlineNode): string {
+  if (n.type === 'text') return n.content;
+  if (n.type === 'inline-math') return `<span class="math-inline" data-latex="${escAttr(n.latex)}">${n.html}</span>`;
+  if (n.type === 'xref') {
+    const resolved = xrefMap?.get(n.linkend);
+    if (resolved) return `<a href="${escAttr(resolved.url)}" class="xref-link">${esc(resolved.label)}</a>`;
+    return `<span class="xref-unresolved" title="Unresolved: ${escAttr(n.linkend)}">[?]</span>`;
+  }
+  if (n.type === 'emphasis') {
+    const inner = n.children.map(renderInlineNode).join('');
+    if (n.role === 'bold') return `<strong>${inner}</strong>`;
+    if (n.role === 'underline') return `<span class="text-underline">${inner}</span>`;
+    if (n.role === 'color-cyan') return `<span class="text-color-cyan">${inner}</span>`;
+    return `<em>${inner}</em>`;
+  }
+  return '';
+}
+
+function esc(s: string): string {
+  return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+function escAttr(s: string): string {
+  return esc(s).replace(/"/g, '&quot;');
+}
 ---
 
 {nodes.map((node) => {
   if (node.type === 'para') {
-    return (
-      <p>
-        {node.children.map((child: InlineNode) => {
-          if (child.type === 'text') return child.content;
-          if (child.type === 'inline-math') {
-            return <span class="math-inline" data-latex={child.latex}><Fragment set:html={child.html} /></span>;
-          }
-          if (child.type === 'emphasis') {
-            if (child.role === 'bold') return <strong>{child.children.map((c: InlineNode) => c.type === 'text' ? c.content : c.type === 'inline-math' ? <span class="math-inline" data-latex={c.latex}><Fragment set:html={c.html} /></span> : '')}</strong>;
-            if (child.role === 'underline') return <span class="text-underline">{child.children.map((c: InlineNode) => c.type === 'text' ? c.content : c.type === 'inline-math' ? <span class="math-inline" data-latex={c.latex}><Fragment set:html={c.html} /></span> : '')}</span>;
-            if (child.role === 'color-cyan') return <span class="text-color-cyan">{child.children.map((c: InlineNode) => c.type === 'text' ? c.content : c.type === 'inline-math' ? <span class="math-inline" data-latex={c.latex}><Fragment set:html={c.html} /></span> : '')}</span>;
-            return <em>{child.children.map((c: InlineNode) => c.type === 'text' ? c.content : c.type === 'inline-math' ? <span class="math-inline" data-latex={c.latex}><Fragment set:html={c.html} /></span> : '')}</em>;
-          }
-          return '';
-        })}
-      </p>
-    );
+    const html = node.children.map(renderInlineNode).join('');
+    return <p><Fragment set:html={html} /></p>;
   }
 
   if (node.type === 'display-math') {
-    return <div class="math-display" data-latex={node.latex}><Fragment set:html={node.html} /></div>;
+    return <div class="math-display" data-latex={node.latex} data-pagefind-index-attrs="data-latex"><Fragment set:html={node.html} /></div>;
   }
 
   if (node.type === 'numbered-equation') {
     return (
-      <div class="equation-wrapper" id={node.id}>
-        {node.title && <span class="equation-title">{node.title}</span>}
-        <div class="equation-content" data-latex={node.latex}>
+      <div class="equation-wrapper" id={node.id} data-pagefind-weight="3">
+        {node.title && <span class="equation-title" data-pagefind-meta={`title:${node.title}`}>{node.title}</span>}
+        <div class="equation-content" data-latex={node.latex} data-pagefind-index-attrs="data-latex">
           <Fragment set:html={node.html} />
         </div>
         <span class="equation-number">({node.number})</span>
@@ -46,17 +59,14 @@ const { nodes } = Astro.props;
   }
 
   if (node.type === 'formalpara') {
+    const fpWeight = (node.role === 'definition' || node.role === 'theorem') ? '5' : '2';
+    const fpFilter = node.role === 'definition' ? 'type:Definition' : node.role === 'theorem' ? 'type:Satz' : undefined;
+    const titleHtml = node.title.map(renderInlineNode).join('');
     return (
-      <div class={`formalpara fp-${node.role}`} id={node.id || undefined}>
-        <p class="formalpara-title">
-          {node.title.map((t: InlineNode) => {
-            if (t.type === 'text') return t.content;
-            if (t.type === 'inline-math') return <span class="math-inline" data-latex={t.latex}><Fragment set:html={t.html} /></span>;
-            return '';
-          })}
-        </p>
+      <div class={`formalpara fp-${node.role}`} id={node.id || undefined} data-pagefind-weight={fpWeight} data-pagefind-filter={fpFilter}>
+        <p class="formalpara-title"><Fragment set:html={titleHtml} /></p>
         <div class="formalpara-body">
-          <Astro.self nodes={node.body} />
+          <Astro.self nodes={node.body} xrefMap={xrefMap} />
         </div>
       </div>
     );
@@ -67,7 +77,7 @@ const { nodes } = Astro.props;
       <div class="example-block" id={node.id || undefined}>
         <p class="example-title">{node.title}</p>
         <div class="example-body">
-          <Astro.self nodes={node.body} />
+          <Astro.self nodes={node.body} xrefMap={xrefMap} />
         </div>
       </div>
     );
@@ -95,21 +105,15 @@ const { nodes } = Astro.props;
           {node.headers.length > 0 && (
             <thead>
               <tr>
-                {node.headers.map((cell: InlineNode[]) => (
-                  <th>
-                    {cell.map((n: InlineNode) => {
-                      if (n.type === 'text') return n.content;
-                      if (n.type === 'inline-math') return <span class="math-inline" data-latex={n.latex}><Fragment set:html={n.html} /></span>;
-                      return '';
-                    })}
-                  </th>
-                ))}
+                {node.headers.map((cell: InlineNode[]) => {
+                  const cellHtml = cell.map(renderInlineNode).join('');
+                  return <th><Fragment set:html={cellHtml} /></th>;
+                })}
               </tr>
             </thead>
           )}
           {node.rows.length > 0 && (
             <tbody>
-              {/* Rows are flattened cells, we need to group them back into rows */}
               {(() => {
                 const colCount = node.headers.length || 3;
                 const rowGroups: InlineNode[][][] = [];
@@ -118,15 +122,10 @@ const { nodes } = Astro.props;
                 }
                 return rowGroups.map((row: InlineNode[][]) => (
                   <tr>
-                    {row.map((cell: InlineNode[]) => (
-                      <td>
-                        {cell.map((n: InlineNode) => {
-                          if (n.type === 'text') return n.content;
-                          if (n.type === 'inline-math') return <span class="math-inline" data-latex={n.latex}><Fragment set:html={n.html} /></span>;
-                          return '';
-                        })}
-                      </td>
-                    ))}
+                    {row.map((cell: InlineNode[]) => {
+                      const cellHtml = cell.map(renderInlineNode).join('');
+                      return <td><Fragment set:html={cellHtml} /></td>;
+                    })}
                   </tr>
                 ));
               })()}
@@ -141,7 +140,7 @@ const { nodes } = Astro.props;
     return (
       <ol class="content-ol">
         {node.items.map((item: ContentNode[]) => (
-          <li><Astro.self nodes={item} /></li>
+          <li><Astro.self nodes={item} xrefMap={xrefMap} /></li>
         ))}
       </ol>
     );
@@ -151,7 +150,7 @@ const { nodes } = Astro.props;
     return (
       <ul class="content-ul">
         {node.items.map((item: ContentNode[]) => (
-          <li><Astro.self nodes={item} /></li>
+          <li><Astro.self nodes={item} xrefMap={xrefMap} /></li>
         ))}
       </ul>
     );
@@ -159,17 +158,12 @@ const { nodes } = Astro.props;
 
   if (node.type === 'section') {
     if (node.depth === 2) {
+      const titleHtml = node.title.map(renderInlineNode).join('');
       return (
         <section class="subsection-block" id={node.id}>
-          <h4 class="subsection-heading">
-            {node.title.map((t: InlineNode) => {
-              if (t.type === 'text') return t.content;
-              if (t.type === 'inline-math') return <span class="math-inline" data-latex={t.latex}><Fragment set:html={t.html} /></span>;
-              return '';
-            })}
-          </h4>
-          <Astro.self nodes={node.children} />
-          {node.subsections.map((sub) => <Astro.self nodes={[sub]} />)}
+          <h4 class="subsection-heading"><Fragment set:html={titleHtml} /></h4>
+          <Astro.self nodes={node.children} xrefMap={xrefMap} />
+          {node.subsections.map((sub) => <Astro.self nodes={[sub]} xrefMap={xrefMap} />)}
         </section>
       );
     }

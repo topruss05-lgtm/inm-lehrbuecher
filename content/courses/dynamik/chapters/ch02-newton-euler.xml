@@ -183,15 +183,15 @@
       <title>Axiom I: Prinzip der virtuellen Arbeit (PvA)</title>
       <para>Für jedes Teilsystem <inlineequation><alt>$S$</alt></inlineequation> und alle
         verträglichen virtuellen Verschiebungen
-        <inlineequation><alt>$\delta\vec{s}$</alt></inlineequation> gilt:
-        <inlineequation><alt>$\delta W = \int_{S} \delta\vec{s} \cdot (\mathrm{d}\vec{F} - \ddot{\vec{s}}\,\mathrm{d}m) \doteq 0 \quad \forall\,\delta\vec{s},\;\forall\,t$</alt></inlineequation>.</para>
+        <inlineequation><alt>$\delta\vec{\xi}$</alt></inlineequation> gilt:
+        <inlineequation><alt>$\delta W = \int_{S} \delta\vec{\xi} \cdot (\mathrm{d}\vec{F} - \ddot{\vec{\xi}}\,\mathrm{d}m) \doteq 0 \quad \forall\,\delta\vec{\xi},\;\forall\,t$</alt></inlineequation>.</para>
     </formalpara>
 
     <formalpara role="definition" xml:id="def.axiom-vwwp">
       <title>Axiom II: Variationelles Wechselwirkungsprinzip (vWwP)</title>
       <para>Die inneren Kräfte eines Starrkörpers leisten bei starren virtuellen Verschiebungen
         keine virtuelle Arbeit:
-        <inlineequation><alt>$\delta W^{i,K} = \int_{K} \delta\vec{s}_{\mathrm{rg}}\cdot\mathrm{d}\vec{F}^{i,K} \doteq 0 \quad \forall\,\delta\vec{s}_{\mathrm{rg}},\;\forall\,K \in \mathcal{S}$</alt></inlineequation>.</para>
+        <inlineequation><alt>$\delta W^{i,K} = \int_{K} \delta\vec{\xi}_{\mathrm{rg}}\cdot\mathrm{d}\vec{F}^{i,K} \doteq 0 \quad \forall\,\delta\vec{\xi}_{\mathrm{rg}},\;\forall\,K \in \mathcal{S}$</alt></inlineequation>.</para>
     </formalpara>
 
     <para>Aus der Kombination von PvA und vWwP folgen für einzelne Starrkörper-Subsysteme die
@@ -240,21 +240,21 @@
       <inlineequation><alt>$P$</alt></inlineequation> gilt:</para>
 
     <equation xml:id="eq.geschwindigkeit-translation">
-      <alt>\[ {}_I\vec{v}_P = {}_I\bar{J}_P\, \dot{\vec{q}} + {}_I\bar{v}_P, \qquad {}_I\delta\vec{r}_P = {}_I\bar{J}_P\, \delta\vec{q}, \qquad {}_I\vec{a}_P = {}_I\bar{J}_P\, \ddot{\vec{q}} + {}_I\bar{h}_P. \]</alt>
+      <alt>\[ {}_I\vec{v}_P = {}_I\bar{J}_P\, \dot{\vec{q}} + {}_I\bar{v}_P, \qquad {}_I\delta\vec{r}_P = {}_I\bar{J}_P\, \delta\vec{q}, \qquad {}_I\vec{a}_P = {}_I\bar{J}_P\, \ddot{\vec{q}} + {}_I\bar{k}_P. \]</alt>
     </equation>
 
     <para>Für die Rotation:</para>
 
     <equation xml:id="eq.winkelgeschwindigkeit">
-      <alt>\[ {}_I\vec{\Omega} = {}_I\bar{J}_R\, \dot{\vec{q}} + {}_I\bar{v}_R, \qquad {}_I\delta\vec{\Phi} = {}_I\bar{J}_R\, \delta\vec{q}, \qquad {}_I\vec{\Psi} = {}_I\bar{J}_R\, \ddot{\vec{q}} + {}_I\bar{h}_R. \]</alt>
+      <alt>\[ {}_I\vec{\Omega} = {}_I\bar{J}_R\, \dot{\vec{q}} + {}_I\bar{v}_R, \qquad {}_I\delta\vec{\Phi} = {}_I\bar{J}_R\, \delta\vec{q}, \qquad {}_I\vec{\Psi} = {}_I\bar{J}_R\, \ddot{\vec{q}} + {}_I\bar{k}_R. \]</alt>
     </equation>
 
     <para>Hierbei sind <inlineequation><alt>$\bar{J}_P$</alt></inlineequation> und
       <inlineequation><alt>$\bar{J}_R$</alt></inlineequation> die translatorische bzw.
       rotatorische Jacobi-Matrix, <inlineequation><alt>$\bar{v}_P$</alt></inlineequation>
       und <inlineequation><alt>$\bar{v}_R$</alt></inlineequation> die explizit
-      zeitabhängigen Anteile und <inlineequation><alt>$\bar{h}_P$</alt></inlineequation>,
-      <inlineequation><alt>$\bar{h}_R$</alt></inlineequation> die restlichen
+      zeitabhängigen Anteile und <inlineequation><alt>$\bar{k}_P$</alt></inlineequation>,
+      <inlineequation><alt>$\bar{k}_R$</alt></inlineequation> die restlichen
       Beschleunigungsterme.</para>
   </section>
 
@@ -275,13 +275,14 @@
 
     <para>Diese Gleichungen haben die Struktur</para>
 
-    <informalequation><alt>\[ M(\vec{q}, t)\,\ddot{\vec{q}} + \bar{g}(\vec{q}, \dot{\vec{q}}, t) - \bar{f}(\vec{q}, \dot{\vec{q}}, t) = \vec{0}, \]</alt></informalequation>
+    <informalequation><alt>\[ M(\vec{q}, t)\,\ddot{\vec{q}} + \vec{g}(\vec{q}, \dot{\vec{q}}, t) - \vec{f}(\vec{q}, \dot{\vec{q}}, t, \vec{\tau}) = \vec{0}, \]</alt></informalequation>
 
     <para>wobei <inlineequation><alt>$M = M^T$</alt></inlineequation> die symmetrische, positiv
-      definite Massenmatrix ist, <inlineequation><alt>$\bar{g}$</alt></inlineequation> die
-      Kreisel- und Coriolisterme enthält und
-      <inlineequation><alt>$\bar{f}$</alt></inlineequation> die generalisierten aktiven
-      Kräfte zusammenfasst.</para>
+      definite Massenmatrix ist, <inlineequation><alt>$\vec{g}$</alt></inlineequation> die
+      Kreisel- und Coriolisterme enthält,
+      <inlineequation><alt>$\vec{f}$</alt></inlineequation> die generalisierten aktiven
+      Kräfte zusammenfasst und <inlineequation><alt>$\vec{\tau}$</alt></inlineequation> den
+      Vektor der Stellgrößen (Regler-Inputs) bezeichnet.</para>
   </section>
 
   <!-- ═══════════════════════════════════════════════════════════════════ -->

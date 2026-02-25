@@ -2,18 +2,31 @@
 // DocBook 5 → TypeScript AST Type Definitions
 // ═══════════════════════════════════════════════════════════════════
 
+export interface BookAuthor {
+  firstName: string;
+  surname: string;
+  orgName: string;
+  orgDiv: string;
+}
+
 export interface BookNode {
   type: 'book';
   title: string;
   subtitle: string;
   date: string;
+  authors: BookAuthor[];
+  copyright: { years: string[]; holder: string } | null;
+  abstract: string;
   chapters: ChapterNode[];
 }
 
 export interface ChapterNode {
   type: 'chapter';
   id: string;
+  slug: string;
   number: number;
+  label: string;
+  isAppendix: boolean;
   title: string;
   preamble: ContentNode[];
   sections: SectionNode[];
@@ -112,7 +125,8 @@ export interface UnorderedListNode {
 export type InlineNode =
   | TextNode
   | InlineMathNode
-  | EmphasisNode;
+  | EmphasisNode
+  | XrefNode;
 
 export interface TextNode {
   type: 'text';
@@ -131,6 +145,11 @@ export interface EmphasisNode {
   type: 'emphasis';
   role: EmphasisRole;
   children: InlineNode[];
+}
+
+export interface XrefNode {
+  type: 'xref';
+  linkend: string;
 }
 
 // ─── Glossary ───────────────────────────────────────────────────

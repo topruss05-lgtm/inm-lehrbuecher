@@ -1,0 +1,80 @@
+---
+import CourseLayout from '../../layouts/CourseLayout.astro';
+import { discoverCourses } from '../../lib/xml/course-registry.js';
+import type { CourseInfo } from '../../lib/xml/course-registry.js';
+
+export function getStaticPaths() {
+  const courses = discoverCourses();
+  return courses.map((course) => ({
+    params: { course: course.slug },
+    props: { course },
+  }));
+}
+
+interface Props {
+  course: CourseInfo;
+}
+
+const { course } = Astro.props;
+const { book, glossary, slug } = course;
+
+const categoryOrder = ['energy', 'inertia', 'dynamics', 'system', 'coordinates', 'kinematics', 'forces', 'conservation', 'variational'];
+const categoryNames: Record<string, string> = {
+  energy: 'Energiegrößen',
+  inertia: 'Trägheitsgrößen',
+  dynamics: 'Dynamik-Matrizen',
+  system: 'Systemgrößen',
+  coordinates: 'Koordinaten',
+  kinematics: 'Kinematik',
+  forces: 'Kräfte',
+  conservation: 'Erhaltungsgrößen',
+  variational: 'Variationsrechnung',
+};
+
+const sortedGlossary = [...glossary].sort((a, b) => {
+  const ia = categoryOrder.indexOf(a.category);
+  const ib = categoryOrder.indexOf(b.category);
+  if (ia !== ib) return (ia === -1 ? 99 : ia) - (ib === -1 ? 99 : ib);
+  return a.name.localeCompare(b.name);
+});
+
+// Group by category
+const grouped = new Map<string, typeof glossary>();
+for (const sym of sortedGlossary) {
+  const cat = sym.category || 'other';
+  if (!grouped.has(cat)) grouped.set(cat, []);
+  grouped.get(cat)!.push(sym);
+}
+---
+
+<CourseLayout book={book} glossary={glossary} courseSlug={slug} currentChapterSlug="symbolverzeichnis">
+  <section class="glossary-appendix" id="glossary-appendix">
+    <h2 class="glossary-appendix-heading">Symbolverzeichnis</h2>
+
+    {Array.from(grouped.entries()).map(([cat, symbols]) => (
+      <div class="glossary-category">
+        <h3 class="glossary-category-title">{categoryNames[cat] || cat}</h3>
+        <table class="notation-table">
+          <thead>
+            <tr>
+              <th>Symbol</th>
+              <th>Name</th>
+              <th class="desc-cell">Beschreibung</th>
+              <th>Einheit</th>
+            </tr>
+          </thead>
+          <tbody>
+            {symbols.map((sym) => (
+              <tr id={sym.id} data-symbol-id={sym.id}>
+                <td class="symbol-cell"><Fragment set:html={sym.latexHtml} /></td>
+                <td>{sym.name}</td>
+                <td class="desc-cell">{sym.description}</td>
+                <td class="unit-cell">{sym.unit || '\u2014'}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    ))}
+  </section>
+</CourseLayout>

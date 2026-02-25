@@ -5,7 +5,8 @@
          xml:id="ch.einfache-gen-kraftgesetze">
   <title>Einfache generalisierte Kraftgesetze</title>
 
-  <para>In den vorangegangenen Kapiteln haben wir die Bewegungsgleichungen in der Form
+  <para>In den vorangegangenen Kapiteln (siehe <xref linkend="ch.projizierte-newton-euler"/> und
+    <xref linkend="ch.lagrangesche-dynamik"/>) haben wir die Bewegungsgleichungen in der Form
     <inlineequation><alt>$M\ddot{\vec{q}} + \ldots = \vec{f}$</alt></inlineequation>
     hergeleitet, wobei <inlineequation><alt>$\vec{f}$</alt></inlineequation> die
     generalisierten aktiven Kräfte bezeichnete. Dieses Kapitel widmet sich der Frage, wie

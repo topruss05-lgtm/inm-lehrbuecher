@@ -944,3 +944,301 @@ p {
   .chapter { page-break-before: always; }
   .formalpara, .example-block { break-inside: avoid; }
 }
+
+/* ─── Breadcrumb ──────────────────────────────────────────────── */
+
+@layer components {
+  .breadcrumb {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.78rem;
+    color: var(--color-ink-muted);
+    margin-top: 0.35rem;
+  }
+  .breadcrumb a {
+    color: var(--color-ink-muted);
+    text-decoration: none;
+    transition: color 0.15s;
+  }
+  .breadcrumb a:hover {
+    color: var(--color-accent);
+  }
+  .breadcrumb-sep {
+    margin: 0 0.35rem;
+    opacity: 0.5;
+  }
+}
+
+/* ─── Landing Page ────────────────────────────────────────────── */
+
+@layer components {
+  .landing-content {
+    max-width: 56rem;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 4rem;
+  }
+
+  .course-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .course-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.5rem 1.75rem;
+    border: 1.5px solid var(--color-border);
+    border-radius: 8px;
+    background: white;
+    text-decoration: none;
+    color: inherit;
+    transition: border-color 0.2s, box-shadow 0.2s, transform 0.15s;
+  }
+  .course-card:hover {
+    border-color: var(--color-accent);
+    box-shadow: 0 2px 12px rgba(180, 83, 9, 0.08);
+    transform: translateY(-1px);
+  }
+
+  .course-card-title {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--color-ink);
+    margin: 0 0 0.25rem;
+  }
+  .course-card-subtitle {
+    font-size: 0.9rem;
+    color: var(--color-ink-light);
+    margin: 0 0 0.5rem;
+  }
+  .course-card-meta {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.8rem;
+    color: var(--color-ink-muted);
+    margin: 0;
+  }
+  .course-card-arrow {
+    font-size: 1.5rem;
+    color: var(--color-ink-faint);
+    transition: color 0.2s, transform 0.2s;
+  }
+  .course-card:hover .course-card-arrow {
+    color: var(--color-accent);
+    transform: translateX(3px);
+  }
+}
+
+/* ─── Course Overview ─────────────────────────────────────────── */
+
+@layer components {
+  .course-overview {
+    padding-bottom: 2rem;
+  }
+
+  .course-abstract {
+    font-family: 'Crimson Pro', Georgia, serif;
+    font-size: 1.05rem;
+    line-height: 1.6;
+    color: var(--color-ink-light);
+    margin-top: 0.75rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .course-meta {
+    margin-top: 0.5rem;
+    margin-bottom: 1rem;
+    padding: 0.75rem 1rem;
+    background: var(--color-bg-warm);
+    border-radius: 6px;
+    font-size: 0.85rem;
+    color: var(--color-ink-muted);
+  }
+  .course-meta p { margin: 0.15rem 0; }
+  .course-author { font-weight: 500; color: var(--color-ink-light); }
+  .course-affiliation { font-weight: 400; }
+  .course-copyright { font-size: 0.8rem; }
+
+  .course-toc-full {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+  }
+
+  .course-toc-card {
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+    padding: 1rem 1.25rem;
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+    text-decoration: none;
+    color: inherit;
+    transition: border-color 0.2s, background 0.15s;
+  }
+  .course-toc-card:hover {
+    border-color: var(--color-accent);
+    background: var(--color-accent-bg);
+  }
+
+  .course-toc-label {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--color-accent);
+    white-space: nowrap;
+    min-width: 5rem;
+  }
+  .course-toc-title {
+    font-size: 1.05rem;
+    font-weight: 500;
+    flex: 1;
+  }
+  .course-toc-sections {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.75rem;
+    color: var(--color-ink-muted);
+    white-space: nowrap;
+  }
+}
+
+/* ─── Chapter Navigation (Prev/Next) ─────────────────────────── */
+
+@layer components {
+  .chapter-nav {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .chapter-nav-link {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+    text-decoration: none;
+    color: inherit;
+    max-width: 48%;
+    transition: border-color 0.2s, background 0.15s;
+  }
+  .chapter-nav-link:hover {
+    border-color: var(--color-accent);
+    background: var(--color-accent-bg);
+  }
+
+  .chapter-nav-prev {
+    align-items: flex-start;
+  }
+  .chapter-nav-next {
+    align-items: flex-end;
+    margin-left: auto;
+  }
+
+  .chapter-nav-label {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-accent);
+  }
+  .chapter-nav-title {
+    font-size: 0.9rem;
+    color: var(--color-ink-light);
+  }
+}
+
+/* ─── Glossary Category ───────────────────────────────────────── */
+
+@layer components {
+  .glossary-category {
+    margin-bottom: 2rem;
+  }
+  .glossary-category-title {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--color-ink);
+    margin: 0 0 0.75rem;
+    padding-bottom: 0.35rem;
+    border-bottom: 1.5px solid var(--color-border);
+  }
+}
+
+/* ─── Current chapter highlight in TOC ────────────────────────── */
+
+@layer components {
+  .toc-chapter-item.current-chapter > .toc-chapter-link {
+    color: var(--color-accent);
+    font-weight: 600;
+  }
+}
+
+/* ─── Cross-Reference Links ──────────────────────────────────── */
+
+.xref-link {
+  color: var(--color-accent);
+  text-decoration: none;
+  border-bottom: 1px dotted var(--color-accent-light);
+  transition: border-color 0.15s ease;
+}
+.xref-link:hover {
+  border-bottom-style: solid;
+  color: var(--color-accent-light);
+}
+.xref-unresolved {
+  color: var(--color-ink-muted);
+  font-style: italic;
+  cursor: help;
+}
+
+/* ─── Pagefind UI Overrides ───────────────────────────────────── */
+
+.pagefind-ui__search-input {
+  font-family: 'DM Sans', sans-serif !important;
+  font-size: 0.85rem !important;
+  border-radius: 6px !important;
+  border: 1.5px solid var(--color-border) !important;
+  padding: 0.5rem 0.75rem !important;
+  background: white !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+.pagefind-ui__search-input:focus {
+  border-color: var(--color-accent) !important;
+  outline: none !important;
+  box-shadow: 0 0 0 2px rgba(180, 83, 9, 0.15) !important;
+}
+.pagefind-ui__result-link {
+  color: var(--color-accent) !important;
+  font-weight: 500 !important;
+}
+.pagefind-ui__result-excerpt {
+  font-family: 'Crimson Pro', Georgia, serif !important;
+  font-size: 0.88rem !important;
+  line-height: 1.55 !important;
+}
+.pagefind-ui__result-excerpt mark {
+  background: rgba(180, 83, 9, 0.15) !important;
+  color: inherit !important;
+  padding: 0.05em 0.15em !important;
+  border-radius: 2px !important;
+}
+.pagefind-ui__button {
+  background: var(--color-accent) !important;
+  border-radius: 4px !important;
+}
+.pagefind-ui__form {
+  margin: 0 !important;
+}
+.pagefind-ui__drawer {
+  max-height: 50vh !important;
+  overflow-y: auto !important;
+}

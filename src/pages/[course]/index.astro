@@ -1,0 +1,60 @@
+---
+import CourseLayout from '../../layouts/CourseLayout.astro';
+import { discoverCourses } from '../../lib/xml/course-registry.js';
+import type { CourseInfo } from '../../lib/xml/course-registry.js';
+
+export function getStaticPaths() {
+  const courses = discoverCourses();
+  return courses.map((course) => ({
+    params: { course: course.slug },
+    props: { course },
+  }));
+}
+
+interface Props {
+  course: CourseInfo;
+}
+
+const { course } = Astro.props;
+const { book, glossary, slug } = course;
+---
+
+<CourseLayout book={book} glossary={glossary} courseSlug={slug}>
+  <div class="course-overview">
+    <h2 class="chapter-heading">Übersicht</h2>
+
+    {book.abstract && (
+      <p class="course-abstract">{book.abstract}</p>
+    )}
+
+    {book.authors.length > 0 && (
+      <div class="course-meta">
+        {book.authors.map((a) => (
+          <p class="course-author">
+            {a.firstName || a.surname
+              ? `${a.firstName} ${a.surname}`.trim()
+              : a.orgName}
+            {a.orgName && (a.firstName || a.surname) && <span class="course-affiliation"> — {a.orgName}{a.orgDiv ? `, ${a.orgDiv}` : ''}</span>}
+          </p>
+        ))}
+        {book.copyright && (
+          <p class="course-copyright">&copy; {book.copyright.years.join('–')} {book.copyright.holder}</p>
+        )}
+      </div>
+    )}
+
+    <div class="course-toc-full">
+      {book.chapters.map((ch) => (
+        <a href={`/${slug}/${ch.slug}/`} class="course-toc-card">
+          <span class="course-toc-label">
+            {ch.isAppendix ? `Anhang ${ch.label}` : `Kapitel ${ch.label}`}
+          </span>
+          <span class="course-toc-title">{ch.title}</span>
+          <span class="course-toc-sections">
+            {ch.sections.length} {ch.sections.length === 1 ? 'Abschnitt' : 'Abschnitte'}
+          </span>
+        </a>
+      ))}
+    </div>
+  </div>
+</CourseLayout>

@@ -1,0 +1,89 @@
+---
+import CourseLayout from '../../layouts/CourseLayout.astro';
+import ContentRenderer from '../../components/ContentRenderer.astro';
+import { discoverCourses } from '../../lib/xml/course-registry.js';
+import type { CourseInfo } from '../../lib/xml/course-registry.js';
+import type { ChapterNode } from '../../lib/xml/docbook-ast.js';
+
+export function getStaticPaths() {
+  const courses = discoverCourses();
+  const paths: any[] = [];
+
+  for (const course of courses) {
+    for (const ch of course.book.chapters) {
+      paths.push({
+        params: { course: course.slug, chapter: ch.slug },
+        props: { course, chapter: ch },
+      });
+    }
+  }
+
+  return paths;
+}
+
+interface Props {
+  course: CourseInfo;
+  chapter: ChapterNode;
+}
+
+const { course, chapter: ch } = Astro.props;
+const { book, glossary, xrefMap, slug: courseSlug } = course;
+
+// Find prev/next chapters
+const allChapters = book.chapters;
+const currentIdx = allChapters.findIndex((c) => c.slug === ch.slug);
+const prevChapter = currentIdx > 0 ? allChapters[currentIdx - 1] : null;
+const nextChapter = currentIdx < allChapters.length - 1 ? allChapters[currentIdx + 1] : null;
+---
+
+<CourseLayout book={book} glossary={glossary} courseSlug={courseSlug} currentChapterSlug={ch.slug}>
+  <article class="chapter" id={ch.id} data-chapter-id={ch.id} data-pagefind-body data-pagefind-filter={`course:${book.title}`}>
+    <h2 class="chapter-heading">
+      <span class="chapter-number">{ch.isAppendix ? `Anhang ${ch.label}.` : `${ch.label}.`}</span>
+      {ch.title}
+    </h2>
+
+    {/* Chapter preamble */}
+    <ContentRenderer nodes={ch.preamble} xrefMap={xrefMap} />
+
+    {/* Sections */}
+    {ch.sections.map((sec) => (
+      <section class="section-block" id={sec.id}>
+        <h3 class="section-heading">
+          {sec.title.map((t) => {
+            if (t.type === 'text') return t.content;
+            if (t.type === 'inline-math') return <span class="math-inline" data-latex={t.latex}><Fragment set:html={t.html} /></span>;
+            return '';
+          })}
+        </h3>
+
+        <ContentRenderer nodes={sec.children} xrefMap={xrefMap} />
+
+        {/* Subsections */}
+        {sec.subsections.map((sub) => (
+          <ContentRenderer nodes={[sub]} xrefMap={xrefMap} />
+        ))}
+      </section>
+    ))}
+  </article>
+
+  {/* Prev/Next Navigation */}
+  <nav class="chapter-nav">
+    {prevChapter ? (
+      <a href={`/${courseSlug}/${prevChapter.slug}/`} class="chapter-nav-link chapter-nav-prev">
+        <span class="chapter-nav-label">Zurück</span>
+        <span class="chapter-nav-title">
+          {prevChapter.isAppendix ? `Anhang ${prevChapter.label}` : `${prevChapter.label}.`} {prevChapter.title}
+        </span>
+      </a>
+    ) : <div />}
+    {nextChapter ? (
+      <a href={`/${courseSlug}/${nextChapter.slug}/`} class="chapter-nav-link chapter-nav-next">
+        <span class="chapter-nav-label">Weiter</span>
+        <span class="chapter-nav-title">
+          {nextChapter.isAppendix ? `Anhang ${nextChapter.label}` : `${nextChapter.label}.`} {nextChapter.title}
+        </span>
+      </a>
+    ) : <div />}
+  </nav>
+</CourseLayout>

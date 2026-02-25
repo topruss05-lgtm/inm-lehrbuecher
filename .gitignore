@@ -1,5 +1,6 @@
 # Build output
 dist/
+build/
 
 # Dependencies
 node_modules/
@@ -17,3 +18,7 @@ Thumbs.db
 
 # Lecture source materials (large PDFs, not part of the web project)
 Vorlesungen/
+Übungen/
+
+# Raw source markdown
+content/courses/*/formelsammlung-raw.md

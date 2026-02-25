@@ -1,0 +1,439 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<glossary xmlns="http://docbook.org/ns/docbook"
+          xmlns:xi="http://www.w3.org/2001/XInclude"
+          version="5.0"
+          xml:lang="de"
+          xml:id="glossary-dynamik">
+
+  <title>Symbolverzeichnis</title>
+
+  <!-- ═══ Energiegrößen ════════════════════════════════════════════ -->
+
+  <glossdiv xml:id="sym-cat-energy">
+    <title>Energiegrößen</title>
+
+    <glossentry xml:id="sym-T">
+      <glossterm><inlineequation><alt>$T$</alt></inlineequation></glossterm>
+      <glossdef>
+        <para>Kinetische Energie — Gesamte kinetische Energie des Systems, zusammengesetzt aus translatorischen und rotatorischen Anteilen aller Körper.</para>
+        <glossseealso otherterm="sym-V"/>
+        <glossseealso otherterm="sym-L"/>
+        <glossseealso otherterm="sym-E"/>
+      </glossdef>
+      <?inm unit="J" ?>
+      <?inm name="Kinetische Energie" ?>
+    </glossentry>
+
+    <glossentry xml:id="sym-V">
+      <glossterm><inlineequation><alt>$V$</alt></inlineequation></glossterm>
+      <glossdef>
+        <para>Potentielle Energie — Potentielle Energie des Systems (Schwere, Federn, etc.).</para>
+        <glossseealso otherterm="sym-T"/>
+        <glossseealso otherterm="sym-L"/>
+        <glossseealso otherterm="sym-E"/>
+      </glossdef>
+      <?inm unit="J" ?>
+      <?inm name="Potentielle Energie" ?>
+    </glossentry>
+
+    <glossentry xml:id="sym-L">
+      <glossterm><inlineequation><alt>$L$</alt></inlineequation></glossterm>
+      <glossdef>
+        <para>Lagrange-Funktion — Differenz aus kinetischer und potentieller Energie: L = T - V.</para>
+        <glossseealso otherterm="sym-T"/>
+        <glossseealso otherterm="sym-V"/>
+      </glossdef>
+      <?inm unit="J" ?>
+      <?inm name="Lagrange-Funktion" ?>
+    </glossentry>
+
+    <glossentry xml:id="sym-E">
+      <glossterm><inlineequation><alt>$E$</alt></inlineequation></glossterm>
+      <glossdef>
+        <para>Gesamtenergie — E = T + V. Bei konservativen Systemen eine Erhaltungsgröße.</para>
+        <glossseealso otherterm="sym-T"/>
+        <glossseealso otherterm="sym-V"/>
+      </glossdef>
+      <?inm unit="J" ?>
+      <?inm name="Gesamtenergie" ?>
+    </glossentry>
+
+    <glossentry xml:id="sym-Phi-dissipation">
+      <glossterm><inlineequation><alt>$\Phi$</alt></inlineequation></glossterm>
+      <glossdef>
+        <para>Dissipationsfunktion — Dissipationsfunktion nach Rayleigh. Für lineare Dämpfer: Φ = ½·d·γ².</para>
+        <glossseealso otherterm="sym-d-damping"/>
+      </glossdef>
+      <?inm unit="W" ?>
+      <?inm name="Dissipationsfunktion" ?>
+      <?inm chapters="ch.einfache-gen-kraftgesetze" ?>
+    </glossentry>
+  </glossdiv>
+
+  <!-- ═══ Trägheiten ══════════════════════════════════════════════ -->
+
+  <glossdiv xml:id="sym-cat-inertia">
+    <title>Trägheitsgrößen</title>
+
+    <glossentry xml:id="sym-m">
+      <glossterm><inlineequation><alt>$m$</alt></inlineequation></glossterm>
+      <glossdef>
+        <para>Masse — Masse eines Körpers oder Massenpunkts.</para>
+      </glossdef>
+      <?inm unit="kg" ?>
+      <?inm name="Masse" ?>
+    </glossentry>
+
+    <glossentry xml:id="sym-Theta-S">
+      <glossterm><inlineequation><alt>$\bar{\Theta}_S$</alt></inlineequation></glossterm>
+      <glossdef>
+        <para>Trägheitstensor — Symmetrischer Trägheitstensor eines Körpers bezogen auf den Schwerpunkt S.</para>
+      </glossdef>
+      <?inm unit="kg·m²" ?>
+      <?inm name="Trägheitstensor" ?>
+    </glossentry>
+  </glossdiv>
+
+  <!-- ═══ Dynamik-Matrizen ═══════════════════════════════════════ -->
+
+  <glossdiv xml:id="sym-cat-dynamics">
+    <title>Dynamik-Matrizen</title>
+
+    <glossentry xml:id="sym-M-matrix">
+      <glossterm><inlineequation><alt>$M$</alt></inlineequation></glossterm>
+      <glossdef>
+        <para>Massenmatrix — Symmetrische, positiv definite Massenmatrix des Systems: M = M^T > 0.</para>
+      </glossdef>
+      <?inm name="Massenmatrix" ?>
+      <?inm chapters="ch.projizierte-newton-euler ch.lagrangesche-dynamik ch.ideale-bilaterale-bindungen ch.einfache-gen-kraftgesetze" ?>
+    </glossentry>
+
+    <glossentry xml:id="sym-vec-g-gyro">
+      <glossterm><inlineequation><alt>$\vec{g}$</alt></inlineequation></glossterm>
+      <glossdef>
+        <para>Kreisel- und Coriolisterme — Zusammenfassung aller geschwindigkeitsabhängigen Terme (Coriolis, Zentrifugal, Kreiseleffekte) in den projizierten Bewegungsgleichungen.</para>
+      </glossdef>
+      <?inm name="Kreisel- und Coriolisterme" ?>
+      <?inm chapters="ch.projizierte-newton-euler ch.lagrangesche-dynamik ch.ideale-bilaterale-bindungen" ?>
+    </glossentry>
+  </glossdiv>
+
+  <!-- ═══ Systemgrößen ══════════════════════════════════════════ -->
+
+  <glossdiv xml:id="sym-cat-system">
+    <title>Systemgrößen</title>
+
+    <glossentry xml:id="sym-f-dof">
+      <glossterm><inlineequation><alt>$f$</alt></inlineequation></glossterm>
+      <glossdef>
+        <para>Freiheitsgrade — Anzahl der Freiheitsgrade des Systems.</para>
+      </glossdef>
+      <?inm name="Freiheitsgrade" ?>
+    </glossentry>
+  </glossdiv>
+
+  <!-- ═══ Koordinaten und Geschwindigkeiten ═══════════════════════ -->
+
+  <glossdiv xml:id="sym-cat-coordinates">
+    <title>Koordinaten</title>
+
+    <glossentry xml:id="sym-vec-q">
+      <glossterm><inlineequation><alt>$\vec{q}$</alt></inlineequation></glossterm>
+      <glossdef>
+        <para>Generalisierte Koordinaten — Minimaler Satz von f Koordinaten, der die Lage des Systems eindeutig beschreibt.</para>
+        <glossseealso otherterm="sym-dot-vec-q"/>
+        <glossseealso otherterm="sym-f-dof"/>
+      </glossdef>
+      <?inm name="Generalisierte Koordinaten" ?>
+    </glossentry>
+
+    <glossentry xml:id="sym-dot-vec-q">
+      <glossterm><inlineequation><alt>$\dot{\vec{q}}$</alt></inlineequation></glossterm>
+      <glossdef>
+        <para>Generalisierte Geschwindigkeiten — Zeitableitungen der generalisierten Koordinaten.</para>
+        <glossseealso otherterm="sym-vec-q"/>
+      </glossdef>
+      <?inm name="Generalisierte Geschwindigkeiten" ?>
+    </glossentry>
+
+    <glossentry xml:id="sym-vec-v-quasi">
+      <glossterm><inlineequation><alt>$\vec{v}$</alt></inlineequation></glossterm>
+      <glossdef>
+        <para>Quasi-Geschwindigkeiten — Quasi-Geschwindigkeiten (Minimalgeschwindigkeiten) in den Hamel-Boltzmann-Gleichungen: v = B·q̇ + β.</para>
+        <glossseealso otherterm="sym-B-matrix"/>
+      </glossdef>
+      <?inm name="Quasi-Geschwindigkeiten" ?>
+      <?inm chapters="ch.lagrangesche-dynamik" ?>
+    </glossentry>
+  </glossdiv>
+
+  <!-- ═══ Kinematik ═════════════════════════════════════════════ -->
+
+  <glossdiv xml:id="sym-cat-kinematics">
+    <title>Kinematik</title>
+
+    <glossentry xml:id="sym-vec-Omega">
+      <glossterm><inlineequation><alt>$\vec{\Omega}$</alt></inlineequation></glossterm>
+      <glossdef>
+        <para>Winkelgeschwindigkeit — Winkelgeschwindigkeit eines starren Körpers.</para>
+      </glossdef>
+      <?inm unit="rad/s" ?>
+      <?inm name="Winkelgeschwindigkeit" ?>
+    </glossentry>
+
+    <glossentry xml:id="sym-vec-xi">
+      <glossterm><inlineequation><alt>$\vec{\xi}$</alt></inlineequation></glossterm>
+      <glossdef>
+        <para>Partikelkoordinate — Ortsvektor eines Massenpunkts im System. Virtuelle Verschiebung: δξ, Starrkörperverschiebung: δξ_rg.</para>
+        <glossseealso otherterm="sym-vec-q"/>
+      </glossdef>
+      <?inm name="Partikelkoordinate" ?>
+      <?inm chapters="ch.projizierte-newton-euler ch.lagrangesche-dynamik" ?>
+    </glossentry>
+
+    <glossentry xml:id="sym-delta-vec-phi">
+      <glossterm><inlineequation><alt>$\delta\vec{\phi}$</alt></inlineequation></glossterm>
+      <glossdef>
+        <para>Virtuelle Starrkörperverdrehung — Virtuelle Verdrehung eines Starrkörpers (Quasiwinkel). Zusammen mit δr_P bestimmt δφ alle virtuellen Verschiebungen der Körperpunkte.</para>
+      </glossdef>
+      <?inm name="Virtuelle Starrkörperverdrehung" ?>
+      <?inm chapters="ch.projizierte-newton-euler" ?>
+    </glossentry>
+
+    <glossentry xml:id="sym-bar-J-P">
+      <glossterm><inlineequation><alt>$\bar{J}_P$</alt></inlineequation></glossterm>
+      <glossdef>
+        <para>Translatorische Jacobi-Matrix — Jacobi-Matrix der Translation: Abbildung von generalisierten Geschwindigkeiten auf Schwerpunktsgeschwindigkeiten.</para>
+      </glossdef>
+      <?inm name="Translatorische Jacobi-Matrix" ?>
+      <?inm chapters="ch.projizierte-newton-euler ch.ideale-bilaterale-bindungen" ?>
+    </glossentry>
+
+    <glossentry xml:id="sym-bar-J-R">
+      <glossterm><inlineequation><alt>$\bar{J}_R$</alt></inlineequation></glossterm>
+      <glossdef>
+        <para>Rotatorische Jacobi-Matrix — Jacobi-Matrix der Rotation: Abbildung von generalisierten Geschwindigkeiten auf Winkelgeschwindigkeiten.</para>
+      </glossdef>
+      <?inm name="Rotatorische Jacobi-Matrix" ?>
+      <?inm chapters="ch.projizierte-newton-euler ch.ideale-bilaterale-bindungen" ?>
+    </glossentry>
+
+    <glossentry xml:id="sym-bar-J-Q">
+      <glossterm><inlineequation><alt>$\bar{J}_Q$</alt></inlineequation></glossterm>
+      <glossdef>
+        <para>Jacobi-Matrix des Kraftangriffspunkts — Jacobi-Matrix des Angriffspunkts Q einer äußeren Kraft.</para>
+      </glossdef>
+      <?inm name="Jacobi-Matrix des Kraftangriffspunkts" ?>
+      <?inm chapters="ch.projizierte-newton-euler" ?>
+    </glossentry>
+
+    <glossentry xml:id="sym-bar-k-P">
+      <glossterm><inlineequation><alt>$\bar{k}_P$</alt></inlineequation></glossterm>
+      <glossdef>
+        <para>Translatorischer Beschleunigungsrest — Anteil der Translationsbeschleunigung, der nicht von der generalisierten Beschleunigung abhängt: a_P = J_P·q̈ + k_P.</para>
+        <glossseealso otherterm="sym-bar-J-P"/>
+      </glossdef>
+      <?inm name="Translatorischer Beschleunigungsrest" ?>
+      <?inm chapters="ch.projizierte-newton-euler" ?>
+    </glossentry>
+
+    <glossentry xml:id="sym-bar-k-R">
+      <glossterm><inlineequation><alt>$\bar{k}_R$</alt></inlineequation></glossterm>
+      <glossdef>
+        <para>Rotatorischer Beschleunigungsrest — Anteil der Winkelbeschleunigung, der nicht von der generalisierten Beschleunigung abhängt: Ψ = J_R·q̈ + k_R.</para>
+        <glossseealso otherterm="sym-bar-J-R"/>
+      </glossdef>
+      <?inm name="Rotatorischer Beschleunigungsrest" ?>
+      <?inm chapters="ch.projizierte-newton-euler" ?>
+    </glossentry>
+
+    <glossentry xml:id="sym-B-matrix">
+      <glossterm><inlineequation><alt>$B$</alt></inlineequation></glossterm>
+      <glossdef>
+        <para>Transformationsmatrix — Lineare Transformation zwischen generalisierten Geschwindigkeiten und Minimalgeschwindigkeiten.</para>
+      </glossdef>
+      <?inm name="Transformationsmatrix" ?>
+      <?inm chapters="ch.lagrangesche-dynamik" ?>
+    </glossentry>
+
+    <glossentry xml:id="sym-C-matrix">
+      <glossterm><inlineequation><alt>$C$</alt></inlineequation></glossterm>
+      <glossdef>
+        <para>Korrekturmatrix (Hamel) — Korrekturmatrix in den Hamel-Boltzmann-Gleichungen, beschrieben durch die Hamel'sche Übergangsgleichung.</para>
+      </glossdef>
+      <?inm name="Korrekturmatrix (Hamel)" ?>
+      <?inm chapters="ch.lagrangesche-dynamik" ?>
+    </glossentry>
+  </glossdiv>
+
+  <!-- ═══ Kräfte ══════════════════════════════════════════════════ -->
+
+  <glossdiv xml:id="sym-cat-forces">
+    <title>Kräfte</title>
+
+    <glossentry xml:id="sym-vec-f">
+      <glossterm><inlineequation><alt>$\vec{f}$</alt></inlineequation></glossterm>
+      <glossdef>
+        <para>Generalisierte aktive Kräfte — Vektor der generalisierten aktiven Kräfte, projiziert auf die Minimalkoordinaten.</para>
+        <glossseealso otherterm="sym-vec-f-NP"/>
+      </glossdef>
+      <?inm name="Generalisierte aktive Kräfte" ?>
+    </glossentry>
+
+    <glossentry xml:id="sym-vec-f-NP">
+      <glossterm><inlineequation><alt>$\vec{f}_{NP}$</alt></inlineequation></glossterm>
+      <glossdef>
+        <para>Nichtpotentialkräfte — Generalisierte Kräfte, die nicht aus einem Potential ableitbar sind (z.B. Dämpfung, Reibung).</para>
+        <glossseealso otherterm="sym-vec-f"/>
+      </glossdef>
+      <?inm name="Nichtpotentialkräfte" ?>
+    </glossentry>
+
+    <glossentry xml:id="sym-lambda">
+      <glossterm><inlineequation><alt>$\lambda$</alt></inlineequation></glossterm>
+      <glossdef>
+        <para>Lagrange-Multiplikator — Skalarer Kraftwert einer Bindung oder eines Kraftelements.</para>
+      </glossdef>
+      <?inm name="Lagrange-Multiplikator" ?>
+    </glossentry>
+
+    <glossentry xml:id="sym-vec-tau">
+      <glossterm><inlineequation><alt>$\vec{\tau}$</alt></inlineequation></glossterm>
+      <glossdef>
+        <para>Stellgrößen — Vektor der Regler-Inputs / Stellgrößen (z.B. Motormomente), die in die generalisierten Kräfte eingehen.</para>
+      </glossdef>
+      <?inm name="Stellgrößen" ?>
+      <?inm chapters="ch.projizierte-newton-euler" ?>
+    </glossentry>
+  </glossdiv>
+
+  <!-- ═══ Erhaltungsgrößen ═══════════════════════════════════════ -->
+
+  <glossdiv xml:id="sym-cat-conservation">
+    <title>Erhaltungsgrößen</title>
+
+    <glossentry xml:id="sym-pi-k">
+      <glossterm><inlineequation><alt>$\pi_k$</alt></inlineequation></glossterm>
+      <glossdef>
+        <para>Generalisierter Impuls — Partielle Ableitung der kinetischen Energie nach der k-ten generalisierten Geschwindigkeit: eine Erhaltungsgröße bei zyklischer Koordinate.</para>
+        <glossseealso otherterm="sym-T"/>
+      </glossdef>
+      <?inm name="Generalisierter Impuls" ?>
+    </glossentry>
+  </glossdiv>
+
+  <!-- ═══ Variationsrechnung ═══════════════════════════════════════ -->
+
+  <glossdiv xml:id="sym-cat-variational">
+    <title>Variationsrechnung</title>
+
+    <glossentry xml:id="sym-delta">
+      <glossterm><inlineequation><alt>$\delta$</alt></inlineequation></glossterm>
+      <glossdef>
+        <para>Variation — Virtuelle Variation; infinitesimale gedachte Änderung bei festgehaltener Zeit.</para>
+      </glossdef>
+      <?inm name="Variation" ?>
+    </glossentry>
+
+    <glossentry xml:id="sym-F-var">
+      <glossterm><inlineequation><alt>$F$</alt></inlineequation></glossterm>
+      <glossdef>
+        <para>Lagrange-Funktion (Variationsrechnung) — Lagrange-Funktion F(x, y, y') des Variationsproblems; nicht zu verwechseln mit der mechanischen Lagrange-Funktion L.</para>
+      </glossdef>
+      <?inm name="Lagrange-Funktion (Variationsrechnung)" ?>
+      <?inm chapters="ch.variationsrechnung" ?>
+    </glossentry>
+
+    <glossentry xml:id="sym-I-functional">
+      <glossterm><inlineequation><alt>$I$</alt></inlineequation></glossterm>
+      <glossdef>
+        <para>Funktional — Ordnet einer Funktion eine reelle Zahl zu: I(y) = ∫ F dx.</para>
+      </glossdef>
+      <?inm name="Funktional" ?>
+      <?inm chapters="ch.variationsrechnung" ?>
+    </glossentry>
+  </glossdiv>
+
+  <!-- ═══ Bindungen ═══════════════════════════════════════════════ -->
+
+  <glossdiv xml:id="sym-cat-constraints">
+    <title>Bindungen</title>
+
+    <glossentry xml:id="sym-g-deflection">
+      <glossterm><inlineequation><alt>$g$</alt></inlineequation></glossterm>
+      <glossdef>
+        <para>Auslenkungsfunktion — Skalare Auslenkungsfunktion eines Kraftelements oder einer geometrischen Bindung.</para>
+      </glossdef>
+      <?inm name="Auslenkungsfunktion" ?>
+      <?inm chapters="ch.einfache-gen-kraftgesetze ch.ideale-bilaterale-bindungen" ?>
+    </glossentry>
+
+    <glossentry xml:id="sym-gamma-velocity">
+      <glossterm><inlineequation><alt>$\gamma$</alt></inlineequation></glossterm>
+      <glossdef>
+        <para>Geschwindigkeitsniveau-Bindung — Zeitableitung der Auslenkungsfunktion: γ = ġ = w^T·q̇ + ẇ. Relevant für geschwindigkeitsabhängige Kraftgesetze (Dämpfer).</para>
+        <glossseealso otherterm="sym-g-deflection"/>
+      </glossdef>
+      <?inm name="Geschwindigkeitsniveau-Bindung" ?>
+      <?inm chapters="ch.einfache-gen-kraftgesetze" ?>
+    </glossentry>
+
+    <glossentry xml:id="sym-vec-w">
+      <glossterm><inlineequation><alt>$\vec{w}$</alt></inlineequation></glossterm>
+      <glossdef>
+        <para>Bindungsrichtung — Richtungsvektor einer Bindung im Raum der generalisierten Koordinaten: w = (∂g/∂q)^T.</para>
+        <glossseealso otherterm="sym-g-deflection"/>
+        <glossseealso otherterm="sym-W-matrix"/>
+      </glossdef>
+      <?inm name="Bindungsrichtung" ?>
+      <?inm chapters="ch.einfache-gen-kraftgesetze ch.ideale-bilaterale-bindungen" ?>
+    </glossentry>
+
+    <glossentry xml:id="sym-vec-n">
+      <glossterm><inlineequation><alt>$\vec{n}$</alt></inlineequation></glossterm>
+      <glossdef>
+        <para>Bindungsnormale — Normalisierter Richtungsvektor einer geometrischen Bindung im kartesischen Raum.</para>
+      </glossdef>
+      <?inm name="Bindungsnormale" ?>
+      <?inm chapters="ch.einfache-gen-kraftgesetze" ?>
+    </glossentry>
+
+    <glossentry xml:id="sym-W-matrix">
+      <glossterm><inlineequation><alt>$W$</alt></inlineequation></glossterm>
+      <glossdef>
+        <para>Bindungsmatrix — Matrix der Bindungsrichtungen: W = (w_1, ..., w_m). Projiziert Bindungskräfte auf generalisierte Koordinaten: f^z = W·λ.</para>
+        <glossseealso otherterm="sym-vec-w"/>
+        <glossseealso otherterm="sym-lambda"/>
+      </glossdef>
+      <?inm name="Bindungsmatrix" ?>
+      <?inm chapters="ch.ideale-bilaterale-bindungen" ?>
+    </glossentry>
+  </glossdiv>
+
+  <!-- ═══ Kraftgesetze ══════════════════════════════════════════ -->
+
+  <glossdiv xml:id="sym-cat-force-laws">
+    <title>Kraftgesetze</title>
+
+    <glossentry xml:id="sym-c-stiffness">
+      <glossterm><inlineequation><alt>$c$</alt></inlineequation></glossterm>
+      <glossdef>
+        <para>Federsteifigkeit — Steifigkeit einer linearen Feder: -λ = c·g.</para>
+      </glossdef>
+      <?inm unit="N/m" ?>
+      <?inm name="Federsteifigkeit" ?>
+      <?inm chapters="ch.einfache-gen-kraftgesetze" ?>
+    </glossentry>
+
+    <glossentry xml:id="sym-d-damping">
+      <glossterm><inlineequation><alt>$d$</alt></inlineequation></glossterm>
+      <glossdef>
+        <para>Dämpfungskonstante — Dämpfungskonstante eines linearen Dämpfers: -λ = d·γ.</para>
+      </glossdef>
+      <?inm unit="N·s/m" ?>
+      <?inm name="Dämpfungskonstante" ?>
+      <?inm chapters="ch.einfache-gen-kraftgesetze" ?>
+    </glossentry>
+  </glossdiv>
+
+</glossary>

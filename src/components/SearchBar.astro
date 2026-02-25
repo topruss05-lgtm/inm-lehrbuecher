@@ -1,0 +1,37 @@
+---
+// Pagefind search UI component
+// Uses is:inline to avoid Vite processing the dynamic import
+// (pagefind files only exist after the post-build indexing step)
+---
+
+<div class="search-wrapper" id="search-container">
+  <div id="search"></div>
+</div>
+
+<script is:inline>
+  window.addEventListener('DOMContentLoaded', function() {
+    var script = document.createElement('script');
+    script.src = '/pagefind/pagefind-ui.js';
+    script.onload = function() {
+      new PagefindUI({
+        element: '#search',
+        showSubResults: true,
+        showImages: false,
+        translations: {
+          placeholder: 'Suche (z.B. "Drallsatz", "Lagrange")',
+          zero_results: 'Keine Ergebnisse',
+          many_results: '[COUNT] Ergebnisse',
+          one_result: '1 Ergebnis',
+          searching: 'Suche...',
+        },
+      });
+    };
+    document.head.appendChild(script);
+  });
+</script>
+
+<style>
+  .search-wrapper {
+    padding: 0.5rem 0 0.75rem;
+  }
+</style>

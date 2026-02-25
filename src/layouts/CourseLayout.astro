@@ -1,0 +1,446 @@
+---
+import PlatformLayout from './PlatformLayout.astro';
+import SearchBar from '../components/SearchBar.astro';
+import type { BookNode, ChapterNode, GlossarySymbol } from '../lib/xml/docbook-ast.js';
+
+interface Props {
+  book: BookNode;
+  glossary: GlossarySymbol[];
+  courseSlug: string;
+  currentChapterSlug?: string;
+}
+
+const { book, glossary, courseSlug, currentChapterSlug } = Astro.props;
+
+const categoryOrder = ['energy', 'inertia', 'dynamics', 'system', 'coordinates', 'kinematics', 'forces', 'conservation', 'variational'];
+const sortedGlossary = [...glossary].sort((a, b) => {
+  const ia = categoryOrder.indexOf(a.category);
+  const ib = categoryOrder.indexOf(b.category);
+  if (ia !== ib) return (ia === -1 ? 99 : ia) - (ib === -1 ? 99 : ib);
+  return a.name.localeCompare(b.name);
+});
+
+function chapterUrl(ch: ChapterNode): string {
+  return `/${courseSlug}/${ch.slug}/`;
+}
+---
+
+<PlatformLayout title={book.title} subtitle={book.subtitle}>
+  <header class="book-header">
+    <a href={`/${courseSlug}/`} style="text-decoration: none; color: inherit;">
+      <h1>{book.title}</h1>
+    </a>
+    <p class="subtitle">{book.subtitle}</p>
+    <nav class="breadcrumb">
+      <a href="/">INM Lehrbücher</a>
+      <span class="breadcrumb-sep">›</span>
+      <a href={`/${courseSlug}/`}>{book.title}</a>
+    </nav>
+  </header>
+
+  <div class="layout-wrapper">
+    <!-- Sidebar TOC -->
+    <nav class="sidebar" id="sidebar" aria-label="Inhaltsverzeichnis" data-pagefind-ignore>
+      <SearchBar />
+
+      <button class="sidebar-glossary-btn" id="open-glossary">
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h4a2 2 0 0 1 2 2v8a1.5 1.5 0 0 0-1.5-1.5H2V3z"/><path d="M14 3h-4a2 2 0 0 0-2 2v8a1.5 1.5 0 0 1 1.5-1.5H14V3z"/></svg>
+        Symbolverzeichnis
+      </button>
+
+      <h2 class="toc-header" id="toc-toggle">
+        Inhaltsverzeichnis
+        <span class="toc-chevron">
+          <svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 2 7 5 3 8"/></svg>
+        </span>
+      </h2>
+
+      <div class="toc-body" id="toc-body">
+        <ol class="toc-list">
+          {book.chapters.map((ch) => (
+            <li class={`toc-chapter-item${currentChapterSlug === ch.slug ? ' current-chapter' : ''}`}>
+              <button class="chapter-toggle" aria-label="Abschnitte ein-/ausblenden">
+                <svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 2 7 5 3 8"/></svg>
+              </button>
+              <a class={`toc-chapter-link${currentChapterSlug === ch.slug ? ' active' : ''}`} href={chapterUrl(ch)}>
+                {ch.isAppendix ? `Anhang ${ch.label}` : `${ch.label}.`} {ch.title}
+              </a>
+              {ch.sections.length > 0 && (
+                <ol class="toc-section-list">
+                  {ch.sections.map((sec) => (
+                    <li>
+                      <a class="toc-section-link" href={`${chapterUrl(ch)}#${sec.id}`}>
+                        {sec.title.map(n => n.type === 'text' ? n.content : n.type === 'inline-math' ? '' : '').join('')}
+                      </a>
+                    </li>
+                  ))}
+                </ol>
+              )}
+            </li>
+          ))}
+          <li class="toc-chapter-item" style="margin-top: 0.5rem;">
+            <a class={`toc-section-link${currentChapterSlug === 'symbolverzeichnis' ? ' active' : ''}`} href={`/${courseSlug}/symbolverzeichnis/`} style="font-style: italic;">
+              Symbolverzeichnis
+            </a>
+          </li>
+        </ol>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <slot />
+    </main>
+  </div>
+
+  <!-- Glossary Slide-Over Panel -->
+  <div class="glossary-backdrop" id="glossary-backdrop"></div>
+  <div class="glossary-slideover" id="glossary-panel" data-pagefind-ignore>
+    <div class="slideover-header">
+      <h3>Symbolverzeichnis</h3>
+      <button class="slideover-close" id="close-glossary" aria-label="Schließen">&times;</button>
+    </div>
+    <div class="slideover-body">
+      <table class="notation-table" id="slideover-notation-table">
+        <thead>
+          <tr>
+            <th>Symbol</th>
+            <th>Name</th>
+            <th class="desc-cell">Beschreibung</th>
+            <th>Einheit</th>
+          </tr>
+        </thead>
+        <tbody>
+          {sortedGlossary.map((sym) => (
+            <tr data-symbol-id={sym.id} data-chapters={sym.chapters.join(' ')}>
+              <td class="symbol-cell"><Fragment set:html={sym.latexHtml} /></td>
+              <td>{sym.name}</td>
+              <td class="desc-cell">{sym.description}</td>
+              <td class="unit-cell">{sym.unit || '\u2014'}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Mobile Nav Toggle -->
+  <button class="mobile-nav-toggle" id="mobile-nav-toggle" aria-label="Navigation öffnen">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+  </button>
+  <div class="mobile-nav-backdrop" id="mobile-nav-backdrop"></div>
+
+  <!-- Embed glossary data for client-side scripts -->
+  <script type="application/json" id="glossary-data" set:html={JSON.stringify(sortedGlossary)} />
+
+  <script is:inline>
+    // ─── TOC Toggle ─────────────────────────────────────────────
+    var tocToggle = document.getElementById('toc-toggle');
+    var tocBody = document.getElementById('toc-body');
+    if (tocToggle) tocToggle.addEventListener('click', function() {
+      tocToggle.classList.toggle('collapsed');
+      if (tocBody) tocBody.classList.toggle('collapsed');
+    });
+
+    // ─── Chapter Section Toggles ────────────────────────────────
+    document.querySelectorAll('.chapter-toggle').forEach(function(btn) {
+      btn.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        btn.parentElement.classList.toggle('sections-collapsed');
+      });
+    });
+
+    // ─── Glossary Panel ─────────────────────────────────────────
+    var panel = document.getElementById('glossary-panel');
+    var bdrop = document.getElementById('glossary-backdrop');
+
+    function openGlossary() {
+      if (panel) panel.classList.add('open');
+      if (bdrop) bdrop.classList.add('visible');
+      updateGlossaryHighlight();
+    }
+    function closeGlossary() {
+      if (panel) panel.classList.remove('open');
+      if (bdrop) bdrop.classList.remove('visible');
+    }
+
+    var openBtn = document.getElementById('open-glossary');
+    var closeBtn = document.getElementById('close-glossary');
+    if (openBtn) openBtn.addEventListener('click', openGlossary);
+    if (closeBtn) closeBtn.addEventListener('click', closeGlossary);
+    if (bdrop) bdrop.addEventListener('click', closeGlossary);
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closeGlossary();
+    });
+
+    // ─── Mobile Navigation ──────────────────────────────────────
+    var sidebar = document.getElementById('sidebar');
+    var mobileToggle = document.getElementById('mobile-nav-toggle');
+    var mobileBackdrop = document.getElementById('mobile-nav-backdrop');
+
+    function openMobileNav() {
+      if (sidebar) sidebar.classList.add('mobile-open');
+      if (mobileBackdrop) { mobileBackdrop.classList.add('visible'); mobileBackdrop.style.display = 'block'; }
+    }
+    function closeMobileNav() {
+      if (sidebar) sidebar.classList.remove('mobile-open');
+      if (mobileBackdrop) { mobileBackdrop.classList.remove('visible'); setTimeout(function() { mobileBackdrop.style.display = 'none'; }, 300); }
+    }
+
+    if (mobileToggle) mobileToggle.addEventListener('click', openMobileNav);
+    if (mobileBackdrop) mobileBackdrop.addEventListener('click', closeMobileNav);
+
+    if (sidebar) sidebar.querySelectorAll('a').forEach(function(a) {
+      a.addEventListener('click', function() {
+        if (window.innerWidth < 900) closeMobileNav();
+      });
+    });
+
+    // ─── Scroll Spy: TOC Active State ───────────────────────────
+    var sectionEls = document.querySelectorAll('section[id]');
+    var currentActiveId = '';
+
+    var scrollObserver = new IntersectionObserver(
+      function(entries) {
+        var best = null;
+        var bestTop = Infinity;
+        for (var i = 0; i < entries.length; i++) {
+          var entry = entries[i];
+          if (entry.isIntersecting) {
+            var top = Math.abs(entry.boundingClientRect.top);
+            if (top < bestTop) {
+              bestTop = top;
+              best = entry;
+            }
+          }
+        }
+        if (best) {
+          var id = best.target.id;
+          if (id !== currentActiveId) {
+            currentActiveId = id;
+            document.querySelectorAll('.toc-section-link').forEach(function(a) {
+              var href = a.getAttribute('href') || '';
+              a.classList.toggle('active', href.endsWith('#' + id));
+            });
+            if (panel && panel.classList.contains('open')) {
+              updateGlossaryHighlight();
+            }
+          }
+        }
+      },
+      { rootMargin: '-10% 0px -70% 0px', threshold: [0, 0.1] }
+    );
+    sectionEls.forEach(function(s) { scrollObserver.observe(s); });
+
+    // ─── Glossary Context Highlighting ──────────────────────────
+    function updateGlossaryHighlight() {
+      var table = document.getElementById('slideover-notation-table');
+      if (!table) return;
+
+      var section = findVisibleSection();
+      var rows = table.querySelectorAll('tbody tr');
+      var tbody = table.querySelector('tbody');
+      if (!tbody) return;
+
+      if (!section) {
+        rows.forEach(function(tr) { tr.classList.remove('symbol-relevant', 'symbol-dimmed'); });
+        return;
+      }
+
+      var chapterEl = document.querySelector('[data-chapter-id]');
+      var chapterId = chapterEl ? (chapterEl.getAttribute('data-chapter-id') || '') : '';
+
+      var latexEls = section.querySelectorAll('[data-latex]');
+      var texContent = Array.from(latexEls).map(function(el) { return el.getAttribute('data-latex') || ''; }).join(' ');
+
+      var glossaryData = JSON.parse(
+        (document.getElementById('glossary-data') || {}).textContent || '[]'
+      );
+
+      var relevantIds = new Set();
+      for (var i = 0; i < glossaryData.length; i++) {
+        var sym = glossaryData[i];
+        if (sym.chapters.length > 0 && sym.chapters.indexOf(chapterId) >= 0) {
+          relevantIds.add(sym.id);
+          continue;
+        }
+        if (sym.latex.length === 1) {
+          var re = new RegExp('(?<![a-zA-Z\\\\])' + sym.latex.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '(?![a-zA-Z])');
+          if (re.test(texContent)) relevantIds.add(sym.id);
+        } else if (texContent.indexOf(sym.latex) >= 0) {
+          relevantIds.add(sym.id);
+        }
+      }
+
+      var relevantRows = [];
+      var otherRows = [];
+
+      rows.forEach(function(tr) {
+        var symId = tr.getAttribute('data-symbol-id') || '';
+        tr.classList.remove('symbol-relevant', 'symbol-dimmed');
+        if (relevantIds.has(symId)) {
+          tr.classList.add('symbol-relevant');
+          relevantRows.push(tr);
+        } else {
+          tr.classList.add('symbol-dimmed');
+          otherRows.push(tr);
+        }
+      });
+
+      relevantRows.forEach(function(tr) { tbody.appendChild(tr); });
+      otherRows.forEach(function(tr) { tbody.appendChild(tr); });
+    }
+
+    function findVisibleSection() {
+      var secs = document.querySelectorAll('section[id]');
+      var best = null;
+      var bestScore = -Infinity;
+      var mid = window.innerHeight / 2;
+
+      for (var i = 0; i < secs.length; i++) {
+        var s = secs[i];
+        var rect = s.getBoundingClientRect();
+        if (rect.bottom > 0 && rect.top < window.innerHeight) {
+          var score = -Math.abs(rect.top - mid);
+          if (score > bestScore) {
+            bestScore = score;
+            best = s;
+          }
+        }
+      }
+      return best;
+    }
+
+    // Update glossary on scroll (debounced)
+    var rafId = 0;
+    window.addEventListener('scroll', function() {
+      cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(function() {
+        if (panel && panel.classList.contains('open')) updateGlossaryHighlight();
+      });
+    }, { passive: true });
+
+    // ─── Copy-to-Clipboard ────────────────────────────────────
+    var CLIPBOARD_SVG = '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="8" height="10" rx="1"/><path d="M3 5v7a1 1 0 0 0 1 1h7"/></svg>';
+    var CHECK_SVG = '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 8 6.5 11.5 13 5"/></svg>';
+
+    function addCopyBtn(heading, scope) {
+      var btn = document.createElement('button');
+      btn.className = 'copy-btn';
+      btn.textContent = '\u{1F4CB}';
+      btn.title = scope === 'chapter' ? 'Kapitel kopieren' : 'Abschnitt kopieren';
+      btn.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var container = scope === 'chapter'
+          ? heading.closest('article.chapter')
+          : heading.closest('section');
+        if (!container) return;
+        var md = extractMarkdown(container, scope);
+        navigator.clipboard.writeText(md).then(function() {
+          btn.textContent = '\u2713';
+          btn.classList.add('success');
+          showToast(scope === 'chapter' ? 'Kapitel kopiert' : 'Abschnitt kopiert');
+          setTimeout(function() { btn.textContent = '\u{1F4CB}'; btn.classList.remove('success'); }, 1500);
+        });
+      });
+      heading.appendChild(btn);
+    }
+
+    document.querySelectorAll('.chapter-heading').forEach(function(h) { addCopyBtn(h, 'chapter'); });
+    document.querySelectorAll('.section-heading').forEach(function(h) { addCopyBtn(h, 'section'); });
+
+    function extractMarkdown(el, level) {
+      var md = '';
+      function walk(node, depth) {
+        for (var i = 0; i < node.children.length; i++) {
+          var child = node.children[i];
+          if (child.matches('.chapter-heading')) {
+            md += '# ' + cleanText(child) + '\n\n';
+          } else if (child.matches('.section-heading')) {
+            md += '\n## ' + cleanText(child) + '\n\n';
+          } else if (child.matches('.subsection-heading')) {
+            md += '\n### ' + cleanText(child) + '\n\n';
+          } else if (child.matches('p')) {
+            md += extractInline(child) + '\n\n';
+          } else if (child.matches('.math-display')) {
+            var latex = child.getAttribute('data-latex') || '';
+            md += '\n$$' + stripDlm(latex) + '$$\n\n';
+          } else if (child.matches('.equation-wrapper')) {
+            var eq = child.querySelector('.equation-content');
+            var num = child.querySelector('.equation-number');
+            var eqLatex = eq ? (eq.getAttribute('data-latex') || '') : '';
+            md += '\n$$' + stripDlm(eqLatex) + '$$' + (num ? '  ' + num.textContent.trim() : '') + '\n\n';
+          } else if (child.matches('.formalpara')) {
+            var title = child.querySelector('.formalpara-title');
+            if (title) md += '**' + title.textContent.trim() + '**\n\n';
+            var body = child.querySelector('.formalpara-body');
+            if (body) walk(body, depth + 1);
+          } else if (child.matches('.example-block')) {
+            var exTitle = child.querySelector('.example-title');
+            if (exTitle) md += '**' + exTitle.textContent.trim() + '**\n\n';
+            var exBody = child.querySelector('.example-body');
+            if (exBody) walk(exBody, depth + 1);
+          } else if (child.matches('.section-block, .subsection-block')) {
+            walk(child, depth + 1);
+          }
+        }
+      }
+      walk(el, 0);
+
+      md += '\n---\n\n## Symbolverzeichnis\n\n';
+      md += '| Symbol | Name | Beschreibung | Einheit |\n';
+      md += '|--------|------|--------------|--------|\n';
+      var gData = JSON.parse((document.getElementById('glossary-data') || {}).textContent || '[]');
+      for (var i = 0; i < gData.length; i++) {
+        var s = gData[i];
+        md += '| $' + s.latex + '$ | ' + s.name + ' | ' + s.description + ' | ' + (s.unit || '\u2014') + ' |\n';
+      }
+      return md;
+    }
+
+    function cleanText(el) {
+      var clone = el.cloneNode(true);
+      clone.querySelectorAll('.copy-btn, .chapter-number').forEach(function(b) { b.remove(); });
+      return (clone.textContent || '').trim();
+    }
+
+    function extractInline(el) {
+      var result = '';
+      el.childNodes.forEach(function(node) {
+        if (node.nodeType === 3) result += node.textContent;
+        else if (node.nodeType === 1) {
+          var e = node;
+          if (e.matches('.math-inline')) {
+            result += e.getAttribute('data-latex') || e.textContent;
+          } else if (e.matches('strong')) {
+            result += '**' + e.textContent + '**';
+          } else if (e.matches('em')) {
+            result += '*' + e.textContent + '*';
+          } else result += e.textContent;
+        }
+      });
+      return result.trim();
+    }
+
+    function stripDlm(s) {
+      return s.replace(/^\s*\\\[\s*/, '').replace(/\s*\\\]\s*$/, '').trim();
+    }
+
+    function showToast(message) {
+      var old = document.getElementById('copy-toast');
+      if (old) old.remove();
+      var toast = document.createElement('div');
+      toast.id = 'copy-toast';
+      toast.className = 'toast';
+      toast.textContent = message;
+      document.body.appendChild(toast);
+      requestAnimationFrame(function() { toast.classList.add('visible'); });
+      setTimeout(function() {
+        toast.classList.remove('visible');
+        setTimeout(function() { toast.remove(); }, 250);
+      }, 2000);
+    }
+  </script>
+</PlatformLayout>

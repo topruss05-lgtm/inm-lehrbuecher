@@ -5,11 +5,12 @@
          xml:id="ch.lagrangesche-dynamik">
   <title>Lagrange'sche Dynamik</title>
 
-  <para>Die projizierten Newton-Euler-Gleichungen aus Kapitel 2 liefern Bewegungsgleichungen
-    in Minimalkoordinaten, erfordern jedoch die explizite Berechnung von Jacobi-Matrizen und
-    die komponentenweise Aufstellung der Newton-Euler-Gleichungen jedes Körpers. Die
-    Lagrange'sche Formulierung bietet einen eleganteren Zugang: Anstatt Kräfte und Trägheiten
-    einzeln zu berechnen, genügt es, zwei skalare Funktionen anzugeben — die kinetische Energie
+  <para>Die projizierten Newton-Euler-Gleichungen aus <xref linkend="ch.projizierte-newton-euler"/> liefern Bewegungsgleichungen
+    in Minimalkoordinaten, erfordern jedoch die explizite Berechnung von Jacobi-Matrizen (vgl.
+    <xref linkend="sec.jacobi-matrizen"/>) und die komponentenweise Aufstellung der
+    Newton-Euler-Gleichungen jedes Körpers. Die Lagrange'sche Formulierung bietet einen eleganteren
+    Zugang: Anstatt Kräfte und Trägheiten einzeln zu berechnen, genügt es, zwei skalare Funktionen
+    anzugeben — die kinetische Energie
     <inlineequation><alt>$T$</alt></inlineequation> und die potentielle Energie
     <inlineequation><alt>$V$</alt></inlineequation>. Die Bewegungsgleichungen folgen dann auf
     rein analytischem Weg.</para>
@@ -36,7 +37,7 @@
       Prinzip der virtuellen Arbeit (PvA) herleiten lässt:</para>
 
     <equation xml:id="eq.zentralgleichung">
-      <alt>\[ \delta W = \int_S \delta \vec{s} \cdot d\vec{F} + \delta T - \left( \int_S \delta \vec{s} \cdot \dot{\vec{s}} \, dm \right)^\cdot = 0 \quad \forall\, \delta \vec{s}. \]</alt>
+      <alt>\[ \delta W = \int_S \delta \vec{\xi} \cdot d\vec{F} + \delta T - \left( \int_S \delta \vec{\xi} \cdot \dot{\vec{\xi}} \, dm \right)^\cdot = 0 \quad \forall\, \delta \vec{\xi}. \]</alt>
     </equation>
 
     <para>Drückt man alles in Minimalkoordinaten aus und nutzt die Vertauschbarkeit von
@@ -86,7 +87,7 @@
     <informalequation><alt>\[ T = \frac{1}{2}\, m\, \vec{v}_S^T\vec{v}_S + \frac{1}{2}\, \vec{\Omega}^T\, \bar{\Theta}_S\, \vec{\Omega}. \]</alt></informalequation>
 
     <para>Das Schwerepotential lautet
-      <inlineequation><alt>$V = -m\, \vec{r}_{OS} \cdot \vec{g}$</alt></inlineequation>.
+      <inlineequation><alt>$V = -m\, \vec{r}_{OS}^T \vec{g}$</alt></inlineequation>.
       Nichtpotentialkräfte werden über die Jacobi-Matrizen auf die generalisierten Koordinaten
       projiziert:</para>
 
@@ -125,14 +126,14 @@
       Hamel'sche Übergangsgleichung:</para>
 
     <equation xml:id="eq.uebergangsgleichung">
-      <alt>\[ (\delta\vec{s})^\cdot - \delta\vec{v} = C(\vec{q}, \vec{v}, t)\,\delta\vec{s}. \]</alt>
+      <alt>\[ (\delta\vec{\xi})^\cdot - \delta\vec{v} = C(\vec{q}, \vec{v}, t)\,\delta\vec{\xi}. \]</alt>
     </equation>
 
     <para>Die resultierenden <emphasis role="bold">Hamel-Boltzmann-Gleichungen</emphasis>
       (Volterra 1898, Boltzmann 1902, Hamel 1904) lauten:</para>
 
     <equation xml:id="eq.hamel-boltzmann">
-      <alt>\[ \frac{d}{dt}\!\left(\frac{\partial \bar{T}}{\partial \vec{v}}\right)^T - B^T\!\left(\frac{\partial T}{\partial \dot{\vec{q}}}\right)^T + C^T\!\left(\frac{\partial \bar{T}}{\partial \vec{v}}\right)^T = B^T\, \vec{f}. \]</alt>
+      <alt>\[ \frac{d}{dt}\!\left(\frac{\partial \bar{T}}{\partial \vec{v}}\right)^T - B^T\!\left(\frac{\partial T}{\partial \vec{q}}\right)^T + C^T\!\left(\frac{\partial \bar{T}}{\partial \vec{v}}\right)^T = B^T\, \vec{f}. \]</alt>
     </equation>
 
     <para>Für <inlineequation><alt>$B = I$</alt></inlineequation> und
