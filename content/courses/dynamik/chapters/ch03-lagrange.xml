@@ -66,6 +66,29 @@
       <alt>\[ \frac{d}{dt}\left(\frac{\partial T}{\partial \dot{\vec{q}}}\right)^T - \left(\frac{\partial T}{\partial \vec{q}}\right)^T + \left(\frac{\partial V}{\partial \vec{q}}\right)^T = \vec{f}_{\mathrm{NP}}. \]</alt>
     </equation>
 
+    <formalpara role="derivation" xml:id="deriv.lagrange2">
+      <title>Herleitung aus der Lagrange'schen Zentralgleichung</title>
+      <para>Ausgangspunkt ist die Zentralgleichung (Lagrange, ~1900), die aus dem
+        Prinzip der virtuellen Arbeit folgt:</para>
+      <informalequation><alt>\[ \delta\vec{q}^T \vec{f} + \delta T - \frac{d}{dt}\!\left[\delta\vec{q}^T \left(\frac{\partial T}{\partial \dot{\vec{q}}}\right)^T\right] = 0 \quad \forall\,\delta\vec{q}. \]</alt></informalequation>
+      <para>Dabei ist <inlineequation><alt>$T = T(\vec{q}, \dot{\vec{q}}, t)$</alt></inlineequation>
+        die kinetische Energie in Minimalkoordinaten. Die Variation
+        <inlineequation><alt>$\delta T$</alt></inlineequation> ergibt:</para>
+      <informalequation><alt>\[ \delta T = \delta\vec{q}^T \left(\frac{\partial T}{\partial \vec{q}}\right)^T + \delta\dot{\vec{q}}^T \left(\frac{\partial T}{\partial \dot{\vec{q}}}\right)^T. \]</alt></informalequation>
+      <para>Einsetzen in die Zentralgleichung und Anwenden der Produktregel auf den
+        Zeitableitungsterm liefert:</para>
+      <informalequation><alt>\[ \delta\vec{q}^T\!\left[\vec{f} + \left(\frac{\partial T}{\partial \vec{q}}\right)^T - \frac{d}{dt}\left(\frac{\partial T}{\partial \dot{\vec{q}}}\right)^T \right] + \underbrace{\left[(\delta\vec{q})^{\boldsymbol{\cdot}} - \delta\dot{\vec{q}}\right]^T \left(\frac{\partial T}{\partial \dot{\vec{q}}}\right)^T}_{= \, 0 \text{ (}\delta\text{-d-Vertauschung)}} = 0. \]</alt></informalequation>
+      <para>Der zweite Term verschwindet, weil für Minimalkoordinaten die
+        <inlineequation><alt>$\delta$</alt></inlineequation>-<inlineequation><alt>$d$</alt></inlineequation>-Vertauschung
+        gilt: <inlineequation><alt>$(\delta\vec{q})^{\boldsymbol{\cdot}} = \delta\dot{\vec{q}}$</alt></inlineequation>.
+        Da der Ausdruck für beliebige <inlineequation><alt>$\delta\vec{q}$</alt></inlineequation>
+        gelten muss, folgt:</para>
+      <informalequation><alt>\[ \frac{d}{dt}\left(\frac{\partial T}{\partial \dot{\vec{q}}}\right)^T - \left(\frac{\partial T}{\partial \vec{q}}\right)^T = \vec{f}. \]</alt></informalequation>
+      <para>Mit der Aufspaltung
+        <inlineequation><alt>$\vec{f} = -(\partial V/\partial\vec{q})^T + \vec{f}_{\mathrm{NP}}$</alt></inlineequation>
+        ergibt sich die klassische Form der Lagrange-Gleichungen 2. Art.</para>
+    </formalpara>
+
     <para>Dies sind die <emphasis role="bold">Lagrange'schen Gleichungen 2. Art</emphasis>
       (Lagrange, 1780/1788). Auf der linken Seite stehen nur Ableitungen von
       <inlineequation><alt>$T$</alt></inlineequation> und
@@ -136,6 +159,27 @@
       <alt>\[ \frac{d}{dt}\!\left(\frac{\partial \bar{T}}{\partial \vec{v}}\right)^T - B^T\!\left(\frac{\partial T}{\partial \vec{q}}\right)^T + C^T\!\left(\frac{\partial \bar{T}}{\partial \vec{v}}\right)^T = B^T\, \vec{f}. \]</alt>
     </equation>
 
+    <formalpara role="derivation" xml:id="deriv.hamel-boltzmann">
+      <title>Herleitung aus der Lagrange'schen Zentralgleichung</title>
+      <para>Wir schreiben die Zentralgleichung mit
+        <inlineequation><alt>$\delta\vec{q} = B\,\delta\vec{\xi}$</alt></inlineequation> und
+        <inlineequation><alt>$\delta(\dot{\vec{q}}) = B\,\delta\vec{v} + \dot{B}\,\delta\vec{\xi}$</alt></inlineequation>
+        um. Die kinetische Energie in den neuen Koordinaten ist
+        <inlineequation><alt>$\bar{T}(\vec{q},\vec{v},t) := T(\vec{q},\dot{\vec{q}}(\vec{q},\vec{v},t),t)$</alt></inlineequation>,
+        und es gilt
+        <inlineequation><alt>$(\partial\bar{T}/\partial\vec{v}) = (\partial T/\partial\dot{\vec{q}}) B$</alt></inlineequation>.
+        Einsetzen in die Zentralgleichung liefert:</para>
+      <informalequation><alt>\[ 0 = \delta\vec{\xi}^T B^T\vec{f} + \delta\vec{\xi}^T B^T\!\left(\frac{\partial T}{\partial\vec{q}}\right)^T + \delta\vec{v}^T\!\left(\frac{\partial\bar{T}}{\partial\vec{v}}\right)^T - \frac{d}{dt}\!\left[\delta\vec{\xi}^T\!\left(\frac{\partial\bar{T}}{\partial\vec{v}}\right)^T\right] \quad \forall\,\delta\vec{\xi}. \]</alt></informalequation>
+      <para>Anwendung der Produktregel auf den Zeitableitungsterm und Multiplikation mit
+        <inlineequation><alt>$(-1)$</alt></inlineequation> ergibt:</para>
+      <informalequation><alt>\[ 0 = \delta\vec{\xi}^T\!\left[\frac{d}{dt}\!\left(\frac{\partial\bar{T}}{\partial\vec{v}}\right)^T - B^T\!\left(\frac{\partial T}{\partial\vec{q}}\right)^T - B^T\vec{f}\right] + \underbrace{\left[(\delta\vec{\xi})^\cdot - \delta\vec{v}\right]^T}_{{=\,(C\,\delta\vec{\xi})^T}}\!\left(\frac{\partial\bar{T}}{\partial\vec{v}}\right)^T. \]</alt></informalequation>
+      <para>Der Klammerausdruck <inlineequation><alt>$(\delta\vec{\xi})^\cdot - \delta\vec{v} = C\,\delta\vec{\xi}$</alt></inlineequation>
+        ist genau die Hamel'sche Übergangsgleichung. Da dies für beliebige
+        <inlineequation><alt>$\delta\vec{\xi}$</alt></inlineequation> gelten muss, folgt nach
+        Transponieren die Hamel-Boltzmann-Gleichung:</para>
+      <informalequation><alt>\[ \frac{d}{dt}\!\left(\frac{\partial\bar{T}}{\partial\vec{v}}\right)^T - B^T\!\left(\frac{\partial T}{\partial\vec{q}}\right)^T + C^T\!\left(\frac{\partial\bar{T}}{\partial\vec{v}}\right)^T = B^T\vec{f}. \]</alt></informalequation>
+    </formalpara>
+
     <para>Für <inlineequation><alt>$B = I$</alt></inlineequation> und
       <inlineequation><alt>$\vec{\beta} = \vec{0}$</alt></inlineequation> (also
       <inlineequation><alt>$\vec{v} = \dot{\vec{q}}$</alt></inlineequation>) reduzieren sich
@@ -205,6 +249,25 @@
         und potentielle Energie hängen nicht explizit von der Zeit ab. (3) Die kinetische
         Energie ist eine rein quadratische Form in den generalisierten Geschwindigkeiten:
         <inlineequation><alt>$T = \frac{1}{2}\,\dot{\vec{q}}^T M(\vec{q})\,\dot{\vec{q}}$</alt></inlineequation>.</para>
+    </formalpara>
+
+    <formalpara role="proof" xml:id="proof.konservativ" collapsible="true">
+      <title>Beweis (über Hamilton-Prinzip und Beltrami-Identität)</title>
+      <para>Wegen Bedingung (1) gilt das Prinzip von Hamilton mit der Lagrange-Funktion
+        <inlineequation><alt>$L = T - V$</alt></inlineequation>. Wegen Bedingung (2) ist
+        <inlineequation><alt>$L = L(\vec{q}, \dot{\vec{q}})$</alt></inlineequation>
+        (keine explizite Zeitabhängigkeit). Dies entspricht dem Sonderfall (c) der
+        Variationsrechnung (Kap. I.7), und die Beltrami-Identität liefert:</para>
+      <informalequation><alt>\[ L - \dot{\vec{q}}^T \left(\frac{\partial L}{\partial \dot{\vec{q}}}\right)^T = -H_0 = \text{const.} \]</alt></informalequation>
+      <para>Einsetzen von <inlineequation><alt>$L = T - V$</alt></inlineequation> ergibt:</para>
+      <informalequation><alt>\[ -H_0 = T - V - \dot{\vec{q}}^T \left(\frac{\partial T}{\partial \dot{\vec{q}}}\right)^T, \]</alt></informalequation>
+      <para>wobei <inlineequation><alt>$\partial V/\partial\dot{\vec{q}} = 0$</alt></inlineequation>
+        verwendet wurde. Wegen Bedingung (3) ist
+        <inlineequation><alt>$T = \frac{1}{2}\dot{\vec{q}}^T M \dot{\vec{q}}$</alt></inlineequation>,
+        also:</para>
+      <informalequation><alt>\[ \left(\frac{\partial T}{\partial \dot{\vec{q}}}\right)^T = M\dot{\vec{q}} \qquad \Longrightarrow \qquad \dot{\vec{q}}^T \left(\frac{\partial T}{\partial \dot{\vec{q}}}\right)^T = \dot{\vec{q}}^T M \dot{\vec{q}} = 2T. \]</alt></informalequation>
+      <para>Damit wird</para>
+      <informalequation><alt>\[ -H_0 = T - V - 2T = -(T + V) = -E \qquad \Longrightarrow \qquad E = H_0 = \text{const.} \]</alt></informalequation>
     </formalpara>
 
     <para>Die dritte Bedingung ist genau dann erfüllt, wenn die Bindungen skleronom (zeitunabhängig)

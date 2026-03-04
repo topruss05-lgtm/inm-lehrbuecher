@@ -62,6 +62,21 @@ function escAttr(s: string): string {
     const fpWeight = (node.role === 'definition' || node.role === 'theorem') ? '5' : '2';
     const fpFilter = node.role === 'definition' ? 'type:Definition' : node.role === 'theorem' ? 'type:Satz' : undefined;
     const titleHtml = node.title.map(renderInlineNode).join('');
+
+    if (node.collapsible || node.role === 'derivation') {
+      return (
+        <details class={`formalpara fp-${node.role} fp-collapsible`} id={node.id || undefined} data-pagefind-weight={fpWeight}>
+          <summary class="formalpara-title collapsible-summary">
+            <span class="collapsible-chevron" aria-hidden="true"></span>
+            <Fragment set:html={titleHtml} />
+          </summary>
+          <div class="formalpara-body">
+            <Astro.self nodes={node.body} xrefMap={xrefMap} />
+          </div>
+        </details>
+      );
+    }
+
     return (
       <div class={`formalpara fp-${node.role}`} id={node.id || undefined} data-pagefind-weight={fpWeight} data-pagefind-filter={fpFilter}>
         <p class="formalpara-title"><Fragment set:html={titleHtml} /></p>

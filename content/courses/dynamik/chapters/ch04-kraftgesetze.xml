@@ -22,25 +22,111 @@
 
     <para>Wir betrachten ein Kraftelement <inlineequation><alt>$K$</alt></inlineequation>, das
       zwischen zwei Punkten <inlineequation><alt>$P$</alt></inlineequation> und
-      <inlineequation><alt>$Q$</alt></inlineequation> wirkt. Die resultierende generalisierte
-      Kraft lässt sich stets in der Form</para>
+      <inlineequation><alt>$Q$</alt></inlineequation> wirkt. Der normierte Richtungsvektor
+      <inlineequation><alt>$\vec{n}$</alt></inlineequation>
+      (<inlineequation><alt>$\lVert\vec{n}\rVert = 1$</alt></inlineequation>) zeigt von
+      <inlineequation><alt>$P$</alt></inlineequation> nach
+      <inlineequation><alt>$Q$</alt></inlineequation>, und die skalare
+      <emphasis role="bold">Auslenkung</emphasis> ist definiert als
+      <inlineequation><alt>$g = \vec{n} \cdot \vec{r}_{PQ}$</alt></inlineequation>. Die
+      resultierende generalisierte Kraft lässt sich stets in der Form</para>
 
     <informalequation><alt>\[ \vec{f} = \underbrace{(\bar{J}_Q - \bar{J}_P)^T \vec{n}}_{=:\,\vec{w}} \, \lambda \]</alt></informalequation>
 
     <para>schreiben. Dabei ist <inlineequation><alt>$\vec{w} \in \mathbb{R}^f$</alt></inlineequation>
-      die <emphasis role="bold">generalisierte Kraftrichtung</emphasis>,
+      die <emphasis role="bold">generalisierte Kraftrichtung</emphasis> und
       <inlineequation><alt>$\lambda$</alt></inlineequation> der skalare
-      <emphasis role="bold">Kraftwert</emphasis> und
-      <inlineequation><alt>$g = \vec{n} \cdot \vec{r}_{PQ}$</alt></inlineequation> die skalare
-      <emphasis role="bold">Auslenkung</emphasis> des Kraftelements.</para>
+      <emphasis role="bold">Kraftwert</emphasis>. Die Kraftrichtung
+      <inlineequation><alt>$\vec{w}$</alt></inlineequation> ist eine rein kinematische Größe —
+      sie hängt ausschließlich von der Geometrie der Kraftkopplung ab und ist unabhängig
+      vom konkreten Kraftgesetz.</para>
 
-    <para>Zwischen der Auslenkung <inlineequation><alt>$g$</alt></inlineequation> und der
-      Kraftrichtung <inlineequation><alt>$\vec{w}$</alt></inlineequation> besteht ein enger
-      kinematischer Zusammenhang:</para>
+    <formalpara role="generic" xml:id="note.jacobi-ueberstrich">
+      <title>Notation: Der Überstrich an Jacobi-Matrizen</title>
+      <para><inlineequation><alt>$\bar{J}_P$</alt></inlineequation> bezeichnet die Jacobi-Matrix
+        als koordinatenfreie lineare Abbildung
+        <inlineequation><alt>$\mathbb{R}^f \to V$</alt></inlineequation>, wobei
+        <inlineequation><alt>$V$</alt></inlineequation> der abstrakte euklidische Vektorraum
+        der Mechanik ist. Sobald ein konkretes Koordinatensystem gewählt wird, wird daraus
+        eine Zahlenmatrix <inlineequation><alt>$J_P \in \mathbb{R}^{3 \times f}$</alt></inlineequation>
+        ohne Überstrich. Der Überstrich trennt also die koordinatenfreie Formulierung (Physik)
+        von der koordinatengebundenen (Numerik).</para>
+    </formalpara>
+
+    <formalpara role="derivation" xml:id="deriv.herleitung-w-chi-xi">
+      <title>Herleitung von w, χ und ξ</title>
+      <para>Ausgangspunkt ist die Auslenkung
+        <inlineequation><alt>$g = \vec{n} \cdot \vec{r}_{PQ}$</alt></inlineequation>.
+        Zeitliche Ableitung liefert</para>
+      <informalequation><alt>\[ \dot{g} = \dot{\vec{n}} \cdot \vec{r}_{PQ} + \vec{n} \cdot (\vec{v}_Q - \vec{v}_P). \]</alt></informalequation>
+      <para>Da <inlineequation><alt>$\lVert\vec{n}\rVert = 1$</alt></inlineequation>,
+        folgt <inlineequation><alt>$\tfrac{d}{dt}(\vec{n}\cdot\vec{n}) = 2\,\dot{\vec{n}}\cdot\vec{n} = 0$</alt></inlineequation>,
+        also <inlineequation><alt>$\dot{\vec{n}} \perp \vec{n}$</alt></inlineequation>.
+        Weil <inlineequation><alt>$\vec{n} \parallel \vec{r}_{PQ}$</alt></inlineequation>,
+        verschwindet der erste Term:
+        <inlineequation><alt>$\dot{\vec{n}} \cdot \vec{r}_{PQ} = 0$</alt></inlineequation>.
+        Es bleibt</para>
+      <informalequation><alt>\[ \dot{g} = \vec{n} \cdot (\vec{v}_Q - \vec{v}_P). \]</alt></informalequation>
+      <para>Mit der Jacobi-Zerlegung
+        (vgl. <xref linkend="eq.geschwindigkeit-translation"/>)
+        <inlineequation><alt>$\vec{v}_Q - \vec{v}_P = (\bar{J}_Q - \bar{J}_P)\,\dot{\vec{q}} + (\bar{v}_Q - \bar{v}_P)$</alt></inlineequation>
+        ergibt sich</para>
+      <informalequation><alt>\[ \dot{g} = \underbrace{\vec{n}^T(\bar{J}_Q - \bar{J}_P)}_{=\,\vec{w}^T}\,\dot{\vec{q}} \;+\; \underbrace{\vec{n} \cdot (\bar{v}_Q - \bar{v}_P)}_{=\,\chi}. \]</alt></informalequation>
+      <para>Beide Größen hängen nur von
+        <inlineequation><alt>$\vec{q}$</alt></inlineequation> und
+        <inlineequation><alt>$t$</alt></inlineequation> ab:
+        <inlineequation><alt>$\vec{w} = \vec{w}(\vec{q},t)$</alt></inlineequation>,
+        <inlineequation><alt>$\chi = \chi(\vec{q},t)$</alt></inlineequation>.
+        Die zweite Zeitableitung von
+        <inlineequation><alt>$\dot{g} = \vec{w}^T \dot{\vec{q}} + \chi$</alt></inlineequation>
+        liefert</para>
+      <informalequation><alt>\[ \ddot{g} = \vec{w}^T \ddot{\vec{q}} + \underbrace{\dot{\vec{w}}^T \dot{\vec{q}} + \dot{\chi}}_{=:\,\xi}. \]</alt></informalequation>
+      <para>Da <inlineequation><alt>$\xi$</alt></inlineequation> nicht von
+        <inlineequation><alt>$\ddot{\vec{q}}$</alt></inlineequation> abhängt, sind
+        Auslenkung und ihre Ableitungen vollständig durch
+        <inlineequation><alt>$\vec{w}$</alt></inlineequation>,
+        <inlineequation><alt>$\chi$</alt></inlineequation> und
+        <inlineequation><alt>$\xi$</alt></inlineequation> charakterisiert.</para>
+    </formalpara>
+
+    <para>Zusammengefasst gelten die kinematischen Beziehungen</para>
 
     <equation xml:id="eq.gdot">
       <alt>\[ \dot{g} = \vec{w}^T \dot{\vec{q}} + \chi, \qquad \ddot{g} = \vec{w}^T \ddot{\vec{q}} + \xi, \qquad \delta g = \vec{w}^T \delta\vec{q}. \]</alt>
     </equation>
+
+    <para>Dabei ist <inlineequation><alt>$g = g(\vec{q},t)$</alt></inlineequation> eine Funktion
+      auf Lageebene, <inlineequation><alt>$\dot{g} = \dot{g}(\vec{q},\dot{\vec{q}},t)$</alt></inlineequation>
+      auf Geschwindigkeitsebene und
+      <inlineequation><alt>$\ddot{g} = \ddot{g}(\vec{q},\dot{\vec{q}},\ddot{\vec{q}},t)$</alt></inlineequation>
+      auf Beschleunigungsebene. Die zugehörige virtuelle Arbeit
+      <inlineequation><alt>$\delta W = \delta g \cdot \lambda = \delta\vec{q}^T\!(\vec{w}\lambda) = \delta\vec{q}^T \vec{f}$</alt></inlineequation>
+      bestätigt die Konsistenz mit dem Prinzip der virtuellen Arbeit.</para>
+
+    <formalpara role="derivation" xml:id="deriv.partielle-ableitungen-g">
+      <title>Partielle Ableitungen von g</title>
+      <para>Andererseits lässt sich
+        <inlineequation><alt>$\vec{w}$</alt></inlineequation> auch ohne Rückgriff auf die
+        Jacobi-Matrizen bestimmen. Da
+        <inlineequation><alt>$g = g(\vec{q}, t)$</alt></inlineequation>, liefert die
+        totale Zeitableitung mit der Kettenregel</para>
+      <informalequation><alt>\[ \dot{g} = \frac{\partial g}{\partial \vec{q}} \dot{\vec{q}} + \frac{\partial g}{\partial t}. \]</alt></informalequation>
+      <para>Koeffizientenvergleich mit <inlineequation><alt>$\dot{g} = \vec{w}^T \dot{\vec{q}} + \chi$</alt></inlineequation>
+        liefert direkt
+        <inlineequation><alt>$\vec{w}^T = \frac{\partial g}{\partial \vec{q}}$</alt></inlineequation>
+        und <inlineequation><alt>$\chi = \frac{\partial g}{\partial t}$</alt></inlineequation>.
+        Da <inlineequation><alt>$\dot{g}$</alt></inlineequation> linear in
+        <inlineequation><alt>$\dot{\vec{q}}$</alt></inlineequation> ist, folgt
+        <inlineequation><alt>$\frac{\partial \dot{g}}{\partial \dot{\vec{q}}} = \vec{w}^T$</alt></inlineequation>.
+        Analog gilt auf Beschleunigungsebene
+        <inlineequation><alt>$\frac{\partial \ddot{g}}{\partial \ddot{\vec{q}}} = \vec{w}^T$</alt></inlineequation>,
+        da <inlineequation><alt>$\xi$</alt></inlineequation> nicht von
+        <inlineequation><alt>$\ddot{\vec{q}}$</alt></inlineequation> abhängt. Dieser
+        Blickwinkel ist nützlich für die praktische Bestimmung von
+        <inlineequation><alt>$\vec{w}$</alt></inlineequation>: Man berechnet
+        <inlineequation><alt>$g(\vec{q},t)$</alt></inlineequation> und differenziert
+        partiell nach <inlineequation><alt>$\vec{q}$</alt></inlineequation>.</para>
+    </formalpara>
 
     <para>Insbesondere gilt die Identität</para>
 

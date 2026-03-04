@@ -194,6 +194,27 @@
         <inlineequation><alt>$\delta W^{i,K} = \int_{K} \delta\vec{\xi}_{\mathrm{rg}}\cdot\mathrm{d}\vec{F}^{i,K} \doteq 0 \quad \forall\,\delta\vec{\xi}_{\mathrm{rg}},\;\forall\,K \in \mathcal{S}$</alt></inlineequation>.</para>
     </formalpara>
 
+    <formalpara role="derivation" xml:id="deriv.impulssatz-aus-pva">
+      <title>Herleitung von Impuls- und Drallsatz aus PvA + vWwP</title>
+      <para>Sei <inlineequation><alt>$K$</alt></inlineequation> ein Starrkörper-Subsystem.
+        Nach PvA gilt für alle verträglichen virtuellen Verschiebungen:</para>
+      <informalequation><alt>\[ 0 \doteq \delta W = \int_K \delta\vec{\xi} \cdot \left(\mathrm{d}\vec{F}^{a,K} + \mathrm{d}\vec{F}^{i,K} - \ddot{\vec{\xi}}\,\mathrm{d}m\right) \quad \forall\,\delta\vec{\xi}. \]</alt></informalequation>
+      <para>Wir wählen als virtuelle Verschiebung die <emphasis role="italic">starre</emphasis>
+        Bewegung des Körpers:
+        <inlineequation><alt>$\delta\vec{\xi} = \delta\vec{r}_P + \delta\vec{\phi} \times \vec{\rho}$</alt></inlineequation>,
+        wobei <inlineequation><alt>$\vec{\rho} = \vec{r} - \vec{r}_P$</alt></inlineequation>.
+        Nach vWwP leisten die inneren Kräfte dabei keine Arbeit
+        (<inlineequation><alt>$\delta W^{i,K} = 0$</alt></inlineequation>), und man erhält
+        nach Integration über den Körper:</para>
+      <informalequation><alt>\[ 0 = \begin{pmatrix}\delta\vec{r}_P\\\delta\vec{\phi}\end{pmatrix} \cdot \left[\begin{pmatrix}\vec{F}^{a,K}\\\vec{M}_P^{a,K}\end{pmatrix} - \begin{pmatrix}\dot{\vec{p}}\\\dot{\vec{L}}_P + \vec{v}_P \times \vec{p}\end{pmatrix}\right] \quad \forall\,\begin{pmatrix}\delta\vec{r}_P\\\delta\vec{\phi}\end{pmatrix}. \]</alt></informalequation>
+      <para>Da dies für beliebige <inlineequation><alt>$\delta\vec{r}_P$</alt></inlineequation>
+        und <inlineequation><alt>$\delta\vec{\phi}$</alt></inlineequation> gelten muss, folgt
+        durch separates Nullsetzen der Beiträge der Impulssatz
+        <inlineequation><alt>$\dot{\vec{p}} = \vec{F}^{a,K}$</alt></inlineequation>
+        und der Drallsatz
+        <inlineequation><alt>$\dot{\vec{L}}_P + \vec{v}_P \times \vec{p} = \vec{M}_P^{a,K}$</alt></inlineequation>.</para>
+    </formalpara>
+
     <para>Aus der Kombination von PvA und vWwP folgen für einzelne Starrkörper-Subsysteme die
       bekannten Impuls- und Drallsätze.</para>
   </section>

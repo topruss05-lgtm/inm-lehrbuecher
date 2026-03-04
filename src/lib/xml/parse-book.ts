@@ -236,12 +236,15 @@ function parseFormalPara(el: Element): FormalParaNode {
     }
   }
 
+  const collapsible = role === 'derivation' || el.getAttribute('collapsible') === 'true';
+
   return {
     type: 'formalpara',
     id: getId(el),
     role,
     title: titleNodes,
     body: bodyContent,
+    ...(collapsible && { collapsible }),
   };
 }
 

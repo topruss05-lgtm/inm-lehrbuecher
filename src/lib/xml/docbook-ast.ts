@@ -75,7 +75,7 @@ export interface NumberedEquationNode {
   html: string;
 }
 
-export type FormalParaRole = 'definition' | 'theorem' | 'proof' | 'rule' | 'generic';
+export type FormalParaRole = 'definition' | 'theorem' | 'proof' | 'rule' | 'generic' | 'derivation';
 
 export interface FormalParaNode {
   type: 'formalpara';
@@ -83,6 +83,7 @@ export interface FormalParaNode {
   role: FormalParaRole;
   title: InlineNode[];
   body: ContentNode[];
+  collapsible?: boolean;
 }
 
 export interface ExampleNode {

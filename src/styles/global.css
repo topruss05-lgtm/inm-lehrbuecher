@@ -33,6 +33,9 @@
     --generic-bg: #faf5ff;
     --generic-border: #a855f7;
     --generic-title: #6b21a8;
+    --deriv-bg: #fefcf3;
+    --deriv-border: #d4a853;
+    --deriv-title: #7c5e1e;
 
     --sidebar-w: 272px;
     --content-max: 50rem;
@@ -530,6 +533,118 @@ p {
   border-left-color: var(--generic-border);
 }
 .fp-generic .formalpara-title { color: var(--generic-title); }
+
+.fp-derivation {
+  background: var(--deriv-bg);
+  border-left-color: var(--deriv-border);
+}
+.fp-derivation .formalpara-title,
+.fp-derivation .collapsible-summary { color: var(--deriv-title); }
+
+/* ─── Collapsible Proofs & Derivations ───────────────────────── */
+
+.fp-collapsible {
+  cursor: default;
+}
+
+.fp-collapsible > summary {
+  list-style: none;
+  cursor: pointer;
+  user-select: none;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 700;
+  font-size: 0.92rem;
+  margin-bottom: 0;
+  letter-spacing: 0.01em;
+  padding: 0.2rem 0;
+  min-height: 44px;
+}
+
+.fp-collapsible > summary::-webkit-details-marker { display: none; }
+
+.collapsible-chevron {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1rem;
+  height: 1rem;
+  flex-shrink: 0;
+  transition: transform 0.25s ease;
+}
+
+.collapsible-chevron::before {
+  content: '';
+  display: block;
+  width: 0;
+  height: 0;
+  border-left: 5px solid currentColor;
+  border-top: 4px solid transparent;
+  border-bottom: 4px solid transparent;
+}
+
+.fp-collapsible[open] > summary .collapsible-chevron {
+  transform: rotate(90deg);
+}
+
+.fp-collapsible .formalpara-body {
+  padding-top: 0.5rem;
+}
+
+/* QED square at end of proof/derivation body */
+.fp-collapsible .formalpara-body::after {
+  content: '\25A0';
+  display: block;
+  text-align: right;
+  color: var(--color-ink-faint);
+  font-size: 0.7rem;
+  margin-top: 0.5rem;
+}
+
+/* Collapsible proofs keep italic body */
+.fp-collapsible.fp-proof .formalpara-body { font-style: italic; }
+
+/* ─── Expand All Toggle ──────────────────────────────────────── */
+
+.expand-all-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: none;
+  border: 1.5px solid var(--color-border);
+  border-radius: 6px;
+  padding: 0.3rem 0.6rem;
+  cursor: pointer;
+  color: var(--color-ink-muted);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 500;
+  transition: border-color 0.15s, color 0.15s, background 0.15s;
+  white-space: nowrap;
+  line-height: 0;
+}
+
+.expand-all-toggle:hover {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+.expand-all-toggle.active {
+  border-color: var(--deriv-border);
+  color: var(--deriv-title);
+  background: var(--deriv-bg);
+}
+
+.expand-all-toggle .expand-chevron {
+  display: inline-flex;
+  transition: transform 0.25s ease;
+}
+
+.expand-all-toggle.active .expand-chevron {
+  transform: rotate(180deg);
+}
 
 /* ─── Examples ────────────────────────────────────────────────── */
 
@@ -1033,7 +1148,8 @@ p {
   .glossary-slideover,
   .glossary-backdrop,
   .copy-btn,
-  .toast { display: none !important; }
+  .toast,
+  .expand-all-toggle { display: none !important; }
 
   body { background: #fff; font-size: 11pt; }
 
@@ -1046,6 +1162,12 @@ p {
 
   .chapter { page-break-before: always; }
   .formalpara, .example-block { break-inside: avoid; }
+
+  /* Force all collapsible proofs/derivations open in print */
+  details.fp-collapsible { display: block !important; }
+  details.fp-collapsible > summary { pointer-events: none; }
+  details.fp-collapsible > .formalpara-body { display: block !important; }
+  .collapsible-chevron { display: none !important; }
 }
 
 /* ─── Breadcrumb ──────────────────────────────────────────────── */

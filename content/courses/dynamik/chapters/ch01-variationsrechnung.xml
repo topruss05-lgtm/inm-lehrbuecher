@@ -329,7 +329,7 @@
         <inlineequation><alt>$[a,b]$</alt></inlineequation>.</para>
     </formalpara>
 
-    <formalpara role="proof" xml:id="proof.fundamentallemma">
+    <formalpara role="proof" xml:id="proof.fundamentallemma" collapsible="true">
       <title>Beweis (durch Widerspruch)</title>
       <para>Angenommen, es existiert ein Punkt
         <inlineequation><alt>$x_0 \in (a,b)$</alt></inlineequation> mit
@@ -359,6 +359,27 @@
     <equation xml:id="eq.euler-gleichung">
       <alt>\[ \frac{\partial F}{\partial y} - \frac{d}{dx}\!\left(\frac{\partial F}{\partial y'}\right) = 0. \]</alt>
     </equation>
+
+    <formalpara role="derivation" xml:id="deriv.stationaritaet">
+      <title>Herleitung der Euler-Gleichung aus der Stationaritätsbedingung</title>
+      <para>Wir berechnen explizit die Bedingung
+        <inlineequation><alt>$h'(\varepsilon_0) = 0$</alt></inlineequation>,
+        wobei <inlineequation><alt>$h(\varepsilon) = I(y + \varepsilon\eta)$</alt></inlineequation>
+        mit einer Vergleichsschar
+        <inlineequation><alt>$\eta(x)$</alt></inlineequation>,
+        <inlineequation><alt>$\eta(x_0) = \eta(x_1) = 0$</alt></inlineequation>:</para>
+      <informalequation><alt>\[ 0 \stackrel{!}{=} h'(\varepsilon_0) = \int_{x_0}^{x_1} \!\!\left( \frac{\partial F}{\partial y}\,\eta + \frac{\partial F}{\partial y'}\,\eta' \right) dx. \]</alt></informalequation>
+      <para>Auf den zweiten Summanden wenden wir partielle Integration an
+        (<inlineequation><alt>$u = \partial F/\partial y'$</alt></inlineequation>,
+        <inlineequation><alt>$v' = \eta'$</alt></inlineequation>):</para>
+      <informalequation><alt>\[ \int_{x_0}^{x_1} \frac{\partial F}{\partial y'}\,\eta'\,dx = \underbrace{\left[\frac{\partial F}{\partial y'}\,\eta\right]_{x_0}^{x_1}}_{=\,0} - \int_{x_0}^{x_1} \frac{d}{dx}\!\left(\frac{\partial F}{\partial y'}\right)\eta\,dx. \]</alt></informalequation>
+      <para>Der Randterm verschwindet, weil
+        <inlineequation><alt>$\eta(x_0) = \eta(x_1) = 0$</alt></inlineequation>.
+        Damit wird die Stationaritätsbedingung zu:</para>
+      <informalequation><alt>\[ 0 = \int_{x_0}^{x_1}\!\! \left(\frac{\partial F}{\partial y} - \frac{d}{dx}\frac{\partial F}{\partial y'}\right)\eta\,dx \quad \forall\, \eta \text{ mit } \eta(x_0)=\eta(x_1)=0. \]</alt></informalequation>
+      <para>Das Fundamentallemma der Variationsrechnung erzwingt dann das Verschwinden des
+        Integranden, was genau die Euler-Gleichung ist.</para>
+    </formalpara>
 
     <para>Lösungen <inlineequation><alt>$y(x)$</alt></inlineequation> dieser Gleichung heißen
       <emphasis role="bold">Extremalen</emphasis>. Die Euler-Gleichung ist eine gewöhnliche
@@ -415,6 +436,22 @@
       <para>entlang jeder Extremalen erhalten bleibt. Diese Beziehung, bekannt als
         <emphasis role="bold">Beltrami-Identität</emphasis>, liefert ein erstes Integral und
         reduziert die Ordnung der Differentialgleichung von zwei auf eins.</para>
+
+      <formalpara role="derivation" xml:id="deriv.beltrami">
+        <title>Herleitung der Beltrami-Identität</title>
+        <para>Ausgangspunkt ist die Euler-Gleichung
+          <inlineequation><alt>$F_y - \frac{d}{dx}F_{y'} = 0$</alt></inlineequation>.
+          Wir bilden die totale Ableitung von
+          <inlineequation><alt>$F(y,y')$</alt></inlineequation> nach
+          <inlineequation><alt>$x$</alt></inlineequation>:</para>
+        <informalequation><alt>\[ \frac{dF}{dx} = F_y \, y' + F_{y'} \, y''. \]</alt></informalequation>
+        <para>Andererseits gilt mit der Produktregel:</para>
+        <informalequation><alt>\[ \frac{d}{dx}\!\left(F_{y'} \cdot y'\right) = \frac{d}{dx}(F_{y'}) \cdot y' + F_{y'} \cdot y''. \]</alt></informalequation>
+        <para>Subtrahieren wir die zweite Gleichung von der ersten:</para>
+        <informalequation><alt>\[ \frac{dF}{dx} - \frac{d}{dx}(F_{y'} \, y') = F_y \, y' - \frac{d}{dx}(F_{y'}) \cdot y' = \left[\underbrace{F_y - \frac{d}{dx}F_{y'}}_{=\,0 \text{ (Euler-Gl.)}}\right] \cdot y' = 0. \]</alt></informalequation>
+        <para>Also ist</para>
+        <informalequation><alt>\[ \frac{d}{dx}\!\left(F - y' F_{y'}\right) = 0 \qquad \Longrightarrow \qquad F - y' F_{y'} = \text{const.} \]</alt></informalequation>
+      </formalpara>
     </section>
   </section>
 
@@ -434,6 +471,33 @@
     <equation xml:id="eq.brachistochrone-loesung">
       <alt>\[ x(\varphi) = \frac{K^2}{2}\,(\varphi - \sin\varphi) + \alpha, \qquad y(\varphi) = \frac{K^2}{2}\,(1 - \cos\varphi). \]</alt>
     </equation>
+
+    <formalpara role="derivation" xml:id="deriv.brachistochrone">
+      <title>Vollständige Herleitung der Zykloiden-Lösung</title>
+      <para>Da <inlineequation><alt>$F = \sqrt{(1+y'^2)/(2gy)}$</alt></inlineequation>
+        nicht explizit von <inlineequation><alt>$x$</alt></inlineequation> abhängt,
+        wenden wir die Beltrami-Identität an:</para>
+      <informalequation><alt>\[ F - y' F_{y'} = c = \text{const.} \]</alt></informalequation>
+      <para>Einsetzen von <inlineequation><alt>$F_{y'} = y'/\sqrt{2gy(1+y'^2)}$</alt></inlineequation>
+        liefert nach Vereinfachung:</para>
+      <informalequation><alt>\[ c = \frac{1}{\sqrt{2g}} \cdot \frac{1}{\sqrt{y(1+y'^2)}} \qquad \Longrightarrow \qquad y(1+y'^2) = K^2 = \text{const.} \]</alt></informalequation>
+      <para>Daraus folgt <inlineequation><alt>$y'^2 = (K^2-y)/y$</alt></inlineequation>.
+        Wir führen den Parameter <inlineequation><alt>$\varphi$</alt></inlineequation>
+        ein durch die Substitution
+        <inlineequation><alt>$y'(x) = \cot(\varphi/2)$</alt></inlineequation>. Dann gilt:</para>
+      <informalequation><alt>\[ y = \frac{K^2}{1 + \cot^2(\varphi/2)} = \frac{K^2 \sin^2(\varphi/2)}{\sin^2(\varphi/2) + \cos^2(\varphi/2)} = K^2 \sin^2\!\left(\frac{\varphi}{2}\right). \]</alt></informalequation>
+      <para>Mit der Halbwinkelidentität
+        <inlineequation><alt>$\sin^2(\varphi/2) = \tfrac{1}{2}(1 - \cos\varphi)$</alt></inlineequation>
+        wird daraus:</para>
+      <informalequation><alt>\[ y(\varphi) = \frac{K^2}{2}(1 - \cos\varphi). \]</alt></informalequation>
+      <para>Für <inlineequation><alt>$x(\varphi)$</alt></inlineequation> differenzieren wir
+        <inlineequation><alt>$y = y(\varphi(x))$</alt></inlineequation> und setzen
+        <inlineequation><alt>$dy/dx = y' = \cot(\varphi/2)$</alt></inlineequation> ein.
+        Es ergibt sich:</para>
+      <informalequation><alt>\[ dx = K^2 \sin^2\!\left(\frac{\varphi}{2}\right) d\varphi = \frac{K^2}{2}(1 - \cos\varphi)\, d\varphi. \]</alt></informalequation>
+      <para>Integration liefert die Parameterdarstellung der Zykloide:</para>
+      <informalequation><alt>\[ x(\varphi) = \frac{K^2}{2}(\varphi - \sin\varphi) + \alpha, \qquad y(\varphi) = \frac{K^2}{2}(1 - \cos\varphi). \]</alt></informalequation>
+    </formalpara>
 
     <para>Dies ist die Parameterdarstellung einer <emphasis role="bold">Zykloide</emphasis> — jener
       Kurve, die ein Punkt auf dem Rand eines rollenden Kreises mit Radius

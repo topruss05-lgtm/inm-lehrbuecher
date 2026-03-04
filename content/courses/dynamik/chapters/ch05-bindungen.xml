@@ -144,6 +144,26 @@
         <inlineequation><alt>$V_\mathrm{vertr.}^0 = \operatorname{Im}(W)$</alt></inlineequation>.</para>
     </formalpara>
 
+    <formalpara role="proof" xml:id="proof.ideale-bindungen" collapsible="true">
+      <title>Beweis (über Annihilatorraum und Dimensionsformel)</title>
+      <para><emphasis role="bold">Teil 1:</emphasis>
+        <inlineequation><alt>$\operatorname{Im}(W) \subseteq V_{\mathrm{vertr.}}^0$</alt></inlineequation>.
+        Sei <inlineequation><alt>$\vec{f}^z = W\vec{\lambda} \in \operatorname{Im}(W)$</alt></inlineequation>.
+        Für alle <inlineequation><alt>$\delta\vec{q} \in V_{\mathrm{vertr.}} = \operatorname{Kern}(W^T)$</alt></inlineequation>
+        gilt:</para>
+      <informalequation><alt>\[ \delta\vec{q}^T \vec{f}^z = \delta\vec{q}^T W\vec{\lambda} = \underbrace{(W^T \delta\vec{q})}_{= \vec{0}}^T \vec{\lambda} = 0, \]</alt></informalequation>
+      <para>also <inlineequation><alt>$\vec{f}^z \in V_{\mathrm{vertr.}}^0$</alt></inlineequation>.</para>
+      <para><emphasis role="bold">Teil 2:</emphasis> Dimensionsgleichheit.
+        Sei <inlineequation><alt>$k = \operatorname{Rg}(W) = \operatorname{Rg}(W^T) \leq m$</alt></inlineequation>.
+        Die Dimensionsformel für <inlineequation><alt>$W^T \colon \mathbb{R}^f \to \mathbb{R}^m$</alt></inlineequation>
+        liefert:</para>
+      <informalequation><alt>\[ f = \underbrace{\dim\operatorname{Kern}(W^T)}_{\dim V_{\mathrm{vertr.}}} + \underbrace{\dim\operatorname{Im}(W^T)}_{k} \qquad \Longrightarrow \qquad \dim V_{\mathrm{vertr.}} = f - k. \]</alt></informalequation>
+      <para>Andererseits gilt für den Annihilatorraum:</para>
+      <informalequation><alt>\[ f = \dim V_{\mathrm{vertr.}} + \dim V_{\mathrm{vertr.}}^0 \qquad \Longrightarrow \qquad \dim V_{\mathrm{vertr.}}^0 = f - (f - k) = k = \dim\operatorname{Im}(W). \]</alt></informalequation>
+      <para>Mit Teil 1 und der Dimensionsgleichheit folgt
+        <inlineequation><alt>$V_{\mathrm{vertr.}}^0 = \operatorname{Im}(W)$</alt></inlineequation>.</para>
+    </formalpara>
+
     <para>Der Vektor <inlineequation><alt>$\vec{\lambda} \in \mathbb{R}^m$</alt></inlineequation>
       enthält die <emphasis role="bold">Lagrange-Multiplikatoren</emphasis> — sie geben die
       Stärke der Zwangskräfte an und werden zusammen mit den Beschleunigungen bestimmt.</para>
