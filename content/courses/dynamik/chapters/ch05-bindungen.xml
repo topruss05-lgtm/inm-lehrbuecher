@@ -18,9 +18,11 @@
   <section xml:id="sec.klassifizierung-bindungen">
     <title>Klassifizierung von Bindungen</title>
 
-    <para>Bindungen lassen sich nach zwei Kriterien klassifizieren: nach ihrer Zeitabhängigkeit
-      (skleronom vs. rheonom) und nach der Ebene, auf der sie formuliert werden (geometrisch
-      vs. kinematisch).</para>
+    <para>Eine <emphasis role="bold">Bindung</emphasis> ist eine Einschränkung der
+      Bewegungsfreiheit eines mechanischen Systems zusammen mit den Bindungskräften, die diese
+      Einschränkung unter allen Umständen realisieren. Bindungen lassen sich nach zwei Kriterien
+      klassifizieren: nach ihrer Zeitabhängigkeit (skleronom vs. rheonom) und nach der Ebene,
+      auf der sie formuliert werden (geometrisch vs. kinematisch).</para>
 
     <table xml:id="tab.klassifizierung">
       <title>Klassifizierung von Bindungen</title>
@@ -43,14 +45,94 @@
       </tgroup>
     </table>
 
+    <para>Kinematische Bindungen sind stets linear in den Geschwindigkeiten
+      <inlineequation><alt>$\dot{\vec{q}}$</alt></inlineequation>.</para>
+
     <para>Eine Bindung heißt <emphasis role="bold">holonom</emphasis>, wenn sie entweder
       geometrisch ist oder als kinematische Bindung elementar auf Lageebene integriert werden
-      kann. Andernfalls heißt sie <emphasis role="bold">nichtholonom</emphasis> — ein
-      klassisches Beispiel ist die Rollbedingung eines Rades auf einer Ebene.</para>
+      kann. Andernfalls heißt sie <emphasis role="bold">nichtholonom</emphasis>.</para>
+
+    <example xml:id="ex.rollbedingung">
+      <title>Rollbedingung (holonom)</title>
+      <!-- TODO: Skizze — Rad mit Radius r rollt auf ebener Fläche, Koordinaten x (Translation) und α (Drehwinkel) -->
+      <para>Ein Rad mit Radius <inlineequation><alt>$r$</alt></inlineequation> rollt schlupffrei
+        auf einer Ebene. Die Rollbedingung lautet auf Geschwindigkeitsebene:</para>
+      <informalequation><alt>\[ \gamma = v - \Omega\, r = \dot{x} - \dot{\alpha}\, r = 0. \]</alt></informalequation>
+      <para>Diese kinematische Bindung lässt sich elementar integrieren:</para>
+      <informalequation><alt>\[ g(x, \alpha) = x - \alpha\, r + \text{const.} = 0. \]</alt></informalequation>
+      <para>Die Bindung ist also holonom — sie schränkt ein, <emphasis>wo</emphasis> sich
+        das System befinden kann.</para>
+    </example>
+
+    <example xml:id="ex.schlittschuh">
+      <title>Schlittschuh (nichtholonom)</title>
+      <!-- TODO: Skizze — Kufe in der Ebene mit Koordinaten x, y und Winkel φ, Quergeschwindigkeit v_Q = 0 -->
+      <para>Eine Kufe gleitet reibungsfrei in Längsrichtung, Quergleiten ist verboten.
+        Mit den Koordinaten <inlineequation><alt>$\vec{q} = (x, y, \varphi)^T$</alt></inlineequation>
+        lautet die Bindung:</para>
+      <informalequation><alt>\[ \gamma = -\dot{x}\sin\varphi + \dot{y}\cos\varphi = 0. \]</alt></informalequation>
+      <para>Diese kinematische Bindung ist <emphasis>nicht</emphasis> integrierbar: Die Kufe
+        kann jede Position <inlineequation><alt>$(x,y)$</alt></inlineequation> in der Ebene
+        erreichen — die Lage ist frei, nur die momentane Bewegungsrichtung ist eingeschränkt.
+        Die Bindung ist nichtholonom.</para>
+    </example>
+
+    <para>Holonome Bindungen schränken also ein, welche <emphasis>Lagen</emphasis> das System
+      einnehmen kann. Nichtholonome Bindungen lassen die Lagen frei und schränken nur die
+      <emphasis>Richtungen</emphasis> ein, in die sich das System momentan bewegen kann.</para>
+
+    <formalpara role="remark" xml:id="rem.integrabilitaet" collapsible="true">
+      <title>Bemerkung: Integrabilität von Bindungssätzen</title>
+      <para>Die Integrabilität muss für den <emphasis>gesamten Bindungssatz</emphasis> geprüft
+        werden, nicht für einzelne Bindungen. So ist die Schlittschuh-Bindung
+        <inlineequation><alt>$\gamma = -\dot{x}\sin\varphi + \dot{y}\cos\varphi = 0$</alt></inlineequation>
+        allein nichtholonom. Ergänzt man sie aber um eine geometrische Bindung
+        <inlineequation><alt>$\varphi = \varphi_0 = \text{const.}$</alt></inlineequation>,
+        so wird der Gesamtsatz holonom: Er ist äquivalent zu
+        <inlineequation><alt>$-x\sin\varphi_0 + y\cos\varphi_0 + \text{const.} = 0$</alt></inlineequation>
+        und <inlineequation><alt>$\varphi - \varphi_0 = 0$</alt></inlineequation>.
+        Die Prüfung der Integrabilität mehrerer Bindungen erfordert im Allgemeinen das
+        Frobenius-Kriterium.</para>
+    </formalpara>
 
     <para>Mehrere Bindungen desselben Typs werden kompakt zusammengefasst: geometrische als
       <inlineequation><alt>$\vec{g}(\vec{q}, t) = \vec{0}$</alt></inlineequation>, kinematische
-      als <inlineequation><alt>$W^T(\vec{q}, t)\,\dot{\vec{q}} + \vec{\chi}(\vec{q}, t) = \vec{0}$</alt></inlineequation>.</para>
+      als <inlineequation><alt>$W^T(\vec{q}, t)\,\dot{\vec{q}} + \vec{\chi}(\vec{q}, t) = \vec{0}$</alt></inlineequation>
+      mit <inlineequation><alt>$W^T = (\vec{w}_1, \dots, \vec{w}_m)^T$</alt></inlineequation>.</para>
+
+    <para>Die Verbindung zwischen beiden Formulierungen liefert die Jacobi-Matrix der
+      geometrischen Bindungen: Für holonome Bindungen gilt
+      <inlineequation><alt>$W^T = \frac{\partial \vec{g}}{\partial \vec{q}}$</alt></inlineequation>,
+      wobei die <inlineequation><alt>$i$</alt></inlineequation>-te Zeile
+      <inlineequation><alt>$\vec{w}_i^T = \frac{\partial g_i}{\partial \vec{q}}$</alt></inlineequation>
+      dem Gradienten der <inlineequation><alt>$i$</alt></inlineequation>-ten Bindung entspricht.</para>
+
+    <para>Eine Bindung <inlineequation><alt>$g(\vec{q}, t) = 0$</alt></inlineequation> lässt
+      sich physikalisch als Grenzfall eines Kraftgesetzes aus Kapitel 4 verstehen: Ein
+      Kraftelement mit dem Gesetz <inlineequation><alt>$-\lambda_i = k_i\, g_i(\vec{q},t)$</alt></inlineequation>
+      liefert nach Umstellen
+      <inlineequation><alt>$-\lambda_i / k_i = g_i(\vec{q},t)$</alt></inlineequation>.
+      Im Grenzfall <inlineequation><alt>$k_i \to \infty$</alt></inlineequation> folgt
+      <inlineequation><alt>$g_i(\vec{q},t) = 0$</alt></inlineequation> — die Auslenkung
+      verschwindet, während die Zwangskraft
+      <inlineequation><alt>$\lambda_i$</alt></inlineequation> endlich bleibt und genau den
+      Wert annimmt, der zur Durchsetzung der Bindung nötig ist.</para>
+    <!-- TODO: Skizze — Kraft-Weg-Kennlinie: -λ vs. g mit Steigung k, im Grenzfall k→∞ wird die Kennlinie vertikal -->
+
+    <example xml:id="ex.masse-am-stab">
+      <title>Masse am masselosen Stab</title>
+      <!-- TODO: Skizze — Masse m am Stab der Länge l in der Ebene, Koordinaten x, y, Schwerkraft g nach unten -->
+      <para>Eine Punktmasse <inlineequation><alt>$m$</alt></inlineequation> ist über einen
+        masselosen Stab der Länge <inlineequation><alt>$l$</alt></inlineequation> im Ursprung
+        befestigt. Mit den Koordinaten <inlineequation><alt>$\vec{q} = (x, y)^T$</alt></inlineequation>
+        und der Bindung <inlineequation><alt>$g(\vec{q}) = x^2 + y^2 - l^2 = 0$</alt></inlineequation>
+        lauten die Bewegungsgleichungen:</para>
+      <informalequation><alt>\[ m\ddot{x} = 2x\,\lambda, \qquad m\ddot{y} = 2y\,\lambda - mg. \]</alt></informalequation>
+      <para>Die Zwangskraft wirkt in Richtung
+        <inlineequation><alt>$\vec{w} = \left(\frac{\partial g}{\partial \vec{q}}\right)^T = (2x, 2y)^T$</alt></inlineequation>
+        — senkrecht zur Bindungsfläche (dem Kreis
+        <inlineequation><alt>$x^2 + y^2 = l^2$</alt></inlineequation>).</para>
+    </example>
   </section>
 
   <!-- ═══════════════════════════════════════════════════════════════════ -->
@@ -59,19 +141,33 @@
     <title>Überführung zwischen den Ebenen</title>
 
     <para>Geometrische Bindungen können durch Zeitableitung auf die Geschwindigkeitsebene
-      überführt werden:</para>
+      überführt werden. Aus <inlineequation><alt>$\vec{g}(\vec{q}, t) = \vec{0}$</alt></inlineequation>
+      für alle <inlineequation><alt>$t$</alt></inlineequation> folgt:</para>
 
-    <informalequation><alt>\[ \dot{\vec{g}} = \frac{\partial \vec{g}}{\partial \vec{q}}\,\dot{\vec{q}} + \frac{\partial \vec{g}}{\partial t} = \vec{0}. \]</alt></informalequation>
+    <informalequation><alt>\[ \dot{\vec{g}} = \underbrace{\frac{\partial \vec{g}}{\partial \vec{q}}}_{= W^T}\,\dot{\vec{q}} + \underbrace{\frac{\partial \vec{g}}{\partial t}}_{= \vec{\chi}} = \vec{0}. \]</alt></informalequation>
+
+    <para>Durch Vergleich mit der kinematischen Schreibweise liest man ab:</para>
+
+    <informalequation><alt>\[ W^T = \frac{\partial \vec{g}}{\partial \vec{q}} = \frac{\partial \vec{\gamma}}{\partial \dot{\vec{q}}}. \]</alt></informalequation>
 
     <para>Ebenso lassen sich kinematische Bindungen durch nochmalige Ableitung auf die
       Beschleunigungsebene bringen:</para>
 
-    <informalequation><alt>\[ \dot{\vec{\gamma}} = W^T\,\ddot{\vec{q}} + \dot{W}^T\,\dot{\vec{q}} + \dot{\vec{\chi}} = \vec{0}. \]</alt></informalequation>
+    <informalequation><alt>\[ \dot{\vec{\gamma}} = W^T\,\ddot{\vec{q}} + \underbrace{\dot{W}^T\,\dot{\vec{q}} + \dot{\vec{\chi}}}_{=: \vec{\bar{s}}} = \vec{0}. \]</alt></informalequation>
 
-    <para>Diese Überführung spielt eine zentrale Rolle bei der Indexreduktion (siehe unten). Zu
-      beachten ist, dass beim Differenzieren Information verloren geht: Die Geschwindigkeitsbindung
+    <para>Beim Differenzieren geht Information verloren: Die Geschwindigkeitsbindung
       ist schwächer als die Lagebindung, da sie nur die Ableitung, nicht den absoluten Wert
-      einschränkt.</para>
+      einschränkt. Die Äquivalenz zur ursprünglichen Lagebindung gilt nur dann, wenn
+      zusätzlich verträgliche Anfangsbedingungen vorliegen:
+      <inlineequation><alt>$\vec{g}(\vec{q}_0, t_0) = \vec{0}$</alt></inlineequation>
+      bei der Überführung auf Geschwindigkeitsebene, und zusätzlich
+      <inlineequation><alt>$\vec{\gamma}(\vec{q}_0, \dot{\vec{q}}_0, t_0) = \vec{0}$</alt></inlineequation>
+      bei der Überführung auf Beschleunigungsebene.</para>
+
+    <para>Für kinematische Bindungen
+      <inlineequation><alt>$\vec{\gamma} = W^T\dot{\vec{q}} + \vec{\chi} = \vec{0}$</alt></inlineequation>
+      funktioniert die Überführung auf Beschleunigungsebene analog, wobei
+      <inlineequation><alt>$W^T = \frac{\partial \vec{\gamma}}{\partial \dot{\vec{q}}}$</alt></inlineequation>.</para>
   </section>
 
   <!-- ═══════════════════════════════════════════════════════════════════ -->
@@ -89,6 +185,28 @@
 
     <informalequation><alt>\[ \dim \operatorname{Kern}(W^T) + \operatorname{Rg}(W) = f. \]</alt></informalequation>
 
+    <example xml:id="ex.kern-bild">
+      <title>Kern und Bild einer linearen Abbildung</title>
+      <para>Sei <inlineequation><alt>$A \colon \mathbb{R}^2 \to \mathbb{R}^3$</alt></inlineequation>
+        mit <inlineequation><alt>$A = \begin{pmatrix} 1 &amp; 2 \\ 2 &amp; 4 \\ 2 &amp; 4 \end{pmatrix}$</alt></inlineequation>.
+        Gauß-Elimination von <inlineequation><alt>$A\vec{v} = \vec{0}$</alt></inlineequation> liefert
+        <inlineequation><alt>$v_1 = -2v_2$</alt></inlineequation>, also:</para>
+      <informalequation><alt>\[ \operatorname{Kern}(A) = \operatorname{span}\left\{\begin{pmatrix} -2 \\ 1 \end{pmatrix}\right\}. \]</alt></informalequation>
+      <para>Das Bild ergibt sich aus den Spalten:
+        <inlineequation><alt>$A\vec{e}_1 = (1, 2, 2)^T$</alt></inlineequation>,
+        <inlineequation><alt>$A\vec{e}_2 = (2, 4, 4)^T = 2 \cdot A\vec{e}_1$</alt></inlineequation>, also:</para>
+      <informalequation><alt>\[ \operatorname{Im}(A) = \operatorname{span}\left\{\begin{pmatrix} 1 \\ 2 \\ 2 \end{pmatrix}\right\}. \]</alt></informalequation>
+      <!-- TODO: Skizze — Links: ℝ² mit Kern(A) als Gerade durch (-2,1). Rechts: ℝ³ mit Im(A) als Gerade durch (1,2,2). Abbildung A dazwischen. -->
+      <para>Dimensionsformel: <inlineequation><alt>$\dim\mathbb{R}^2 = \underbrace{\dim\operatorname{Kern}(A)}_{= 1} + \underbrace{\operatorname{Rg}(A)}_{= 1} = 2$</alt></inlineequation>. ✓</para>
+    </example>
+
+    <para>Ein <emphasis role="bold">lineares Funktional</emphasis> auf
+      <inlineequation><alt>$V = \mathbb{R}^f$</alt></inlineequation> ist eine Abbildung
+      <inlineequation><alt>$I_{\vec{\alpha}} \colon V \to \mathbb{R}$</alt></inlineequation> mit
+      <inlineequation><alt>$I_{\vec{\alpha}}(\vec{v}) = \vec{v}^T \vec{\alpha}$</alt></inlineequation>
+      für einen festen Vektor
+      <inlineequation><alt>$\vec{\alpha} \in \mathbb{R}^f$</alt></inlineequation>.</para>
+
     <formalpara role="definition" xml:id="def.annihilatorraum">
       <title>Definition: Annihilatorraum</title>
       <para>Für einen Unterraum <inlineequation><alt>$U \subseteq \mathbb{R}^f$</alt></inlineequation>
@@ -101,6 +219,16 @@
     <para>Der Annihilatorraum ist das orthogonale Komplement bezüglich der euklidischen
       Bilinearform — er enthält genau die Vektoren, die auf jedem Element von
       <inlineequation><alt>$U$</alt></inlineequation> senkrecht stehen.</para>
+
+    <example xml:id="ex.annihilator">
+      <title>Annihilatorraum in <inlineequation><alt>$\mathbb{R}^2$</alt></inlineequation></title>
+      <para>Sei <inlineequation><alt>$U = \operatorname{span}\{(-2, 1)^T\} \subset \mathbb{R}^2$</alt></inlineequation>.
+        Die Bedingung <inlineequation><alt>$(\alpha_1, \alpha_2) \cdot (-2, 1)^T = -2\alpha_1 + \alpha_2 = 0$</alt></inlineequation>
+        liefert <inlineequation><alt>$\alpha_2 = 2\alpha_1$</alt></inlineequation>, also:</para>
+      <informalequation><alt>\[ U^0 = \operatorname{span}\left\{\begin{pmatrix} 1 \\ 2 \end{pmatrix}\right\}. \]</alt></informalequation>
+      <!-- TODO: Skizze — ℝ² mit U als Gerade und U⁰ als orthogonale Gerade -->
+      <para>Dimensionsprüfung: <inlineequation><alt>$\dim U + \dim U^0 = 1 + 1 = 2 = \dim\mathbb{R}^2$</alt></inlineequation>. ✓</para>
+    </example>
   </section>
 
   <!-- ═══════════════════════════════════════════════════════════════════ -->
@@ -108,22 +236,79 @@
   <section xml:id="sec.vertraegliche-verschiebungen">
     <title>Verträgliche virtuelle Verschiebungen</title>
 
+    <para>Betrachte <inlineequation><alt>$m$</alt></inlineequation> geometrische Bindungen
+      <inlineequation><alt>$\vec{g}(\vec{q}, t) = \vec{0}$</alt></inlineequation>.
+      Sei <inlineequation><alt>$\vec{q}_\text{vertr.}$</alt></inlineequation> eine mit den
+      Bindungen verträgliche Lage, d.h.
+      <inlineequation><alt>$\vec{g}(\vec{q}_\text{vertr.}, t) = \vec{0}$</alt></inlineequation>.
+      Welche virtuellen Verschiebungen <inlineequation><alt>$\delta\vec{q}$</alt></inlineequation>
+      sind mit den Bindungen verträglich?</para>
+
+    <para>Wähle eine einparametrige Familie verträglicher Lagen
+      <inlineequation><alt>$\hat{\vec{q}}_\text{vertr.}(\varepsilon)$</alt></inlineequation>
+      mit <inlineequation><alt>$\hat{\vec{q}}_\text{vertr.}(\varepsilon_0) = \vec{q}_\text{vertr.}$</alt></inlineequation>,
+      die die Bindungen für alle <inlineequation><alt>$\varepsilon$</alt></inlineequation>
+      erfüllt:</para>
+
+    <informalequation><alt>\[ \vec{g}\bigl(\hat{\vec{q}}_\text{vertr.}(\varepsilon),\, t\bigr) = \vec{0} \quad \forall\,\varepsilon. \]</alt></informalequation>
+
+    <para>Ableitung nach <inlineequation><alt>$\varepsilon$</alt></inlineequation> mit der
+      Kettenregel ergibt (die rechte Seite bleibt Null, da die Bindung für jedes
+      <inlineequation><alt>$\varepsilon$</alt></inlineequation> gilt):</para>
+
+    <informalequation><alt>\[ \frac{\mathrm{d}}{\mathrm{d}\varepsilon}\,\vec{g}\bigl(\hat{\vec{q}}_\text{vertr.}(\varepsilon),\, t\bigr)\bigg|_{\varepsilon = \varepsilon_0} = \underbrace{\frac{\partial \vec{g}}{\partial \vec{q}}\bigl(\vec{q}_\text{vertr.},\, t\bigr)}_{= W^T} \cdot \underbrace{\frac{\mathrm{d}\hat{\vec{q}}_\text{vertr.}}{\mathrm{d}\varepsilon}\bigg|_{\varepsilon_0} \cdot \delta\varepsilon}_{= \delta\vec{q}_\text{vertr.}} = \vec{0}. \]</alt></informalequation>
+
+    <para>Verträgliche virtuelle Verschiebungen müssen also die Bedingung
+      <inlineequation><alt>$W^T \delta\vec{q} = \vec{0}$</alt></inlineequation> erfüllen —
+      sie liegen im Kern von
+      <inlineequation><alt>$W^T$</alt></inlineequation>.</para>
+
     <formalpara role="definition" xml:id="def.vertraegliche-verschiebungen">
       <title>Definition</title>
       <para>Der Unterraum der <emphasis role="bold">verträglichen virtuellen
         Verschiebungen</emphasis> besteht aus allen virtuellen Verschiebungen, die die
         linearisierten Bindungsbedingungen erfüllen:
-        <inlineequation><alt>$V_\mathrm{vertr.} = \operatorname{Kern}(W^T)$</alt></inlineequation>.</para>
+        <inlineequation><alt>$V_\mathrm{vertr.} = \{\delta\vec{q} \in \mathbb{R}^f \mid W^T(\vec{q}, t)\,\delta\vec{q} = \vec{0}\} = \operatorname{Kern}(W^T)$</alt></inlineequation>.
+        Dabei ist <inlineequation><alt>$W^T = \frac{\partial \vec{\gamma}}{\partial \dot{\vec{q}}}$</alt></inlineequation>.</para>
     </formalpara>
 
     <para>Die Dimension dieses Unterraums entspricht der Zahl der verbleibenden Freiheitsgrade:
       <inlineequation><alt>$\dim V_\mathrm{vertr.} = f - \operatorname{Rg}(W)$</alt></inlineequation>.</para>
+
+    <example xml:id="ex.masse-auf-parabel">
+      <title>Masse auf einer Parabel</title>
+      <!-- TODO: Skizze — Masse auf der Kurve y = ax², Koordinaten x, y, tangentiale Verschiebung δq -->
+      <para>Sei <inlineequation><alt>$\vec{q} = (x, y)^T$</alt></inlineequation> und
+        <inlineequation><alt>$g = y - ax^2 = 0$</alt></inlineequation>. Die Geschwindigkeitsbindung
+        lautet:</para>
+      <informalequation><alt>\[ \gamma = \dot{g} = \dot{y} - 2ax\dot{x} = \underbrace{\begin{pmatrix} -2ax &amp; 1 \end{pmatrix}}_{= \vec{w}^T} \begin{pmatrix} \dot{x} \\ \dot{y} \end{pmatrix} = 0. \]</alt></informalequation>
+      <para>Aus <inlineequation><alt>$\vec{w}^T \delta\vec{q}_\text{vertr.} = -2ax\,\delta x + \delta y = 0$</alt></inlineequation>
+        folgt <inlineequation><alt>$\delta y = 2ax\,\delta x$</alt></inlineequation>, also:</para>
+      <informalequation><alt>\[ V_\text{vertr.} = \operatorname{span}\left\{\begin{pmatrix} 1 \\ 2ax \end{pmatrix}\right\}. \]</alt></informalequation>
+      <para>Die verträgliche Verschiebung ist tangential zur Parabel.</para>
+    </example>
   </section>
 
   <!-- ═══════════════════════════════════════════════════════════════════ -->
 
   <section xml:id="sec.ideale-bindungen">
     <title>Ideale Bindungen und das d'Alembert-Lagrange-Prinzip</title>
+
+    <para>Ausgangspunkt ist das Prinzip der virtuellen Arbeit für ein ungebundenes System
+      in <inlineequation><alt>$f$</alt></inlineequation> Minimalkoordinaten
+      <inlineequation><alt>$\vec{q} \in \mathbb{R}^f$</alt></inlineequation> (Kapitel 2):</para>
+
+    <informalequation><alt>\[ \delta\vec{q}^T\bigl(M(\vec{q},t)\,\ddot{\vec{q}} - \vec{h}(\vec{q},\dot{\vec{q}},t)\bigr) = 0 \quad \forall\,\delta\vec{q}. \]</alt></informalequation>
+
+    <para>Werden dem System nachträglich <inlineequation><alt>$m$</alt></inlineequation>
+      Bindungen auferlegt, z.B. <inlineequation><alt>$\vec{g}(\vec{q},t) = \vec{0}$</alt></inlineequation>,
+      so treten Zwangskräfte <inlineequation><alt>$\vec{f}^z$</alt></inlineequation> auf:</para>
+
+    <informalequation><alt>\[ \delta\vec{q}^T\bigl(M\,\ddot{\vec{q}} - \vec{h} - \vec{f}^z\bigr) = 0 \quad \forall\,\delta\vec{q}. \]</alt></informalequation>
+
+    <para>Die Frage ist: Welche Struktur haben die Zwangskräfte
+      <inlineequation><alt>$\vec{f}^z$</alt></inlineequation>? Die Antwort gibt das
+      folgende Prinzip.</para>
 
     <formalpara role="definition" xml:id="def.ideale-bindung">
       <title>Definition: Ideale bilaterale Bindung</title>
@@ -133,6 +318,10 @@
         <inlineequation><alt>$\delta W^z = \delta\vec{q}^T\vec{f}^z = 0 \quad \forall\,\delta\vec{q} \in V_\mathrm{vertr.}$</alt></inlineequation>.
         Dies ist das <emphasis role="bold">Prinzip von d'Alembert-Lagrange</emphasis>.</para>
     </formalpara>
+
+    <para>Die Zwangskräfte liegen somit im Annihilatorraum
+      <inlineequation><alt>$V_\mathrm{vertr.}^0$</alt></inlineequation> der verträglichen
+      Verschiebungen.</para>
 
     <formalpara role="theorem" xml:id="thm.ideale-bindungen">
       <title>Satz: Struktur idealer Zwangskräfte</title>
@@ -174,7 +363,9 @@
   <section xml:id="sec.lagrange-1-art">
     <title>Lagrange'sche Gleichungen 1. Art</title>
 
-    <para>Ergänzt man die Bewegungsgleichungen um die Zwangskraftterme und die
+    <para>Für ideale Bindungen wird
+      <inlineequation><alt>$\vec{f}^z = W\vec{\lambda}$</alt></inlineequation>.
+      Ergänzt man die Bewegungsgleichungen um die Zwangskraftterme und die
       Bindungsgleichungen, so erhält man die
       <emphasis role="bold">Lagrange'schen Gleichungen 1. Art</emphasis> (Lagrange, 1788):</para>
 
@@ -193,6 +384,9 @@
       <para>Durch Ableitung der Lagebindungen erhält man ein System vom Index 2:</para>
 
       <informalequation><alt>\[ M\,\ddot{\vec{q}} - \vec{h} - W\,\vec{\lambda} = \vec{0}, \qquad W^T\,\dot{\vec{q}} + \vec{\chi} = \vec{0}. \]</alt></informalequation>
+
+      <para>Voraussetzung für die Äquivalenz zum Index-3-System ist eine verträgliche
+        Anfangslage <inlineequation><alt>$\vec{g}(\vec{q}_0, t_0) = \vec{0}$</alt></inlineequation>.</para>
     </section>
 
     <section xml:id="sec.index-reduktion-beschl">
@@ -201,6 +395,13 @@
       <para>Nochmalige Ableitung liefert ein System vom Index 1:</para>
 
       <informalequation><alt>\[ M\,\ddot{\vec{q}} - \vec{h} - W\,\vec{\lambda} = \vec{0}, \qquad W^T\,\ddot{\vec{q}} + \vec{\bar{s}} = \vec{0}. \]</alt></informalequation>
+
+      <para>Hier ist <inlineequation><alt>$\vec{\bar{s}} = \dot{W}^T\dot{\vec{q}} + \dot{\vec{\chi}}$</alt></inlineequation>
+        (wie in der Überführungsformel definiert). Voraussetzung für die Äquivalenz sind
+        verträgliche Anfangsbedingungen sowohl auf Lageebene
+        (<inlineequation><alt>$\vec{g}(\vec{q}_0, t_0) = \vec{0}$</alt></inlineequation>)
+        als auch auf Geschwindigkeitsebene
+        (<inlineequation><alt>$\vec{\gamma}(\vec{q}_0, \dot{\vec{q}}_0, t_0) = \vec{0}$</alt></inlineequation>).</para>
     </section>
 
     <section xml:id="sec.berechnung-qddot-lambda">
@@ -212,11 +413,28 @@
 
       <informalequation><alt>\[ \begin{pmatrix} M &amp; -W \\ W^T &amp; 0 \end{pmatrix} \begin{pmatrix} \ddot{\vec{q}} \\ \vec{\lambda} \end{pmatrix} = \begin{pmatrix} \vec{h} \\ -\vec{\bar{s}} \end{pmatrix}. \]</alt></informalequation>
 
-      <para>Alternativ lassen sich die Lagrange-Multiplikatoren durch Auflösen eliminieren.
-        Mit <inlineequation><alt>$G = W^T M^{-1} W$</alt></inlineequation> ergibt sich
-        <inlineequation><alt>$\vec{\lambda} = -G^{-1}\vec{\eta}$</alt></inlineequation>,
-        wobei <inlineequation><alt>$G$</alt></inlineequation> stets regulär ist, wenn die
-        Bindungen unabhängig sind und
+      <para>Die Lagrange-Multiplikatoren lassen sich auch direkt eliminieren.</para>
+
+      <formalpara role="derivation" xml:id="deriv.elimination-lambda" collapsible="true">
+        <title>Herleitung: Elimination der Lagrange-Multiplikatoren</title>
+        <para>Aus der kinetischen Gleichung folgt:</para>
+        <informalequation><alt>\[ \ddot{\vec{q}} = M^{-1}\vec{h} + M^{-1}W\vec{\lambda}. \]</alt></informalequation>
+        <para>Einsetzen in die Beschleunigungsbindung
+          <inlineequation><alt>$W^T\ddot{\vec{q}} + \vec{\bar{s}} = \vec{0}$</alt></inlineequation>
+          ergibt:</para>
+        <informalequation><alt>\[ W^T M^{-1} W\,\vec{\lambda} + W^T M^{-1}\vec{h} + \vec{\bar{s}} = \vec{0}. \]</alt></informalequation>
+        <para>Mit den Abkürzungen</para>
+        <informalequation><alt>\[ G := W^T M^{-1} W \quad \text{(Delassus-Matrix)}, \qquad \vec{\eta} := W^T M^{-1}\vec{h} + \vec{\bar{s}} \]</alt></informalequation>
+        <para>lautet das Ergebnis:</para>
+        <informalequation><alt>\[ G\,\vec{\lambda} + \vec{\eta} = \vec{0} \qquad \Longrightarrow \qquad \vec{\lambda} = -G^{-1}\vec{\eta}. \]</alt></informalequation>
+        <para>Rückeinsetzen liefert die Beschleunigungen als gewöhnliche Differentialgleichung:</para>
+        <informalequation><alt>\[ \ddot{\vec{q}} = M^{-1}\vec{h} - M^{-1}W\,G^{-1}\vec{\eta}. \]</alt></informalequation>
+      </formalpara>
+
+      <para>Die Matrix <inlineequation><alt>$G = W^T M^{-1} W$</alt></inlineequation>
+        (Delassus-Matrix) ist genau dann regulär, wenn
+        <inlineequation><alt>$W$</alt></inlineequation> spaltenregulär ist (d.h. die
+        Bindungen unabhängig sind) und
         <inlineequation><alt>$M$</alt></inlineequation> positiv definit.</para>
     </section>
   </section>
@@ -229,21 +447,61 @@
     <para>Wenn ein System durch Bindungen eingeschränkt wird, kann man neue Minimalkoordinaten
       <inlineequation><alt>$\vec{z} \in \mathbb{R}^n$</alt></inlineequation> mit
       <inlineequation><alt>$n = f - \operatorname{Rg}(W)$</alt></inlineequation> einführen,
-      so dass die Bindungen identisch erfüllt sind. Es gelte
+      so dass die Bindungen identisch erfüllt sind:
+      <inlineequation><alt>$\vec{g}(\vec{q}(\vec{z},t), t) \equiv \vec{0}$</alt></inlineequation>.
+      Es gelte
       <inlineequation><alt>$\vec{q} = \vec{q}(\vec{z}, t)$</alt></inlineequation>, dann ist:</para>
 
-    <informalequation><alt>\[ \dot{\vec{q}} = B(\vec{z},t)\,\dot{\vec{z}} + \vec{\beta}(\vec{z},t), \qquad B = \frac{\partial \vec{q}}{\partial \vec{z}}. \]</alt></informalequation>
+    <informalequation><alt>\[ \dot{\vec{q}} = B(\vec{z},t)\,\dot{\vec{z}} + \vec{\beta}(\vec{z},t), \qquad B = \frac{\partial \vec{q}}{\partial \vec{z}}, \]</alt></informalequation>
 
-    <para>Durch Projektion mit <inlineequation><alt>$B^T$</alt></inlineequation> werden die
-      Zwangskräfte eliminiert und man erhält:</para>
+    <para>und auf Beschleunigungsebene:</para>
+
+    <informalequation><alt>\[ \ddot{\vec{q}} = B\,\ddot{\vec{z}} + \vec{\nu}, \qquad \vec{\nu} := \dot{B}\,\dot{\vec{z}} + \dot{\vec{\beta}}. \]</alt></informalequation>
+
+    <para>Da die Bindungen für alle <inlineequation><alt>$\vec{z}$</alt></inlineequation>
+      identisch erfüllt sind, gilt
+      <inlineequation><alt>$\vec{\gamma}_z(\vec{z}, \dot{\vec{z}}, t) \equiv \vec{0}$</alt></inlineequation>.
+      Ableitung nach <inlineequation><alt>$\dot{\vec{z}}$</alt></inlineequation> mit der
+      Kettenregel liefert die zentrale Eigenschaft:</para>
+
+    <informalequation><alt>\[ W_z^T = \frac{\partial \vec{\gamma}_z}{\partial \dot{\vec{z}}} = \frac{\partial \vec{\gamma}}{\partial \dot{\vec{q}}}\,\frac{\partial \dot{\vec{q}}}{\partial \dot{\vec{z}}} = W^T \cdot B = 0. \]</alt></informalequation>
+
+    <para>Die Spalten von <inlineequation><alt>$B \in \mathbb{R}^{f \times n}$</alt></inlineequation>
+      liegen also im <inlineequation><alt>$\operatorname{Kern}(W^T) = V_\text{vertr.}$</alt></inlineequation>.
+      Da <inlineequation><alt>$B$</alt></inlineequation> spaltenregulär ist und
+      <inlineequation><alt>$n = \dim V_\text{vertr.}$</alt></inlineequation>, bilden die
+      Spalten von <inlineequation><alt>$B$</alt></inlineequation> eine Basis von
+      <inlineequation><alt>$V_\text{vertr.}$</alt></inlineequation>. Jede verträgliche
+      virtuelle Verschiebung lässt sich somit als
+      <inlineequation><alt>$\delta\vec{q} = B\,\delta\vec{z}$</alt></inlineequation>
+      darstellen.</para>
+
+    <formalpara role="derivation" xml:id="deriv.projektion-minimalkoordinaten" collapsible="true">
+      <title>Herleitung: Projizierte Bewegungsgleichung</title>
+      <para>Einsetzen von <inlineequation><alt>$\delta\vec{q} = B\,\delta\vec{z}$</alt></inlineequation>
+        in das Prinzip der virtuellen Arbeit ergibt:</para>
+      <informalequation><alt>\[ 0 = \delta\vec{z}^T\,B^T\!\bigl(M\,\ddot{\vec{q}} - \vec{h} - W\vec{\lambda}\bigr) \quad \forall\,\delta\vec{z}. \]</alt></informalequation>
+      <para>Wegen <inlineequation><alt>$W^T B = 0$</alt></inlineequation> gilt
+        <inlineequation><alt>$B^T W\vec{\lambda} = (W^T B)^T\vec{\lambda} = \vec{0}$</alt></inlineequation>
+        — die Zwangskräfte fallen heraus. Einsetzen von
+        <inlineequation><alt>$\ddot{\vec{q}} = B\,\ddot{\vec{z}} + \vec{\nu}$</alt></inlineequation>
+        liefert:</para>
+      <informalequation><alt>\[ 0 = \delta\vec{z}^T\!\bigl(B^T M B\,\ddot{\vec{z}} + B^T M\vec{\nu} - B^T\vec{h}\bigr) \quad \forall\,\delta\vec{z}. \]</alt></informalequation>
+      <para>Da dies für beliebige <inlineequation><alt>$\delta\vec{z}$</alt></inlineequation> gilt,
+        folgt die Gleichung im Klammerausdruck.</para>
+    </formalpara>
 
     <equation xml:id="eq.proj-neue-minimalkoordinaten">
-      <alt>\[ \underbrace{B^T M B}_{\tilde{M}}\,\ddot{\vec{z}} - \underbrace{(B^T \vec{h} - B^T M \dot{B}\,\dot{\vec{z}})}_{\tilde{h}} = \vec{0}. \]</alt>
+      <alt>\[ \underbrace{B^T M B}_{\tilde{M}}\,\ddot{\vec{z}} - \underbrace{(B^T \vec{h} - B^T M\,\vec{\nu})}_{\tilde{h}} = \vec{0}. \]</alt>
     </equation>
 
     <para>Die Matrix <inlineequation><alt>$\tilde{M}$</alt></inlineequation> ist wiederum
       symmetrisch und positiv definit, sodass die Gleichung nach
       <inlineequation><alt>$\ddot{\vec{z}}$</alt></inlineequation> aufgelöst werden kann.</para>
+
+    <para>Das Vorgehen gilt auch dann, wenn keine Freiheitsgrade gesperrt werden — also bei
+      einem reinen Koordinatenwechsel. In diesem Fall ist
+      <inlineequation><alt>$B$</alt></inlineequation> quadratisch und regulär.</para>
   </section>
 
   <!-- ═══════════════════════════════════════════════════════════════════ -->
@@ -254,13 +512,29 @@
     <para>Alternativ zum Wechsel der Koordinaten kann man auch neue
       <emphasis role="bold">Minimalgeschwindigkeiten</emphasis>
       <inlineequation><alt>$\vec{u} \in \mathbb{R}^n$</alt></inlineequation> einführen, die
-      die Bindungen auf Geschwindigkeitsebene identisch erfüllen:</para>
+      die Bindungen auf Geschwindigkeitsebene identisch erfüllen. Die
+      <emphasis role="bold">kinematische Differentialgleichung</emphasis> lautet:</para>
 
     <equation xml:id="eq.kinematik-neue-geschw">
       <alt>\[ \dot{\vec{q}} = B(\vec{q}, t)\,\vec{u} + \vec{\beta}(\vec{q}, t). \]</alt>
     </equation>
 
-    <para>Die Bewegungsgleichungen nehmen dann die Form an:</para>
+    <para>Im Unterschied zu den Minimalkoordinaten hängt
+      <inlineequation><alt>$B$</alt></inlineequation> hier von
+      <inlineequation><alt>$\vec{q}$</alt></inlineequation> ab (nicht von
+      <inlineequation><alt>$\vec{z}$</alt></inlineequation>), und
+      <inlineequation><alt>$\vec{u}$</alt></inlineequation> ist im Allgemeinen
+      <emphasis>nicht</emphasis> die Zeitableitung einer Lagekoordinate.</para>
+
+    <para>Die Eigenschaft <inlineequation><alt>$W^T B = 0$</alt></inlineequation> folgt
+      völlig analog zum Vorgehen bei Minimalkoordinaten: Weil
+      <inlineequation><alt>$\vec{\gamma}_u(\vec{q}, \vec{u}, t) \equiv \vec{0}$</alt></inlineequation>
+      für alle <inlineequation><alt>$\vec{u}$</alt></inlineequation>,
+      ergibt Ableitung nach <inlineequation><alt>$\vec{u}$</alt></inlineequation>
+      wieder <inlineequation><alt>$W^T B = 0$</alt></inlineequation>. Die Herleitung der
+      projizierten Gleichung verläuft dann wie im vorigen Abschnitt.</para>
+
+    <para>Die Bewegungsgleichungen nehmen die Form an:</para>
 
     <equation xml:id="eq.kinetik-neue-geschw">
       <alt>\[ \tilde{M}(\vec{q}, t)\,\dot{\vec{u}} - \tilde{h}(\vec{q}, \vec{u}, t) = \vec{0}. \]</alt>
@@ -276,6 +550,21 @@
 
     <para>Diese Zustandsform ist der natürliche Ausgangspunkt für die numerische
       Zeitintegration der Bewegungsgleichungen.</para>
+
+    <formalpara role="remark" xml:id="rem.spezialfaelle-minimalgeschw" collapsible="true">
+      <title>Bemerkung: Spezialfälle</title>
+      <para>Die kinematische Gleichung
+        <inlineequation><alt>$\dot{\vec{q}} = B\vec{u} + \vec{\beta}$</alt></inlineequation>
+        umfasst als Spezialfälle:
+        (i) Die triviale Transformation
+        <inlineequation><alt>$\vec{u} = \dot{\vec{q}}$</alt></inlineequation> mit
+        <inlineequation><alt>$B = E$</alt></inlineequation> und
+        <inlineequation><alt>$\vec{\beta} = \vec{0}$</alt></inlineequation>.
+        (ii) Reguläre Geschwindigkeitstransformationen ohne Bindungen, etwa beim freien
+        Starrkörper die Wahl
+        <inlineequation><alt>$\vec{u} = {}^I\!\vec{\Omega}$</alt></inlineequation>
+        anstelle der Euler-Winkel-Geschwindigkeiten.</para>
+    </formalpara>
   </section>
 
   <!-- ═══════════════════════════════════════════════════════════════════ -->
@@ -284,13 +573,26 @@
     <title>Anwendung auf die projizierten Newton-Euler-Gleichungen</title>
 
     <para>Der Übergang auf neue Minimalgeschwindigkeiten lässt sich direkt auf die projizierten
-      Newton-Euler-Gleichungen aus Kapitel 2 anwenden. Die Vorgehensweise ist: Man berechnet
-      <inlineequation><alt>$\vec{v}_P(\vec{q}, \vec{u}, t)$</alt></inlineequation> und
-      <inlineequation><alt>$\vec{\Omega}(\vec{q}, \vec{u}, t)$</alt></inlineequation>, klammert
-      <inlineequation><alt>$\vec{u}$</alt></inlineequation> aus, liest die modifizierten
-      Jacobi-Matrizen <inlineequation><alt>$\tilde{J}$</alt></inlineequation> ab und bestimmt
-      die Impulse <inlineequation><alt>$\dot{\vec{p}}$</alt></inlineequation> und Dralle
-      <inlineequation><alt>$\dot{\vec{N}}_S$</alt></inlineequation>.</para>
+      Newton-Euler-Gleichungen aus Kapitel 2 anwenden. Durch Einsetzen der kinematischen
+      Gleichung in die Geschwindigkeits- und Winkelgeschwindigkeitsausdrücke ergeben sich die
+      modifizierten Jacobi-Matrizen:</para>
+
+    <informalequation><alt>\[ \vec{v}_P = \underbrace{\bar{J}_P\,B}_{\tilde{J}_P}\,\vec{u} + \underbrace{\bar{J}_P\,\vec{\beta} + \vec{v}_P'}_{\tilde{v}_P}, \qquad \vec{\Omega} = \underbrace{\bar{J}_R\,B}_{\tilde{J}_R}\,\vec{u} + \underbrace{\bar{J}_R\,\vec{\beta} + \vec{v}_R}_{\tilde{v}_R}. \]</alt></informalequation>
+
+    <para>Die Vorgehensweise ist:</para>
+
+    <orderedlist>
+      <listitem><para>Berechne
+        <inlineequation><alt>$\vec{v}_P(\vec{q}, \vec{u}, t)$</alt></inlineequation> und
+        <inlineequation><alt>$\vec{\Omega}(\vec{q}, \vec{u}, t)$</alt></inlineequation>.</para></listitem>
+      <listitem><para>Klammere <inlineequation><alt>$\vec{u}$</alt></inlineequation> aus und
+        lese die modifizierten Jacobi-Matrizen
+        <inlineequation><alt>$\tilde{J}_P$</alt></inlineequation>,
+        <inlineequation><alt>$\tilde{J}_R$</alt></inlineequation> ab.</para></listitem>
+      <listitem><para>Bestimme die Zeitableitungen von Impuls
+        <inlineequation><alt>$\dot{\vec{p}}$</alt></inlineequation> und Drall
+        <inlineequation><alt>$\dot{\vec{N}}_S$</alt></inlineequation>.</para></listitem>
+    </orderedlist>
 
     <para>Derselbe Formalismus kann auch auf die Hamel-Boltzmann-Gleichungen (Kapitel 3)
       angewendet werden. In beiden Fällen ist das Ergebnis ein System gewöhnlicher
