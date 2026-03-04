@@ -103,6 +103,17 @@
       <inlineequation><alt>$\delta W = \delta g \cdot \lambda = \delta\vec{q}^T\!(\vec{w}\lambda) = \delta\vec{q}^T \vec{f}$</alt></inlineequation>
       bestätigt die Konsistenz mit dem Prinzip der virtuellen Arbeit.</para>
 
+    <para>Die Größen <inlineequation><alt>$\chi$</alt></inlineequation> und
+      <inlineequation><alt>$\xi$</alt></inlineequation> haben eine klare kinematische Bedeutung:
+      <inlineequation><alt>$\chi = \frac{\partial g}{\partial t}$</alt></inlineequation> ist die
+      rheonome Auslenkungsgeschwindigkeit — sie verschwindet bei skleronomen (zeitunabhängigen)
+      Systemen. <inlineequation><alt>$\xi = \dot{\vec{w}}^T \dot{\vec{q}} + \dot{\chi}$</alt></inlineequation>
+      ist die kinematische Beschleunigung des Kraftelements; sie hängt von
+      <inlineequation><alt>$\vec{q}$</alt></inlineequation>,
+      <inlineequation><alt>$\dot{\vec{q}}$</alt></inlineequation> und
+      <inlineequation><alt>$t$</alt></inlineequation> ab, aber nicht von
+      <inlineequation><alt>$\ddot{\vec{q}}$</alt></inlineequation>.</para>
+
     <formalpara role="derivation" xml:id="deriv.partielle-ableitungen-g">
       <title>Partielle Ableitungen von g</title>
       <para>Andererseits lässt sich
@@ -161,6 +172,35 @@
       zweiseitige <emphasis>kinematische Bindungen</emphasis>
       (<inlineequation><alt>$\dot{g} = 0$</alt></inlineequation>) sowie die
       <emphasis>Coulomb-Reibung</emphasis>.</para>
+
+    <para><emphasis role="bold">Planare Coulomb-Reibung</emphasis>:
+      Bei einem Kontakt mit Normalkraftwert
+      <inlineequation><alt>$\lambda_N$</alt></inlineequation> und Reibkoeffizient
+      <inlineequation><alt>$\mu$</alt></inlineequation> lautet das Kraftgesetz</para>
+
+    <informalequation><alt>\[ -\lambda_T = \begin{cases} \mu\lambda_N &amp; \dot{g} &gt; 0, \\ \in [-\mu\lambda_N,\;\mu\lambda_N] &amp; \dot{g} = 0, \\ -\mu\lambda_N &amp; \dot{g} &lt; 0. \end{cases} \]</alt></informalequation>
+
+    <para>Dies ist ein mengenwertiges Kraftgesetz: Im Haften
+      (<inlineequation><alt>$\dot{g} = 0$</alt></inlineequation>) liegt die Reibkraft
+      irgendwo im zulässigen Intervall.</para>
+
+    <!-- TODO: Skizze λ-g-Kennlinien: Feder (Gerade), einseitige Bindung (Halbachsen), zweiseitige Bindung (vertikale Linie) -->
+    <!-- TODO: Skizze λ-γ-Kennlinien: Dämpfer (Gerade), einseitige kin. Bindung, zweiseitige kin. Bindung -->
+
+    <formalpara role="remark">
+      <title>Bindungen als Grenzfälle</title>
+      <para>Die Kennlinien aller Kraftgesetze auf Lageebene leben im
+        <inlineequation><alt>$(-\lambda, g)$</alt></inlineequation>-Diagramm, die auf
+        Geschwindigkeitsebene im
+        <inlineequation><alt>$(-\lambda, \dot{g})$</alt></inlineequation>-Diagramm.
+        Die zweiseitige geometrische Bindung
+        <inlineequation><alt>$g = 0$</alt></inlineequation> entspricht einer vertikalen
+        Kennlinie — sie lässt sich als Grenzfall einer linearen Feder mit
+        <inlineequation><alt>$c \to \infty$</alt></inlineequation> interpretieren.
+        Analog ist die zweiseitige kinematische Bindung
+        <inlineequation><alt>$\dot{g} = 0$</alt></inlineequation> der Grenzfall
+        <inlineequation><alt>$d \to \infty$</alt></inlineequation> eines linearen Dämpfers.</para>
+    </formalpara>
   </section>
 
   <!-- ═══════════════════════════════════════════════════════════════════ -->
@@ -177,6 +217,17 @@
         erfüllt und der Kraftwert durch ein Kraftgesetz
         <inlineequation><alt>$-\lambda \in \mathcal{F}(g)$</alt></inlineequation> bestimmt ist.</para>
     </formalpara>
+
+    <para>Ist der Kraftwert durch eine einwertige Funktion
+      <inlineequation><alt>$-\lambda = F(g)$</alt></inlineequation> gegeben, so existiert ein
+      zugehöriges <emphasis role="bold">Potential</emphasis>
+      <inlineequation><alt>$V(\vec{q},t) = v\bigl(g(\vec{q},t)\bigr)$</alt></inlineequation> mit</para>
+
+    <informalequation><alt>\[ -\vec{f}^T = \frac{\partial V}{\partial \vec{q}} = \frac{\partial v}{\partial g}\,\frac{\partial g}{\partial \vec{q}} = -\lambda\,\vec{w}^T, \qquad\text{also}\quad -\lambda = F(g) = \frac{\partial v}{\partial g}. \]</alt></informalequation>
+
+    <para>Für die lineare Feder etwa ist
+      <inlineequation><alt>$v(g) = \tfrac{1}{2}c\,g^2$</alt></inlineequation>, also
+      <inlineequation><alt>$V(\vec{q},t) = \tfrac{1}{2}c\,g(\vec{q},t)^2$</alt></inlineequation>.</para>
 
     <formalpara role="definition" xml:id="def.einfache-gen-kraft-geschw-ebene">
       <title>Definition: Einfache generalisierte Kraft auf Geschwindigkeitsebene</title>
@@ -217,6 +268,32 @@
       für jedes Kraftelement. Diese Struktur — Massenmatrix mal Beschleunigung plus
       geschwindigkeitsabhängige Terme gleich Kraftrichtungsmatrix mal Kraftwerte — ist der
       Standard-Ausgangspunkt für die numerische Simulation von Mehrkörpersystemen.</para>
+
+    <example xml:id="ex.zwei-massen-feder">
+      <title>Zwei Massen auf Ebene, verbunden durch Feder</title>
+      <para>Zwei Punktmassen
+        <inlineequation><alt>$m_1$</alt></inlineequation>,
+        <inlineequation><alt>$m_2$</alt></inlineequation> auf der
+        <inlineequation><alt>$x$</alt></inlineequation>-Achse mit Minimalkoordinaten
+        <inlineequation><alt>$\vec{q} = (x_1, x_2)^T$</alt></inlineequation>, verbunden durch
+        eine lineare Feder (Steifigkeit <inlineequation><alt>$c$</alt></inlineequation>,
+        Ruhelänge <inlineequation><alt>$\ell_0$</alt></inlineequation>). Die Auslenkung ist</para>
+      <informalequation><alt>\[ g = x_2 - x_1 - \ell_0. \]</alt></informalequation>
+      <para>Ableitung nach <inlineequation><alt>$\vec{q}$</alt></inlineequation> liefert die
+        generalisierte Kraftrichtung</para>
+      <informalequation><alt>\[ \vec{w}^T = \frac{\partial g}{\partial \vec{q}} = \begin{pmatrix} -1 &amp; 1 \end{pmatrix}. \]</alt></informalequation>
+      <para>Der Kraftwert der linearen Feder ist
+        <inlineequation><alt>$\lambda = c\,g = c(x_2 - x_1 - \ell_0)$</alt></inlineequation>,
+        und die generalisierte Kraft wird</para>
+      <informalequation><alt>\[ \vec{f} = \vec{w}\,\lambda = \begin{pmatrix} -1 \\ 1 \end{pmatrix} c(x_2 - x_1 - \ell_0). \]</alt></informalequation>
+      <para>Die Bewegungsgleichung
+        <inlineequation><alt>$M\ddot{\vec{q}} - \vec{w}\lambda = \vec{0}$</alt></inlineequation>
+        lautet damit</para>
+      <informalequation><alt>\[ \begin{pmatrix} m_1 &amp; 0 \\ 0 &amp; m_2 \end{pmatrix} \begin{pmatrix} \ddot{x}_1 \\ \ddot{x}_2 \end{pmatrix} - \begin{pmatrix} -1 \\ 1 \end{pmatrix} c(x_2 - x_1 - \ell_0) = \vec{0}. \]</alt></informalequation>
+      <!-- TODO: Skizze: Zwei Massen auf horizontaler Ebene, verbunden durch Feder -->
+      <para>Masse 1 wird nach rechts gezogen, wenn die Feder gedehnt ist
+        (<inlineequation><alt>$g > 0$</alt></inlineequation>), Masse 2 nach links — wie erwartet.</para>
+    </example>
   </section>
 
 </chapter>
