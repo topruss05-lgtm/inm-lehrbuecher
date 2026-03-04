@@ -43,6 +43,24 @@
       <emphasis>gedachte</emphasis>, infinitesimale Änderung der Lage bei
       <emphasis>festgehaltener Zeit</emphasis>.</para>
 
+    <para>Der mathematisch präzise Zugang führt über
+      <emphasis>Variationsscharen</emphasis>. Sei
+      <inlineequation><alt>$\hat{\vec{q}}(\varepsilon, t)$</alt></inlineequation> eine einparametrige
+      Schar von Lagen, die für
+      <inlineequation><alt>$\varepsilon = \varepsilon_0$</alt></inlineequation> die tatsächliche
+      Lage reproduziert:
+      <inlineequation><alt>$\hat{\vec{q}}(\varepsilon_0, t) = \vec{q}(t)$</alt></inlineequation>.
+      Taylor-Entwicklung um <inlineequation><alt>$\varepsilon_0$</alt></inlineequation> bei fester Zeit liefert:</para>
+
+    <informalequation><alt>\[\hat{\vec{q}}(\varepsilon, t) - \hat{\vec{q}}(\varepsilon_0, t) = \hat{\vec{q}}_\varepsilon(\varepsilon_0, t)\,(\varepsilon - \varepsilon_0) + \mathcal{O}((\varepsilon - \varepsilon_0)^2).\]</alt></informalequation>
+
+    <para>Die Differenz zwischen der benachbarten Lage
+      <inlineequation><alt>$\vec{q}^* = \hat{\vec{q}}(\varepsilon, t)$</alt></inlineequation>
+      und der tatsächlichen Lage
+      <inlineequation><alt>$\vec{q} = \hat{\vec{q}}(\varepsilon_0, t)$</alt></inlineequation>
+      ist in führender Ordnung proportional zu
+      <inlineequation><alt>$\delta\varepsilon := \varepsilon - \varepsilon_0$</alt></inlineequation>.</para>
+
     <formalpara role="definition" xml:id="def.virtuelle-verschiebungen">
       <title>Definition: Virtuelle Verschiebung</title>
       <para>Virtuelle Verschiebungen sind Differenzen zwischen einer gedachten, beliebig
@@ -55,8 +73,11 @@
       <alt>\[\delta\vec{q}(t) := \hat{\vec{q}}_\varepsilon(\varepsilon_0, t)\,\delta\varepsilon.\]</alt>
     </equation>
 
-    <para>Virtuelle Verschiebungen sind also (i) infinitesimal klein, (ii) bei festgehaltener
-      Zeit genommen und (iii) beliebig in ihrer Richtung (innerhalb der durch die Bindungen
+    <para>Virtuelle Verschiebungen sind also (i) infinitesimal klein (wegen
+      <inlineequation><alt>$\delta\varepsilon$</alt></inlineequation>),
+      (ii) bei festgehaltener Zeit genommen (variiert wird nur in
+      <inlineequation><alt>$\varepsilon$</alt></inlineequation>-Richtung) und
+      (iii) beliebig in ihrer Richtung (innerhalb der durch die Bindungen
       erlaubten Menge).</para>
   </section>
 
@@ -87,19 +108,40 @@
       Differentiationsregel, die den Zusammenhang zwischen absoluter und relativer
       Zeitableitung herstellt.</para>
 
-    <para>Wir bezeichnen mit I das Inertialsystem, mit K das körperfeste System und mit B ein
-      beliebiges Bezugssystem. Die Drehgeschwindigkeit des Systems B relativ zum
-      Inertialsystem wird durch den schiefsymmetrischen Tensor
-      <inlineequation><alt>${}_B \tilde{\omega}_{IB} = \dot{A}_{IB}\; A_{IB}^{T}$</alt></inlineequation>
-      beschrieben. Die Euler'sche Differentiationsregel lautet:</para>
+    <para>Wir bezeichnen mit
+      <inlineequation><alt>$I$</alt></inlineequation> das Inertialsystem, mit
+      <inlineequation><alt>$K$</alt></inlineequation> das körperfeste System und mit
+      <inlineequation><alt>$B$</alt></inlineequation> ein beliebiges Bezugssystem.</para>
+
+    <formalpara role="definition" xml:id="def.tilde-operator">
+      <title>Definition: Tilde-Operator (schiefsymmetrischer Tensor)</title>
+      <para>Einem Vektor
+        <inlineequation><alt>${}_B\vec{a} = (a_1, a_2, a_3)^T \in \mathbb{R}^3$</alt></inlineequation>
+        wird durch den Tilde-Operator die schiefsymmetrische Matrix
+        <inlineequation><alt>$\tilde{\vec{a}} \in \mathbb{R}^{3\times 3}$</alt></inlineequation>
+        zugeordnet:
+        <inlineequation><alt>$\tilde{\vec{a}} = \begin{pmatrix} 0 &amp; -a_3 &amp; a_2 \\ a_3 &amp; 0 &amp; -a_1 \\ -a_2 &amp; a_1 &amp; 0 \end{pmatrix}, \qquad \tilde{\vec{a}} = -\tilde{\vec{a}}^T.$</alt></inlineequation>
+        Das Kreuzprodukt lässt sich damit als Matrizenmultiplikation schreiben:
+        <inlineequation><alt>$\vec{a} \times \vec{b} = \tilde{\vec{a}}\,\vec{b} = -\tilde{\vec{b}}\,\vec{a}.$</alt></inlineequation></para>
+    </formalpara>
+
+    <para>Die Drehgeschwindigkeit des Systems
+      <inlineequation><alt>$B$</alt></inlineequation> relativ zum Inertialsystem wird durch den
+      schiefsymmetrischen Tensor</para>
+
+    <informalequation><alt>\[{}_B \tilde{\omega}_{IB} = \dot{A}_{IB}\; A_{IB}^{T}\]</alt></informalequation>
+
+    <para>beschrieben, wobei <inlineequation><alt>$A_{IB}$</alt></inlineequation> die
+      Transformationsmatrix vom System <inlineequation><alt>$B$</alt></inlineequation> ins
+      Inertialsystem ist. Die Euler'sche Differentiationsregel lautet:</para>
 
     <equation xml:id="eq.eulersche-diff-regel">
-      <alt>\[ {}_B(\dot{\vec{c}}) = ({}_B \vec{c})^{\boldsymbol{\cdot}} + {}_B \tilde{\omega}_{IB} \times {}_B \vec{c}. \]</alt>
+      <alt>\[ {}_B(\dot{\vec{c}}) = ({}_B \vec{c})^{\boldsymbol{\cdot}} + {}_B \tilde{\omega}_{IB} \, {}_B \vec{c}. \]</alt>
     </equation>
 
-    <para>In Worten: Die absolute Zeitableitung eines Vektors, dargestellt in B, setzt sich
-      zusammen aus der lokalen Zeitableitung der Komponenten und einem
-      Drehgeschwindigkeitsterm.</para>
+    <para>In Worten: Die absolute Zeitableitung eines Vektors, dargestellt in
+      <inlineequation><alt>$B$</alt></inlineequation>, setzt sich zusammen aus der lokalen
+      Zeitableitung der Komponenten und einem Drehgeschwindigkeitsterm.</para>
   </section>
 
   <!-- ═══════════════════════════════════════════════════════════════════ -->
@@ -131,17 +173,40 @@
   <section xml:id="sec.virtuelle-starrkoerperverschiebungen">
     <title>Virtuelle Starrkörperverschiebungen</title>
 
-    <para>Analog zur Geschwindigkeitsformel lässt sich die virtuelle Verschiebung eines Punktes
-      <inlineequation><alt>$Q$</alt></inlineequation> auf einem starren Körper ausdrücken als:</para>
+    <para>Für die virtuelle Verschiebung eines Punktes
+      <inlineequation><alt>$Q$</alt></inlineequation> auf einem starren Körper gilt:</para>
 
     <equation xml:id="eq.virtuelle-verschiebung-starr">
       <alt>\[ \delta\vec{r}_Q = \delta\vec{r}_P + \delta\vec{\phi} \times \vec{r}_{PQ}, \]</alt>
     </equation>
 
     <para>wobei <inlineequation><alt>$\delta\vec{\phi}$</alt></inlineequation> die virtuelle
-      Starrkörperverdrehung bezeichnet. Diese Beziehung ist das virtuelle Analogon zur
-      Geschwindigkeitsformel und spielt eine zentrale Rolle bei der Aufstellung der
-      projizierten Gleichungen.</para>
+      Starrkörperverdrehung bezeichnet.</para>
+
+    <formalpara role="derivation" xml:id="deriv.virtuelle-sk-verschiebung" collapsible="true">
+      <title>Herleitung über ε-Differentiation</title>
+      <para>Die Starrkörperformel
+        <inlineequation><alt>$\vec{v}_Q = \vec{v}_P + \vec{\Omega} \times \vec{r}_{PQ}$</alt></inlineequation>
+        gilt für die zeitliche Ableitung. Für Variationsscharen
+        <inlineequation><alt>$\hat{\vec{r}}_{OP}(\varepsilon, t)$</alt></inlineequation> und
+        <inlineequation><alt>$\hat{A}_{IK}(\varepsilon, t)$</alt></inlineequation> liefert die
+        <inlineequation><alt>$\varepsilon$</alt></inlineequation>-Ableitung die analoge Beziehung:</para>
+      <informalequation><alt>\[\hat{\vec{r}}_{OQ,\varepsilon} = \hat{\vec{r}}_{OP,\varepsilon} + \hat{\vec{Z}} \times \vec{r}_{PQ}, \qquad \text{mit} \quad {}_I\hat{\tilde{\vec{Z}}} = \hat{A}_{IK,\varepsilon}\; \hat{A}_{IK}^T\big|_{\varepsilon_0}.\]</alt></informalequation>
+      <para>Multiplikation mit <inlineequation><alt>$\delta\varepsilon$</alt></inlineequation>
+        und Identifikation
+        <inlineequation><alt>$\delta\vec{\phi} := \hat{\vec{Z}}\,\delta\varepsilon$</alt></inlineequation>
+        liefert das Resultat
+        <inlineequation><alt>$\delta\vec{r}_Q = \delta\vec{r}_P + \delta\vec{\phi} \times \vec{r}_{PQ}$</alt></inlineequation>.
+        Bei vorgegebenem
+        <inlineequation><alt>$\delta\vec{r}_P$</alt></inlineequation> und
+        <inlineequation><alt>$\delta\vec{\phi}$</alt></inlineequation> sind damit alle
+        virtuellen Verschiebungen der Starrkörperpunkte eindeutig festgelegt.</para>
+    </formalpara>
+
+    <para>Die Größen <inlineequation><alt>$\delta\vec{\phi}$</alt></inlineequation> sind keine
+      global definierten Winkel, sondern nur lokal nach
+      <inlineequation><alt>$\varepsilon$</alt></inlineequation> aufintegrierte Verdrehungen — sie
+      werden daher als <emphasis>Quasiwinkel</emphasis> bezeichnet.</para>
   </section>
 
   <!-- ═══════════════════════════════════════════════════════════════════ -->
@@ -154,12 +219,12 @@
 
     <equation xml:id="eq.impulssatz">
       <title>Impulssatz</title>
-      <alt>\[ m \cdot \vec{a}_S = \vec{F}^{a,K} \]</alt>
+      <alt>\[ \dot{\vec{p}} = m\,\vec{a}_P + m\,\vec{\Psi} \times \vec{r}_{PS} + m\,\vec{\Omega} \times (\vec{\Omega} \times \vec{r}_{PS}) \doteq \vec{F}^{a,K} \]</alt>
     </equation>
 
     <equation xml:id="eq.drallsatz">
       <title>Drallsatz (bezogen auf Punkt P)</title>
-      <alt>\[ \bar{\Theta}_P\,\vec{\Psi} + \vec{\Omega} \times \bar{\Theta}_P\,\vec{\Omega} + m\,\vec{r}_{PS} \times \vec{a}_P = \vec{M}_P^{a,K} \]</alt>
+      <alt>\[ \dot{\vec{L}}_O + \vec{r}_{PO} \times \dot{\vec{p}} = \bar{\Theta}_P\,\vec{\Psi} + \vec{\Omega} \times \bar{\Theta}_P\,\vec{\Omega} + m\,\vec{r}_{PS} \times \vec{a}_P \doteq \vec{M}_P^{a,K} \]</alt>
     </equation>
 
     <para>Dabei ist <inlineequation><alt>$S$</alt></inlineequation> der Schwerpunkt,
@@ -169,6 +234,24 @@
       Kräfte auf den Körper und
       <inlineequation><alt>$\vec{M}_P^{a,K}$</alt></inlineequation> die Summe aller
       äußeren Momente bezüglich <inlineequation><alt>$P$</alt></inlineequation>.</para>
+
+    <formalpara role="remark" xml:id="rem.matrixform-kinematik" collapsible="true">
+      <title>Kompakte Matrixform der Starrkörperkinematik</title>
+      <para>Mit dem Tilde-Operator und
+        <inlineequation><alt>$\vec{\rho} = \vec{\xi} - \vec{r}_{OP}$</alt></inlineequation>
+        lassen sich Geschwindigkeit, Beschleunigung und virtuelle Verschiebung eines
+        Massenpunktes <inlineequation><alt>$\vec{\xi}$</alt></inlineequation> am Starrkörper
+        kompakt schreiben:</para>
+      <informalequation><alt>\[\dot{\vec{\xi}} = \begin{pmatrix} E &amp; -\tilde{\vec{\rho}} \end{pmatrix} \begin{pmatrix} \vec{v}_P \\ \vec{\Omega} \end{pmatrix}, \qquad \delta\vec{\xi} = \begin{pmatrix} E &amp; -\tilde{\vec{\rho}} \end{pmatrix} \begin{pmatrix} \delta\vec{r}_P \\ \delta\vec{\phi} \end{pmatrix}.\]</alt></informalequation>
+      <para>Integration über den Körper mit
+        <inlineequation><alt>$\int_K dm = m$</alt></inlineequation>,
+        <inlineequation><alt>$\int_K \vec{\rho}\,dm = m\,\vec{r}_{PS}$</alt></inlineequation>,
+        <inlineequation><alt>$\int_K \tilde{\vec{\rho}}\,\tilde{\vec{\rho}}^T dm = \bar{\Theta}_P$</alt></inlineequation>
+        liefert den Impuls
+        <inlineequation><alt>$\vec{p} = m(\vec{v}_P + \vec{\Omega} \times \vec{r}_{PS}) = m\,\vec{v}_S$</alt></inlineequation>
+        und den Drall
+        <inlineequation><alt>$\vec{L}_O = \vec{r}_{OP} \times \vec{p} + \bar{\Theta}_P\,\vec{\Omega} + m\,\vec{r}_{PS} \times \vec{v}_P$</alt></inlineequation>.</para>
+    </formalpara>
   </section>
 
   <!-- ═══════════════════════════════════════════════════════════════════ -->
@@ -224,21 +307,19 @@
   <section xml:id="sec.minimalkoordinaten">
     <title>Bindungen und Minimalkoordinaten</title>
 
-    <para>Bevor wir die projizierten Gleichungen herleiten können, müssen wir die Begriffe
-      „Bindung" und „Minimalkoordinaten" präzisieren.</para>
-
     <formalpara role="definition" xml:id="def.bindung">
       <title>Definition: Bindung</title>
       <para>Eine <emphasis role="bold">Bindung</emphasis> ist eine Einschränkung der
         Bewegungsfreiheit zusammen mit Kräften, die diese unter allen Umständen realisieren
-        können.</para>
+        können. Diese Kräfte heißen <emphasis>Bindungskräfte</emphasis>.</para>
     </formalpara>
 
     <formalpara role="definition" xml:id="def.ideale-bindung">
       <title>Definition: Ideale Bindung</title>
       <para>Eine Bindung heißt <emphasis role="bold">ideal</emphasis>, wenn die
         Bindungskräfte bei allen verträglichen virtuellen Verschiebungen keine virtuelle
-        Arbeit leisten.</para>
+        Arbeit leisten. Die Bindungskräfte idealer Bindungen heißen
+        <emphasis>Zwangskräfte</emphasis>.</para>
     </formalpara>
 
     <formalpara role="definition" xml:id="def.minimalkoordinaten">
@@ -247,8 +328,23 @@
         <inlineequation><alt>$\vec{q}(t) \in \mathbb{R}^f$</alt></inlineequation>, mit dem
         die Lagen aller Punkte des Systems eindeutig beschrieben werden, heißt
         <emphasis role="bold">Minimalkoordinaten</emphasis> (oder generalisierte
-        Koordinaten).</para>
+        Koordinaten). Die Zahl
+        <inlineequation><alt>$f$</alt></inlineequation> heißt <emphasis>Anzahl der
+        Freiheitsgrade</emphasis>.</para>
     </formalpara>
+
+    <example xml:id="ex.doppelpendel-koordinaten">
+      <title>Doppelpendel: Wahl der Minimalkoordinaten</title>
+      <para>Für ein ebenes Doppelpendel (zwei starre Stäbe, verbunden durch Drehgelenke)
+        gilt <inlineequation><alt>$f = 2$</alt></inlineequation>. Mögliche Wahlen sind
+        unter anderem:</para>
+      <!-- TODO: Skizze Doppelpendel mit Winkeln α, β und kartesischen Koordinaten x, y -->
+      <informalequation><alt>\[\vec{q} = \begin{pmatrix} \alpha \\ \beta \end{pmatrix}, \qquad \begin{pmatrix} \alpha \\ \gamma \end{pmatrix}, \qquad \begin{pmatrix} x \\ y \end{pmatrix}, \qquad \begin{pmatrix} \alpha \\ y \end{pmatrix}, \qquad \ldots\]</alt></informalequation>
+      <para>Minimalkoordinaten sind nicht eindeutig. Manche Wahlen (wie kartesische Koordinaten
+        <inlineequation><alt>$(x,y)$</alt></inlineequation> der Pendelspitze) sind nur
+        <emphasis>lokal</emphasis> eindeutig — in gestreckter Konfiguration versagt die
+        Parametrisierung.</para>
+    </example>
   </section>
 
   <!-- ═══════════════════════════════════════════════════════════════════ -->
@@ -257,8 +353,45 @@
     <title>Kinematik starrer MKS in Minimalkoordinaten</title>
 
     <para>In Minimalkoordinaten lassen sich die kinematischen Größen jedes Körpers durch
-      Jacobi-Matrizen ausdrücken. Für die Translation eines Punktes
-      <inlineequation><alt>$P$</alt></inlineequation> gilt:</para>
+      Jacobi-Matrizen ausdrücken.</para>
+
+    <formalpara role="derivation" xml:id="deriv.jacobi-translation" collapsible="true">
+      <title>Herleitung der translatorischen Jacobi-Matrix</title>
+      <para>Der Ortsvektor eines Körperpunktes
+        <inlineequation><alt>$P$</alt></inlineequation> hängt über die Minimalkoordinaten
+        von der Zeit ab:
+        <inlineequation><alt>${}_I\vec{r}_{OP} = {}_I\vec{r}_{OP}(\vec{q}, t)$</alt></inlineequation>.
+        Zeitableitung mit der Kettenregel liefert:</para>
+      <informalequation><alt>\[{}_I\vec{v}_P = \frac{\partial\, {}_I\vec{r}_{OP}}{\partial \vec{q}}\,\dot{\vec{q}} + \frac{\partial\, {}_I\vec{r}_{OP}}{\partial t} =: {}_I\bar{J}_P\,\dot{\vec{q}} + {}_I\bar{v}_P.\]</alt></informalequation>
+      <para>Dabei ist <inlineequation><alt>${}_I\bar{J}_P(\vec{q},t) \in \mathbb{R}^{3 \times f}$</alt></inlineequation>
+        die <emphasis>translatorische Jacobi-Matrix</emphasis> und
+        <inlineequation><alt>${}_I\bar{v}_P(\vec{q},t)$</alt></inlineequation> der explizit
+        zeitabhängige Anteil (der bei skleronomen Bindungen verschwindet).
+        Die virtuelle Verschiebung folgt direkt, da
+        <inlineequation><alt>$\delta\vec{r}_P = \hat{\vec{r}}_{OP,\varepsilon}\,\delta\varepsilon = (\partial\vec{r}_{OP}/\partial\vec{q})\,\hat{\vec{q}}_\varepsilon\,\delta\varepsilon = \bar{J}_P\,\delta\vec{q}$</alt></inlineequation>.
+        Eine weitere Zeitableitung ergibt die Beschleunigung
+        <inlineequation><alt>$\vec{a}_P = \bar{J}_P\,\ddot{\vec{q}} + \bar{k}_P$</alt></inlineequation>
+        mit
+        <inlineequation><alt>$\bar{k}_P = \dot{\bar{J}}_P\,\dot{\vec{q}} + \dot{\bar{v}}_P$</alt></inlineequation>.</para>
+    </formalpara>
+
+    <formalpara role="derivation" xml:id="deriv.jacobi-rotation" collapsible="true">
+      <title>Herleitung der rotatorischen Jacobi-Matrix</title>
+      <para>Die Drehmatrix hängt ebenfalls von den Minimalkoordinaten ab:
+        <inlineequation><alt>$A_{IK} = A_{IK}(\vec{q}, t)$</alt></inlineequation>.
+        Die Winkelgeschwindigkeit ergibt sich aus:</para>
+      <informalequation><alt>\[{}_I\tilde{\vec{\Omega}} = \dot{A}_{IK}\,A_{IK}^T = \left(\frac{\partial A_{IK}}{\partial \vec{q}}\cdot\dot{\vec{q}} + \frac{\partial A_{IK}}{\partial t}\right)A_{IK}^T =: {}_I\tilde{\bar{J}}_R\,\dot{\vec{q}} + {}_I\tilde{\bar{v}}_R.\]</alt></informalequation>
+      <para>Der zugehörige Vektor
+        <inlineequation><alt>${}_I\vec{\Omega} = {}_I\bar{J}_R\,\dot{\vec{q}} + {}_I\bar{v}_R$</alt></inlineequation>
+        definiert die <emphasis>rotatorische Jacobi-Matrix</emphasis>
+        <inlineequation><alt>${}_I\bar{J}_R(\vec{q},t) \in \mathbb{R}^{3\times f}$</alt></inlineequation>.
+        Die virtuelle Verdrehung folgt analog über
+        <inlineequation><alt>$\varepsilon$</alt></inlineequation>-Differentiation:
+        <inlineequation><alt>$\delta\vec{\phi} = \bar{J}_R\,\delta\vec{q}$</alt></inlineequation>.</para>
+    </formalpara>
+
+    <para>Zusammengefasst gelten für die Translation eines Punktes
+      <inlineequation><alt>$P$</alt></inlineequation>:</para>
 
     <equation xml:id="eq.geschwindigkeit-translation">
       <alt>\[ {}_I\vec{v}_P = {}_I\bar{J}_P\, \dot{\vec{q}} + {}_I\bar{v}_P, \qquad {}_I\delta\vec{r}_P = {}_I\bar{J}_P\, \delta\vec{q}, \qquad {}_I\vec{a}_P = {}_I\bar{J}_P\, \ddot{\vec{q}} + {}_I\bar{k}_P. \]</alt>
@@ -267,7 +400,7 @@
     <para>Für die Rotation:</para>
 
     <equation xml:id="eq.winkelgeschwindigkeit">
-      <alt>\[ {}_I\vec{\Omega} = {}_I\bar{J}_R\, \dot{\vec{q}} + {}_I\bar{v}_R, \qquad {}_I\delta\vec{\Phi} = {}_I\bar{J}_R\, \delta\vec{q}, \qquad {}_I\vec{\Psi} = {}_I\bar{J}_R\, \ddot{\vec{q}} + {}_I\bar{k}_R. \]</alt>
+      <alt>\[ {}_I\vec{\Omega} = {}_I\bar{J}_R\, \dot{\vec{q}} + {}_I\bar{v}_R, \qquad {}_I\delta\vec{\phi} = {}_I\bar{J}_R\, \delta\vec{q}, \qquad {}_I\vec{\Psi} = {}_I\bar{J}_R\, \ddot{\vec{q}} + {}_I\bar{k}_R. \]</alt>
     </equation>
 
     <para>Hierbei sind <inlineequation><alt>$\bar{J}_P$</alt></inlineequation> und
@@ -276,7 +409,21 @@
       und <inlineequation><alt>$\bar{v}_R$</alt></inlineequation> die explizit
       zeitabhängigen Anteile und <inlineequation><alt>$\bar{k}_P$</alt></inlineequation>,
       <inlineequation><alt>$\bar{k}_R$</alt></inlineequation> die restlichen
-      Beschleunigungsterme.</para>
+      Beschleunigungsterme. Durch beliebige
+      <inlineequation><alt>$\delta\vec{q}$</alt></inlineequation> werden genau die mit den
+      Bindungen verträglichen virtuellen Verschiebungen
+      <inlineequation><alt>$(\delta\vec{r}_P, \delta\vec{\phi})$</alt></inlineequation>
+      induziert.</para>
+
+    <formalpara role="remark" xml:id="rem.auswertungsstrategie">
+      <title>Auswertungsstrategie</title>
+      <para>In der Praxis bestimmt man die Jacobi-Matrizen, indem man
+        <inlineequation><alt>$\vec{v}_P$</alt></inlineequation> und
+        <inlineequation><alt>$\vec{\Omega}$</alt></inlineequation> wie in TM III berechnet,
+        <inlineequation><alt>$\dot{\vec{q}}$</alt></inlineequation> ausklammert und die
+        Koeffizienten als <inlineequation><alt>$\bar{J}$</alt></inlineequation> bzw. den Rest
+        als <inlineequation><alt>$\bar{v}$</alt></inlineequation> abliest.</para>
+    </formalpara>
   </section>
 
   <!-- ═══════════════════════════════════════════════════════════════════ -->
@@ -284,11 +431,40 @@
   <section xml:id="sec.projizierte-newton-euler-gleichung">
     <title>Die projizierten Newton-Euler-Gleichungen</title>
 
-    <para>Wir können nun die zentrale Gleichung dieses Kapitels herleiten. Gegeben ist ein MKS
-      aus <inlineequation><alt>$n$</alt></inlineequation> starren Körpern mit
-      <inlineequation><alt>$f$</alt></inlineequation> Freiheitsgraden unter idealen
-      Lagebindungen. Wendet man das Prinzip der virtuellen Arbeit auf das gesamte System an
-      und drückt alle kinematischen Größen in Minimalkoordinaten aus, so erhält man:</para>
+    <para>Gegeben ist ein MKS aus <inlineequation><alt>$n$</alt></inlineequation> starren Körpern
+      mit <inlineequation><alt>$f$</alt></inlineequation> Freiheitsgraden unter idealen
+      Lagebindungen.</para>
+
+    <formalpara role="derivation" xml:id="deriv.projizierte-ne" collapsible="true">
+      <title>Herleitung der projizierten Newton-Euler-Gleichungen</title>
+      <para>Ausgangspunkt ist die virtuelle Arbeit des Gesamtsystems nach PvA:</para>
+      <informalequation><alt>\[0 \doteq \delta W = \sum_{j=1}^{n} \int_{K_j} \delta\vec{\xi}_j \cdot \left(\mathrm{d}\vec{F}_e^{a,K_j} + \mathrm{d}\vec{F}_z^{a,K_j} + \mathrm{d}\vec{F}^{i,K_j} - \ddot{\vec{\xi}}_j\,\mathrm{d}m\right) \quad \forall\,\delta\vec{\xi}_j,\]</alt></informalequation>
+      <para>wobei
+        <inlineequation><alt>$\mathrm{d}\vec{F}_e^{a,K_j}$</alt></inlineequation> die eingeprägten
+        und <inlineequation><alt>$\mathrm{d}\vec{F}_z^{a,K_j}$</alt></inlineequation> die
+        Zwangskräfte bezeichnen. Wir wählen als virtuelle Verschiebungen die starren
+        Verschiebungen jedes Körpers
+        <inlineequation><alt>$\delta\vec{\xi}_j = \delta\vec{r}_{P_j} + \delta\vec{\phi}_j \times \vec{\rho}_j$</alt></inlineequation>.
+        Nach vWwP verschwinden die inneren Kräfte
+        (<inlineequation><alt>$\delta W^{i,K_j} = 0$</alt></inlineequation>), und das
+        Ergebnis von <xref linkend="deriv.impulssatz-aus-pva"/> liefert für jeden Körper
+        den Beitrag in der Form
+        <inlineequation><alt>$(\delta\vec{r}_P, \delta\vec{\phi})_j^T [(\vec{F}^a, \vec{M}^a)_j - (\dot{\vec{p}}, \dot{\vec{L}}_O + \vec{r}_{PO}\times\dot{\vec{p}})_j]$</alt></inlineequation>.
+        Summation über alle Körper ergibt:</para>
+      <informalequation><alt>\[0 = \sum_{j=1}^{n}\begin{pmatrix}\delta\vec{r}_P\\\delta\vec{\phi}\end{pmatrix}_j^T \left[\begin{pmatrix}\vec{F}^a\\\vec{M}_Q^a\end{pmatrix}_j - \begin{pmatrix}\dot{\vec{p}}\\\dot{\vec{L}}_O + \vec{r}_{PO}\times\dot{\vec{p}}\end{pmatrix}_j\right] + \delta W_z^a \quad \forall\,\delta\vec{r}_{P_j},\;\delta\vec{\phi}_j.\]</alt></informalequation>
+      <para>Nun wählen wir die virtuellen Verschiebungen <emphasis>kompatibel</emphasis> mit den
+        Bindungen, indem wir sie durch die Jacobi-Matrizen aus einem gemeinsamen
+        <inlineequation><alt>$\delta\vec{q}$</alt></inlineequation> erzeugen:</para>
+      <informalequation><alt>\[\begin{pmatrix}\delta\vec{r}_P\\\delta\vec{\phi}\end{pmatrix}_j = \begin{pmatrix}\bar{J}_P\\\bar{J}_R\end{pmatrix}_j \delta\vec{q}.\]</alt></informalequation>
+      <para>Für ideale Bindungen gilt
+        <inlineequation><alt>$\delta W_z^a = 0$</alt></inlineequation> bei kompatiblen
+        virtuellen Verschiebungen. Einsetzen und Ausklammern von
+        <inlineequation><alt>$\delta\vec{q}^T$</alt></inlineequation> liefert:</para>
+      <informalequation><alt>\[0 = \delta\vec{q}^T \sum_{j=1}^{n}\left[\begin{pmatrix}\bar{J}_P\\\bar{J}_R\end{pmatrix}_j^T \begin{pmatrix}\vec{F}^a\\\vec{M}_Q^a\end{pmatrix}_j - \begin{pmatrix}\bar{J}_P\\\bar{J}_R\end{pmatrix}_j^T\begin{pmatrix}\dot{\vec{p}}\\\dot{\vec{L}}_O + \vec{r}_{PO}\times\dot{\vec{p}}\end{pmatrix}_j\right] \quad \forall\,\delta\vec{q}.\]</alt></informalequation>
+      <para>Da dies für beliebige <inlineequation><alt>$\delta\vec{q} \in \mathbb{R}^f$</alt></inlineequation>
+        gelten muss, verschwindet die eckige Klammer. Dies sind die projizierten
+        Newton-Euler-Gleichungen.</para>
+    </formalpara>
 
     <equation xml:id="eq.projizierte-NE">
       <alt>\[ 0 = \sum_{j=1}^{n} \bigl[ \bar{J}_S^T \, \dot{\vec{p}} + \bar{J}_R^T \, (\dot{\vec{L}}_O + \vec{r}_{PO} \times \dot{\vec{p}}) - \bar{J}_Q^T \, \vec{F}^a - \bar{J}_R^T \, \vec{M}_Q^a \bigr]_j. \]</alt>
@@ -298,12 +474,30 @@
 
     <informalequation><alt>\[ M(\vec{q}, t)\,\ddot{\vec{q}} + \vec{g}(\vec{q}, \dot{\vec{q}}, t) - \vec{f}(\vec{q}, \dot{\vec{q}}, t, \vec{\tau}) = \vec{0}, \]</alt></informalequation>
 
-    <para>wobei <inlineequation><alt>$M = M^T$</alt></inlineequation> die symmetrische, positiv
-      definite Massenmatrix ist, <inlineequation><alt>$\vec{g}$</alt></inlineequation> die
-      Kreisel- und Coriolisterme enthält,
+    <para>wobei <inlineequation><alt>$M = M^T \succ 0$</alt></inlineequation> die symmetrische,
+      positiv definite Massenmatrix ist,
+      <inlineequation><alt>$\vec{g}$</alt></inlineequation> die gyroskopischen
+      Beschleunigungsterme enthält und
       <inlineequation><alt>$\vec{f}$</alt></inlineequation> die generalisierten aktiven
-      Kräfte zusammenfasst und <inlineequation><alt>$\vec{\tau}$</alt></inlineequation> den
-      Vektor der Stellgrößen (Regler-Inputs) bezeichnet.</para>
+      Kräfte mit dem Stellgrößenvektor
+      <inlineequation><alt>$\vec{\tau}$</alt></inlineequation> zusammenfasst.</para>
+
+    <formalpara role="remark" xml:id="rem.generalisierte-kraft">
+      <title>Berechnung der generalisierten Kraft</title>
+      <para>Die generalisierte Kraft
+        <inlineequation><alt>$\vec{f}_j$</alt></inlineequation>, die einer am Körper
+        <inlineequation><alt>$j$</alt></inlineequation> im Punkt
+        <inlineequation><alt>$Q$</alt></inlineequation> angreifenden Kraft
+        <inlineequation><alt>$\vec{F}$</alt></inlineequation> und einem freien Moment
+        <inlineequation><alt>$\vec{M}$</alt></inlineequation> entspricht, folgt aus der
+        Gleichheit der virtuellen Arbeiten:</para>
+    </formalpara>
+
+    <informalequation><alt>\[\delta\vec{q}^T\vec{f}_j = \delta\vec{r}_Q \cdot \vec{F} + \delta\vec{\phi} \cdot \vec{M} = \delta\vec{q}^T\!\left(\bar{J}_Q^T\,\vec{F} + \bar{J}_R^T\,\vec{M}\right) \qquad \Longrightarrow \qquad \vec{f}_j = \bar{J}_Q^T\,\vec{F} + \bar{J}_R^T\,\vec{M}.\]</alt></informalequation>
+
+    <para>Bei mehreren Kräften an einem Körper werden die jeweiligen Jacobi-Matrizen an den
+      zugehörigen Angriffspunkten verwendet:
+      <inlineequation><alt>$\vec{f}_j = \bar{J}_{Q_1}^T\vec{F}_1 + \bar{J}_{Q_2}^T\vec{F}_2 + \bar{J}_R^T\vec{M}$</alt></inlineequation>.</para>
   </section>
 
   <!-- ═══════════════════════════════════════════════════════════════════ -->
@@ -311,23 +505,38 @@
   <section xml:id="sec.klassifizierung-kraefte">
     <title>Klassifizierung von Kräften</title>
 
-    <para>Für die praktische Anwendung der projizierten Gleichungen ist die Unterscheidung
-      zwischen aktiven und passiven Kräften wesentlich.</para>
+    <formalpara role="definition" xml:id="def.passive-kraefte">
+      <title>Definition: Passive und aktive Kräfte</title>
+      <para>Die <emphasis role="bold">passiven Kräfte</emphasis>
+        <inlineequation><alt>$\vec{f}^P$</alt></inlineequation> eines Systems sind diejenigen,
+        für die gilt:</para>
+    </formalpara>
 
-    <para><emphasis role="bold">Passive Kräfte</emphasis>
-      <inlineequation><alt>$\vec{f}^P$</alt></inlineequation> leisten bei keiner verträglichen
-      virtuellen Verschiebung Arbeit — sie werden durch die Projektion auf den Raum der
-      Minimalkoordinaten automatisch eliminiert. In den projizierten Gleichungen tauchen
-      sie nicht auf.</para>
+    <informalequation><alt>\[\sum_{j=1}^{n}\left(\bar{J}_{Q}^T\,\vec{F}^P + \bar{J}_R^T\,\vec{M}_Q^P\right)_j \equiv \vec{0} \qquad \forall\,\vec{q}.\]</alt></informalequation>
 
-    <para><emphasis role="bold">Aktive Kräfte</emphasis> sind die eingeprägten Kräfte, für die
-      Kraftgesetze formuliert werden müssen (z.B. Gravitation, Federkräfte, Dämpfung). Nur
-      diese gehen in die generalisierten Kräfte
-      <inlineequation><alt>$\bar{f}$</alt></inlineequation> ein.</para>
+    <para>Sie leisten bei keiner verträglichen virtuellen Verschiebung Arbeit und treten in den
+      projizierten Gleichungen nicht auf. Alle übrigen Kräfte heißen
+      <emphasis role="bold">aktiv</emphasis> — für sie müssen Kraftgesetze formuliert werden
+      (z.B. Gravitation, Federkräfte, Dämpfung).</para>
 
-    <para>Diese Eigenschaft — dass Zwangskräfte automatisch aus den Gleichungen verschwinden —
-      ist einer der großen Vorteile des Zugangs über Minimalkoordinaten und virtuelle
-      Arbeit.</para>
+    <para>Zwangskräfte sind passiv, weil die Projektion
+      <inlineequation><alt>$(\delta\vec{r}_P, \delta\vec{\phi})_j = (\bar{J}_P, \bar{J}_R)_j\,\delta\vec{q}$</alt></inlineequation>
+      genau die Richtungen auswählt, die mit den Bindungen verträglich sind. Zwangskräfte
+      stehen per Definition senkrecht dazu.</para>
+
+    <example xml:id="ex.gefuehrte-masse">
+      <title>Geführte Masse auf horizontaler Ebene</title>
+      <para>Eine Punktmasse bewege sich reibungsfrei auf einer horizontalen Ebene in Höhe
+        <inlineequation><alt>$h$</alt></inlineequation>. Die einzige Minimalkoordinate ist
+        die horizontale Position:
+        <inlineequation><alt>$q = x$</alt></inlineequation>.</para>
+      <!-- TODO: Skizze Masse auf horizontaler Ebene mit Schwerkraft nach unten, Bewegungsrichtung horizontal -->
+      <informalequation><alt>\[{}_I\vec{r}_{OS} = \begin{pmatrix}x \\ h\end{pmatrix} \quad \Longrightarrow \quad {}_I\bar{J}_S = \begin{pmatrix}1 \\ 0\end{pmatrix}, \qquad {}_I\vec{F} = \begin{pmatrix}0 \\ -mg\end{pmatrix}.\]</alt></informalequation>
+      <para>Projektion:
+        <inlineequation><alt>${}_I\bar{J}_S^T\,{}_I\vec{F} = \begin{pmatrix}1 &amp; 0\end{pmatrix}\begin{pmatrix}0 \\ -mg\end{pmatrix} = 0$</alt></inlineequation>.
+        Die Schwerkraft ist passiv — sie wirkt senkrecht zur erlaubten Bewegungsrichtung und
+        wird durch die Projektion vollständig eliminiert.</para>
+    </example>
   </section>
 
 </chapter>
