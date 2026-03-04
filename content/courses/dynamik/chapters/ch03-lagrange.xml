@@ -6,11 +6,10 @@
   <title>Lagrange'sche Dynamik</title>
 
   <para>Die projizierten Newton-Euler-Gleichungen aus <xref linkend="ch.projizierte-newton-euler"/> liefern Bewegungsgleichungen
-    in Minimalkoordinaten, erfordern jedoch die explizite Berechnung von Jacobi-Matrizen (vgl.
-    <xref linkend="sec.jacobi-matrizen"/>) und die komponentenweise Aufstellung der
-    Newton-Euler-Gleichungen jedes Körpers. Die Lagrange'sche Formulierung bietet einen eleganteren
-    Zugang: Anstatt Kräfte und Trägheiten einzeln zu berechnen, genügt es, zwei skalare Funktionen
-    anzugeben — die kinetische Energie
+    in Minimalkoordinaten, erfordern jedoch die explizite Berechnung von Jacobi-Matrizen und die
+    komponentenweise Aufstellung der Newton-Euler-Gleichungen jedes Körpers. Die Lagrange'sche
+    Formulierung bietet einen eleganteren Zugang: Anstatt Kräfte und Trägheiten einzeln zu
+    berechnen, genügt es, zwei skalare Funktionen anzugeben — die kinetische Energie
     <inlineequation><alt>$T$</alt></inlineequation> und die potentielle Energie
     <inlineequation><alt>$V$</alt></inlineequation>. Die Bewegungsgleichungen folgen dann auf
     rein analytischem Weg.</para>
@@ -33,20 +32,48 @@
   <section xml:id="sec.zentralgleichung-lagrange2">
     <title>Von der Zentralgleichung zu den Lagrange-Gleichungen 2. Art</title>
 
-    <para>Den Ausgangspunkt bildet die Lagrange'sche Zentralgleichung, die sich direkt aus dem
-      Prinzip der virtuellen Arbeit (PvA) herleiten lässt:</para>
+    <formalpara role="derivation" xml:id="deriv.zentralgleichung" collapsible="true">
+      <title>Herleitung der Zentralgleichung aus dem Prinzip der virtuellen Arbeit</title>
+      <para>Ausgangspunkt ist die kinetische Energie
+        <inlineequation><alt>$T = \frac{1}{2}\int_S \dot{\vec{\xi}} \cdot \dot{\vec{\xi}}\,\mathrm{d}m$</alt></inlineequation>.
+        Der Trägheitsterm in der virtuellen Arbeit (PvA) wird mit dem
+        Produktregel-Trick umgeschrieben:</para>
+      <informalequation><alt>\[\int_S \delta\vec{\xi} \cdot \ddot{\vec{\xi}}\,\mathrm{d}m = \left(\int_S \delta\vec{\xi} \cdot \dot{\vec{\xi}}\,\mathrm{d}m\right)^{\boldsymbol{\cdot}} - \int_S (\delta\vec{\xi})^{\boldsymbol{\cdot}} \cdot \dot{\vec{\xi}}\,\mathrm{d}m.\]</alt></informalequation>
+      <para>Der zweite Term ist die Variation der kinetischen Energie:
+        <inlineequation><alt>$\int_S (\delta\vec{\xi})^{\boldsymbol{\cdot}} \cdot \dot{\vec{\xi}}\,\mathrm{d}m = \frac{1}{2}\delta\varepsilon\!\left(\int_S \hat{\vec{\xi}}_t \cdot \hat{\vec{\xi}}_t\,\mathrm{d}m\right)_{\!\varepsilon}\big|_{\varepsilon_0} = \delta T$</alt></inlineequation>.
+        Einsetzen in die virtuelle Arbeit
+        <inlineequation><alt>$\delta W = \int_S \delta\vec{\xi} \cdot (\mathrm{d}\vec{F} - \ddot{\vec{\xi}}\,\mathrm{d}m) = 0$</alt></inlineequation>
+        liefert die Lagrange'sche Zentralgleichung.</para>
+    </formalpara>
+
+    <para>Die Lagrange'sche Zentralgleichung folgt direkt aus dem Prinzip der virtuellen
+      Arbeit durch Umformung des Trägheitsterms:</para>
 
     <equation xml:id="eq.zentralgleichung">
-      <alt>\[ \delta W = \int_S \delta \vec{\xi} \cdot d\vec{F} + \delta T - \left( \int_S \delta \vec{\xi} \cdot \dot{\vec{\xi}} \, dm \right)^\cdot = 0 \quad \forall\, \delta \vec{\xi}. \]</alt>
+      <alt>\[ \delta W = \int_S \delta \vec{\xi} \cdot \mathrm{d}\vec{F} + \delta T - \left( \int_S \delta \vec{\xi} \cdot \dot{\vec{\xi}} \, \mathrm{d}m \right)^{\boldsymbol{\cdot}} = 0 \quad \forall\, \delta \vec{\xi}. \]</alt>
     </equation>
 
-    <para>Drückt man alles in Minimalkoordinaten aus und nutzt die Vertauschbarkeit von
-      Variation und Zeitableitung
-      (<inlineequation><alt>$\delta\dot{q} = (\delta q)^\cdot$</alt></inlineequation>), so
-      erhält man die <emphasis role="bold">Lagrange-Gleichungen 2. Art</emphasis>:</para>
+    <para>Drückt man alles in Minimalkoordinaten aus, so werden die induzierten virtuellen
+      Verschiebungen und Geschwindigkeiten durch</para>
+
+    <informalequation><alt>\[\delta\vec{\xi} = \frac{\partial\vec{\xi}}{\partial\vec{q}}\,\delta\vec{q}, \qquad \dot{\vec{\xi}} = \frac{\partial\vec{\xi}}{\partial\vec{q}}\,\dot{\vec{q}} + \frac{\partial\vec{\xi}}{\partial t}\]</alt></informalequation>
+
+    <para>beschrieben. Dabei gilt die für die Herleitung zentrale
+      <emphasis role="bold">κ-Identität</emphasis>:
+      Da <inlineequation><alt>$\dot{\vec{\xi}}$</alt></inlineequation> linear in
+      <inlineequation><alt>$\dot{\vec{q}}$</alt></inlineequation> ist, folgt</para>
+
+    <equation xml:id="eq.kappa-identitaet">
+      <alt>\[\frac{\partial\dot{\vec{\xi}}}{\partial\dot{\vec{q}}} = \frac{\partial\vec{\xi}}{\partial\vec{q}} \qquad (\kappa).\]</alt>
+    </equation>
+
+    <para>Setzt man die Minimalkoordinaten-Darstellung in die Zentralgleichung ein und nutzt die
+      Vertauschbarkeit von Variation und Zeitableitung
+      (<inlineequation><alt>$\delta\dot{q} = (\delta q)^{\boldsymbol{\cdot}}$</alt></inlineequation>),
+      so erhält man die <emphasis role="bold">Lagrange-Gleichungen 2. Art</emphasis>:</para>
 
     <equation xml:id="eq.lagrange2-vorlaeufig">
-      <alt>\[ \frac{d}{dt}\left(\frac{\partial T}{\partial \dot{\vec{q}}}\right)^T - \left(\frac{\partial T}{\partial \vec{q}}\right)^T = \vec{f}. \]</alt>
+      <alt>\[ \frac{\mathrm{d}}{\mathrm{d}t}\left(\frac{\partial T}{\partial \dot{\vec{q}}}\right)^T - \left(\frac{\partial T}{\partial \vec{q}}\right)^T = \vec{f}. \]</alt>
     </equation>
 
     <para>Hierbei ist <inlineequation><alt>$\vec{f}$</alt></inlineequation> der Vektor der
@@ -56,34 +83,42 @@
       <title>Definition: Potentialkraft</title>
       <para>Eine aktive Kraft heißt <emphasis role="bold">Potentialkraft</emphasis>, falls ein
         Potential <inlineequation><alt>$V(\vec{q},t)$</alt></inlineequation> existiert mit
-        <inlineequation><alt>$-\vec{f}_{\mathrm{pot}} = \left(\frac{\partial V}{\partial \vec{q}}\right)^T$</alt></inlineequation>.</para>
+        <inlineequation><alt>$-\vec{f}_{\mathrm{pot}} = \left(\frac{\partial V}{\partial \vec{q}}\right)^T$</alt></inlineequation>.
+        Alle übrigen Kräfte heißen <emphasis>Nichtpotentialkräfte</emphasis>
+        <inlineequation><alt>$\vec{f}_{\mathrm{NP}}$</alt></inlineequation>.</para>
     </formalpara>
 
-    <para>Spaltet man die generalisierten Kräfte in Potentialkräfte und Nichtpotentialkräfte auf,
-      so nehmen die Gleichungen ihre klassische Form an:</para>
+    <para>Mit dieser Aufspaltung nehmen die Gleichungen ihre klassische Form an:</para>
 
     <equation xml:id="eq.lagrange2">
-      <alt>\[ \frac{d}{dt}\left(\frac{\partial T}{\partial \dot{\vec{q}}}\right)^T - \left(\frac{\partial T}{\partial \vec{q}}\right)^T + \left(\frac{\partial V}{\partial \vec{q}}\right)^T = \vec{f}_{\mathrm{NP}}. \]</alt>
+      <alt>\[ \frac{\mathrm{d}}{\mathrm{d}t}\left(\frac{\partial T}{\partial \dot{\vec{q}}}\right)^T - \left(\frac{\partial T}{\partial \vec{q}}\right)^T + \left(\frac{\partial V}{\partial \vec{q}}\right)^T = \vec{f}_{\mathrm{NP}}. \]</alt>
     </equation>
 
     <formalpara role="derivation" xml:id="deriv.lagrange2">
       <title>Herleitung aus der Lagrange'schen Zentralgleichung</title>
-      <para>Ausgangspunkt ist die Zentralgleichung (Lagrange, ~1900), die aus dem
-        Prinzip der virtuellen Arbeit folgt:</para>
-      <informalequation><alt>\[ \delta\vec{q}^T \vec{f} + \delta T - \frac{d}{dt}\!\left[\delta\vec{q}^T \left(\frac{\partial T}{\partial \dot{\vec{q}}}\right)^T\right] = 0 \quad \forall\,\delta\vec{q}. \]</alt></informalequation>
-      <para>Dabei ist <inlineequation><alt>$T = T(\vec{q}, \dot{\vec{q}}, t)$</alt></inlineequation>
-        die kinetische Energie in Minimalkoordinaten. Die Variation
-        <inlineequation><alt>$\delta T$</alt></inlineequation> ergibt:</para>
-      <informalequation><alt>\[ \delta T = \delta\vec{q}^T \left(\frac{\partial T}{\partial \vec{q}}\right)^T + \delta\dot{\vec{q}}^T \left(\frac{\partial T}{\partial \dot{\vec{q}}}\right)^T. \]</alt></informalequation>
-      <para>Einsetzen in die Zentralgleichung und Anwenden der Produktregel auf den
-        Zeitableitungsterm liefert:</para>
-      <informalequation><alt>\[ \delta\vec{q}^T\!\left[\vec{f} + \left(\frac{\partial T}{\partial \vec{q}}\right)^T - \frac{d}{dt}\left(\frac{\partial T}{\partial \dot{\vec{q}}}\right)^T \right] + \underbrace{\left[(\delta\vec{q})^{\boldsymbol{\cdot}} - \delta\dot{\vec{q}}\right]^T \left(\frac{\partial T}{\partial \dot{\vec{q}}}\right)^T}_{= \, 0 \text{ (}\delta\text{-d-Vertauschung)}} = 0. \]</alt></informalequation>
-      <para>Der zweite Term verschwindet, weil für Minimalkoordinaten die
-        <inlineequation><alt>$\delta$</alt></inlineequation>-<inlineequation><alt>$d$</alt></inlineequation>-Vertauschung
-        gilt: <inlineequation><alt>$(\delta\vec{q})^{\boldsymbol{\cdot}} = \delta\dot{\vec{q}}$</alt></inlineequation>.
-        Da der Ausdruck für beliebige <inlineequation><alt>$\delta\vec{q}$</alt></inlineequation>
-        gelten muss, folgt:</para>
-      <informalequation><alt>\[ \frac{d}{dt}\left(\frac{\partial T}{\partial \dot{\vec{q}}}\right)^T - \left(\frac{\partial T}{\partial \vec{q}}\right)^T = \vec{f}. \]</alt></informalequation>
+      <para>Ausgangspunkt ist die Zentralgleichung in Minimalkoordinaten. Mit
+        <inlineequation><alt>$T = T(\vec{q}, \dot{\vec{q}}, t)$</alt></inlineequation> und
+        den Abkürzungen
+        <inlineequation><alt>$\delta\vec{q} = \hat{\vec{q}}_\varepsilon\,\delta\varepsilon$</alt></inlineequation>,
+        <inlineequation><alt>$\delta(\dot{\vec{q}}) = \hat{\vec{q}}_{t\varepsilon}\,\delta\varepsilon$</alt></inlineequation>
+        folgt:</para>
+      <informalequation><alt>\[ \delta\vec{q}^T\vec{f} + \delta\vec{q}^T\!\left(\frac{\partial T}{\partial\vec{q}}\right)^T + \delta(\dot{\vec{q}})^T\!\left(\frac{\partial T}{\partial\dot{\vec{q}}}\right)^T - \frac{\mathrm{d}}{\mathrm{d}t}\!\left[\delta\vec{q}^T\!\left(\frac{\partial T}{\partial\dot{\vec{q}}}\right)^T\right] = 0 \quad \forall\,\delta\vec{q}. \]</alt></informalequation>
+      <para>Anwendung der Produktregel auf den Zeitableitungsterm und Umordnen ergibt:</para>
+      <informalequation><alt>\[ \delta\vec{q}^T\!\left[\vec{f} + \left(\frac{\partial T}{\partial \vec{q}}\right)^T - \frac{\mathrm{d}}{\mathrm{d}t}\left(\frac{\partial T}{\partial \dot{\vec{q}}}\right)^T \right] + \underbrace{\left[(\delta\vec{q})^{\boldsymbol{\cdot}} - \delta(\dot{\vec{q}})\right]^T}_{\text{δ-d-Term}} \left(\frac{\partial T}{\partial \dot{\vec{q}}}\right)^T = 0. \]</alt></informalequation>
+      <para>Der δ-d-Term verschwindet für Minimalkoordinaten:
+        Da <inlineequation><alt>$\hat{\vec{q}}(\varepsilon, t)$</alt></inlineequation> glatt ist,
+        gilt nach dem Satz von Schwarz
+        <inlineequation><alt>$\hat{\vec{q}}_{\varepsilon t} = \hat{\vec{q}}_{t\varepsilon}$</alt></inlineequation>,
+        also
+        <inlineequation><alt>$(\delta\vec{q})^{\boldsymbol{\cdot}} = \delta(\dot{\vec{q}})$</alt></inlineequation>.
+        Diese <emphasis role="bold">δ-d-Vertauschungsregel</emphasis> ist eine
+        Schlüsseleigenschaft von Minimalkoordinaten. Für
+        Nicht-Minimalgeschwindigkeiten gilt sie im Allgemeinen
+        <emphasis>nicht</emphasis> — dies führt auf die Hamel-Boltzmann-Gleichungen
+        (siehe <xref linkend="sec.hamel-boltzmann"/>).</para>
+      <para>Da der verbleibende Ausdruck für beliebige
+        <inlineequation><alt>$\delta\vec{q}$</alt></inlineequation> gelten muss, folgt:</para>
+      <informalequation><alt>\[ \frac{\mathrm{d}}{\mathrm{d}t}\left(\frac{\partial T}{\partial \dot{\vec{q}}}\right)^T - \left(\frac{\partial T}{\partial \vec{q}}\right)^T = \vec{f}. \]</alt></informalequation>
       <para>Mit der Aufspaltung
         <inlineequation><alt>$\vec{f} = -(\partial V/\partial\vec{q})^T + \vec{f}_{\mathrm{NP}}$</alt></inlineequation>
         ergibt sich die klassische Form der Lagrange-Gleichungen 2. Art.</para>
@@ -109,21 +144,45 @@
 
     <informalequation><alt>\[ T = \frac{1}{2}\, m\, \vec{v}_S^T\vec{v}_S + \frac{1}{2}\, \vec{\Omega}^T\, \bar{\Theta}_S\, \vec{\Omega}. \]</alt></informalequation>
 
-    <para>Das Schwerepotential lautet
-      <inlineequation><alt>$V = -m\, \vec{r}_{OS}^T \vec{g}$</alt></inlineequation>.
-      Nichtpotentialkräfte werden über die Jacobi-Matrizen auf die generalisierten Koordinaten
+    <para>Wichtige Potentiale sind das Schwerepotential</para>
+
+    <informalequation><alt>\[V = -m\,\vec{r}_{OS}^T\vec{g},\]</alt></informalequation>
+
+    <para>das Potential einer linearen Feder (Steifigkeit
+      <inlineequation><alt>$c$</alt></inlineequation>, entspannte Länge
+      <inlineequation><alt>$x_E$</alt></inlineequation>)</para>
+
+    <informalequation><alt>\[V = \tfrac{1}{2}\,c\,(x - x_E)^2\]</alt></informalequation>
+
+    <para>und das Potential einer linearen Drehfeder (entspannter Winkel
+      <inlineequation><alt>$\varphi_E$</alt></inlineequation>)</para>
+
+    <informalequation><alt>\[V = \tfrac{1}{2}\,c\,(\varphi - \varphi_E)^2.\]</alt></informalequation>
+
+    <para>Nichtpotentialkräfte werden über die Jacobi-Matrizen auf die generalisierten Koordinaten
       projiziert:</para>
 
     <equation xml:id="eq.nichtpotentialkraefte">
-      <alt>\[ \vec{f}_{NP} = J_Q^T\, \vec{F} + J_R^T\, \vec{M}. \]</alt>
+      <alt>\[ \vec{f}_{\mathrm{NP}} = J_Q^T\, \vec{F} + J_R^T\, \vec{M}. \]</alt>
     </equation>
 
     <para>Die Gesamtenergien und -kräfte des Systems ergeben sich durch Summation über alle
       Körper: <inlineequation><alt>$T = \sum_j T_j$</alt></inlineequation>,
       <inlineequation><alt>$V = \sum_k V_k$</alt></inlineequation>,
-      <inlineequation><alt>$\vec{f}_{NP} = \sum_l \vec{f}_{NP,l}$</alt></inlineequation>.
+      <inlineequation><alt>$\vec{f}_{\mathrm{NP}} = \sum_l \vec{f}_{\mathrm{NP},l}$</alt></inlineequation>.
       Anschließend werden die partiellen Ableitungen nach jeder generalisierten Koordinate
       berechnet.</para>
+
+    <formalpara role="remark" xml:id="rem.zusammenhang-pne-lagrange">
+      <title>Zusammenhang mit den projizierten Newton-Euler-Gleichungen</title>
+      <para>Die linke Seite der Lagrange-Gleichungen ist identisch mit der der
+        projizierten Newton-Euler-Gleichungen:</para>
+    </formalpara>
+
+    <informalequation><alt>\[\sum_{j=1}^{n}\left(\bar{J}_S^T\,\dot{\vec{p}} + \bar{J}_R^T\,\dot{\vec{N}}_S\right)_j = \frac{\mathrm{d}}{\mathrm{d}t}\!\left(\frac{\partial T}{\partial\dot{\vec{q}}}\right)^T - \left(\frac{\partial T}{\partial\vec{q}}\right)^T.\]</alt></informalequation>
+
+    <para>Beide Formulierungen liefern dieselben Bewegungsgleichungen. Die Lagrange-Formulierung
+      vermeidet die explizite Berechnung der Jacobi-Matrizen und Newton-Euler-Gleichungen.</para>
   </section>
 
   <!-- ═══════════════════════════════════════════════════════════════════ -->
@@ -131,10 +190,31 @@
   <section xml:id="sec.hamel-boltzmann">
     <title>Hamel-Boltzmann-Gleichungen</title>
 
+    <example xml:id="ex.lagrange2-versagt">
+      <title>Versagen von Lagrange II bei Nicht-Minimalgeschwindigkeiten</title>
+      <para>Betrachte ein System mit
+        <inlineequation><alt>$T = \tfrac{1}{2}\,m\,\dot{q}^2$</alt></inlineequation>
+        und der Minimalgeschwindigkeit
+        <inlineequation><alt>$v := \dot{q} + q$</alt></inlineequation>
+        (also <inlineequation><alt>$\dot{q} = v - q$</alt></inlineequation>).
+        In der neuen Variable ist
+        <inlineequation><alt>$\bar{T}(q, v) = \tfrac{1}{2}\,m\,(v-q)^2$</alt></inlineequation>.
+        Setzt man naiv die Lagrange-Gleichungen mit
+        <inlineequation><alt>$v$</alt></inlineequation> statt
+        <inlineequation><alt>$\dot{q}$</alt></inlineequation> an:</para>
+      <informalequation><alt>\[\frac{\mathrm{d}}{\mathrm{d}t}\!\left(\frac{\partial\bar{T}}{\partial v}\right) - \frac{\partial\bar{T}}{\partial q} = m\dot{v} - m\dot{q} + m(v-q) = m\dot{v} \overset{!}{=} 0.\]</alt></informalequation>
+      <para>Das liefert <inlineequation><alt>$m\dot{v} = 0$</alt></inlineequation>,
+        also <inlineequation><alt>$m\ddot{q} + m\dot{q} = 0$</alt></inlineequation>. Dies ist
+        <emphasis>falsch</emphasis> — die korrekte Bewegungsgleichung lautet
+        <inlineequation><alt>$m\ddot{q} = 0$</alt></inlineequation> (freie Masse).
+        Der Fehler entsteht, weil die δ-d-Vertauschungsregel für
+        <inlineequation><alt>$v \neq \dot{q}$</alt></inlineequation> nicht gilt.</para>
+    </example>
+
     <para>Die Lagrange-Gleichungen 2. Art setzen voraus, dass die generalisierten
       Geschwindigkeiten <inlineequation><alt>$\dot{\vec{q}}$</alt></inlineequation> als
       Zeitableitung der generalisierten Koordinaten auftreten. In manchen Anwendungen ist
-      es jedoch günstiger, mit sogenannten <emphasis role="bold">Minimalgeschwindigkeiten</emphasis>
+      es jedoch notwendig, mit sogenannten <emphasis role="bold">Minimalgeschwindigkeiten</emphasis>
       <inlineequation><alt>$\vec{v}$</alt></inlineequation> zu arbeiten, die über eine
       lineare Transformation mit <inlineequation><alt>$\dot{\vec{q}}$</alt></inlineequation>
       zusammenhängen:</para>
@@ -142,21 +222,20 @@
     <informalequation><alt>\[ \dot{\vec{q}} = B(\vec{q}, t)\,\vec{v} + \vec{\beta}(\vec{q}, t). \]</alt></informalequation>
 
     <para>Da <inlineequation><alt>$\vec{v}$</alt></inlineequation> im Allgemeinen nicht die
-      Zeitableitung einer Koordinate ist, gilt die
-      <inlineequation><alt>$\delta\dot{q}$</alt></inlineequation>-Vertauschungsregel nicht
+      Zeitableitung einer Koordinate ist, gilt die δ-d-Vertauschungsregel nicht
       mehr. Stattdessen tritt eine Korrekturmatrix
       <inlineequation><alt>$C$</alt></inlineequation> auf, beschrieben durch die
       Hamel'sche Übergangsgleichung:</para>
 
     <equation xml:id="eq.uebergangsgleichung">
-      <alt>\[ (\delta\vec{\xi})^\cdot - \delta\vec{v} = C(\vec{q}, \vec{v}, t)\,\delta\vec{\xi}. \]</alt>
+      <alt>\[ (\delta\vec{\xi})^{\boldsymbol{\cdot}} - \delta\vec{v} = C(\vec{q}, \vec{v}, t)\,\delta\vec{\xi}. \]</alt>
     </equation>
 
     <para>Die resultierenden <emphasis role="bold">Hamel-Boltzmann-Gleichungen</emphasis>
       (Volterra 1898, Boltzmann 1902, Hamel 1904) lauten:</para>
 
     <equation xml:id="eq.hamel-boltzmann">
-      <alt>\[ \frac{d}{dt}\!\left(\frac{\partial \bar{T}}{\partial \vec{v}}\right)^T - B^T\!\left(\frac{\partial T}{\partial \vec{q}}\right)^T + C^T\!\left(\frac{\partial \bar{T}}{\partial \vec{v}}\right)^T = B^T\, \vec{f}. \]</alt>
+      <alt>\[ \frac{\mathrm{d}}{\mathrm{d}t}\!\left(\frac{\partial \bar{T}}{\partial \vec{v}}\right)^T - B^T\!\left(\frac{\partial T}{\partial \vec{q}}\right)^T + C^T\!\left(\frac{\partial \bar{T}}{\partial \vec{v}}\right)^T = B^T\, \vec{f}. \]</alt>
     </equation>
 
     <formalpara role="derivation" xml:id="deriv.hamel-boltzmann">
@@ -169,21 +248,38 @@
         und es gilt
         <inlineequation><alt>$(\partial\bar{T}/\partial\vec{v}) = (\partial T/\partial\dot{\vec{q}}) B$</alt></inlineequation>.
         Einsetzen in die Zentralgleichung liefert:</para>
-      <informalequation><alt>\[ 0 = \delta\vec{\xi}^T B^T\vec{f} + \delta\vec{\xi}^T B^T\!\left(\frac{\partial T}{\partial\vec{q}}\right)^T + \delta\vec{v}^T\!\left(\frac{\partial\bar{T}}{\partial\vec{v}}\right)^T - \frac{d}{dt}\!\left[\delta\vec{\xi}^T\!\left(\frac{\partial\bar{T}}{\partial\vec{v}}\right)^T\right] \quad \forall\,\delta\vec{\xi}. \]</alt></informalequation>
+      <informalequation><alt>\[ 0 = \delta\vec{\xi}^T B^T\vec{f} + \delta\vec{\xi}^T B^T\!\left(\frac{\partial T}{\partial\vec{q}}\right)^T + \delta\vec{v}^T\!\left(\frac{\partial\bar{T}}{\partial\vec{v}}\right)^T - \frac{\mathrm{d}}{\mathrm{d}t}\!\left[\delta\vec{\xi}^T\!\left(\frac{\partial\bar{T}}{\partial\vec{v}}\right)^T\right] \quad \forall\,\delta\vec{\xi}. \]</alt></informalequation>
       <para>Anwendung der Produktregel auf den Zeitableitungsterm und Multiplikation mit
         <inlineequation><alt>$(-1)$</alt></inlineequation> ergibt:</para>
-      <informalequation><alt>\[ 0 = \delta\vec{\xi}^T\!\left[\frac{d}{dt}\!\left(\frac{\partial\bar{T}}{\partial\vec{v}}\right)^T - B^T\!\left(\frac{\partial T}{\partial\vec{q}}\right)^T - B^T\vec{f}\right] + \underbrace{\left[(\delta\vec{\xi})^\cdot - \delta\vec{v}\right]^T}_{{=\,(C\,\delta\vec{\xi})^T}}\!\left(\frac{\partial\bar{T}}{\partial\vec{v}}\right)^T. \]</alt></informalequation>
-      <para>Der Klammerausdruck <inlineequation><alt>$(\delta\vec{\xi})^\cdot - \delta\vec{v} = C\,\delta\vec{\xi}$</alt></inlineequation>
+      <informalequation><alt>\[ 0 = \delta\vec{\xi}^T\!\left[\frac{\mathrm{d}}{\mathrm{d}t}\!\left(\frac{\partial\bar{T}}{\partial\vec{v}}\right)^T - B^T\!\left(\frac{\partial T}{\partial\vec{q}}\right)^T - B^T\vec{f}\right] + \underbrace{\left[(\delta\vec{\xi})^{\boldsymbol{\cdot}} - \delta\vec{v}\right]^T}_{{=\,(C\,\delta\vec{\xi})^T}}\!\left(\frac{\partial\bar{T}}{\partial\vec{v}}\right)^T. \]</alt></informalequation>
+      <para>Der Klammerausdruck <inlineequation><alt>$(\delta\vec{\xi})^{\boldsymbol{\cdot}} - \delta\vec{v} = C\,\delta\vec{\xi}$</alt></inlineequation>
         ist genau die Hamel'sche Übergangsgleichung. Da dies für beliebige
         <inlineequation><alt>$\delta\vec{\xi}$</alt></inlineequation> gelten muss, folgt nach
-        Transponieren die Hamel-Boltzmann-Gleichung:</para>
-      <informalequation><alt>\[ \frac{d}{dt}\!\left(\frac{\partial\bar{T}}{\partial\vec{v}}\right)^T - B^T\!\left(\frac{\partial T}{\partial\vec{q}}\right)^T + C^T\!\left(\frac{\partial\bar{T}}{\partial\vec{v}}\right)^T = B^T\vec{f}. \]</alt></informalequation>
+        Transponieren die Hamel-Boltzmann-Gleichung.</para>
     </formalpara>
 
     <para>Für <inlineequation><alt>$B = I$</alt></inlineequation> und
       <inlineequation><alt>$\vec{\beta} = \vec{0}$</alt></inlineequation> (also
-      <inlineequation><alt>$\vec{v} = \dot{\vec{q}}$</alt></inlineequation>) reduzieren sich
-      die Hamel-Boltzmann-Gleichungen auf die Lagrange-Gleichungen 2. Art.</para>
+      <inlineequation><alt>$\vec{v} = \dot{\vec{q}}$</alt></inlineequation>) ist
+      <inlineequation><alt>$C = 0$</alt></inlineequation>, und die Hamel-Boltzmann-Gleichungen
+      reduzieren sich auf die Lagrange-Gleichungen 2. Art.</para>
+
+    <example xml:id="ex.hb-korrekt">
+      <title>Korrekte Lösung mit Hamel-Boltzmann</title>
+      <para>Das Beispiel von oben (<inlineequation><alt>$T = \tfrac{1}{2}m\dot{q}^2$</alt></inlineequation>,
+        <inlineequation><alt>$v = \dot{q} + q$</alt></inlineequation>) hat
+        <inlineequation><alt>$B = 1$</alt></inlineequation>,
+        <inlineequation><alt>$\beta = -q$</alt></inlineequation>.
+        Aus der δ-d-Vertauschung für
+        <inlineequation><alt>$\vec{q}$</alt></inlineequation> folgt
+        <inlineequation><alt>$(\delta s)^{\boldsymbol{\cdot}} - \delta v = -\delta s$</alt></inlineequation>,
+        also <inlineequation><alt>$C = -1$</alt></inlineequation>. Die
+        Hamel-Boltzmann-Gleichung liefert:</para>
+      <informalequation><alt>\[\frac{\mathrm{d}}{\mathrm{d}t}\!\left(\frac{\partial\bar{T}}{\partial v}\right) - \frac{\partial\bar{T}}{\partial q} + C\,\frac{\partial\bar{T}}{\partial v} = m\dot{v} + m(v-q) - m(v-q) = m\dot{v} = 0.\]</alt></informalequation>
+      <para>Mit <inlineequation><alt>$\dot{q} = v - q$</alt></inlineequation> folgt
+        <inlineequation><alt>$m\ddot{q} = 0$</alt></inlineequation> — die korrekte
+        Bewegungsgleichung der freien Masse.</para>
+    </example>
   </section>
 
   <!-- ═══════════════════════════════════════════════════════════════════ -->
@@ -193,12 +289,12 @@
 
     <para>Die Variationsrechnung aus Kapitel 1 und die Lagrange'sche Mechanik treffen sich im
       <emphasis role="bold">Prinzip von Hamilton</emphasis> (1835). Wirken keine
-      Nichtpotentialkräfte (<inlineequation><alt>$\vec{f}_{NP} = 0$</alt></inlineequation>),
+      Nichtpotentialkräfte (<inlineequation><alt>$\vec{f}_{\mathrm{NP}} = 0$</alt></inlineequation>),
       so sind die Lagrange-Gleichungen 2. Art identisch mit den Euler-Lagrange-Gleichungen
       des Variationsproblems</para>
 
     <equation xml:id="eq.hamilton-prinzip">
-      <alt>\[ I(\vec{q}) = \int_{t_0}^{t_1} (T - V)\,dt \longrightarrow \text{stat.} \]</alt>
+      <alt>\[ I(\vec{q}) = \int_{t_0}^{t_1} (T - V)\,\mathrm{d}t \longrightarrow \text{stat.} \]</alt>
     </equation>
 
     <para>Die Lagrange-Funktion <inlineequation><alt>$L = T - V$</alt></inlineequation> spielt
@@ -219,11 +315,14 @@
       <para>Eine Koordinate <inlineequation><alt>$q_k$</alt></inlineequation> heißt
         <emphasis role="bold">zyklisch</emphasis> (oder ignorierbar), wenn die Lagrange-Funktion
         <inlineequation><alt>$L$</alt></inlineequation> nicht explizit von
-        <inlineequation><alt>$q_k$</alt></inlineequation> abhängt. In diesem Fall ist der
-        <emphasis role="bold">generalisierte Impuls</emphasis>
-        <inlineequation><alt>$\pi_k := \frac{\partial T}{\partial \dot{q}_k} = \text{const.}$</alt></inlineequation>
-        eine Erhaltungsgröße.</para>
+        <inlineequation><alt>$q_k$</alt></inlineequation> abhängt, d.h. wenn gleichzeitig</para>
     </formalpara>
+
+    <informalequation><alt>\[\frac{\partial T}{\partial q_k} = 0, \qquad \frac{\partial V}{\partial q_k} = 0, \qquad f_{\mathrm{NP},k} = 0.\]</alt></informalequation>
+
+    <para>In diesem Fall ist der <emphasis role="bold">generalisierte Impuls</emphasis>
+      <inlineequation><alt>$\pi_k := \frac{\partial T}{\partial \dot{q}_k} = \text{const.}$</alt></inlineequation>
+      eine Erhaltungsgröße.</para>
 
     <para>Zyklische Koordinaten stehen in engem Zusammenhang mit Symmetrien des Systems: Jede
       kontinuierliche Symmetrie der Lagrange-Funktion führt auf eine Erhaltungsgröße (Noether-Theorem).</para>
@@ -245,7 +344,7 @@
       <title>Satz: Hinreichende Bedingungen für Energieerhaltung</title>
       <para>Ein System ist konservativ, wenn die folgenden drei Bedingungen gleichzeitig
         erfüllt sind: (1) Es wirken keine Nichtpotentialkräfte
-        (<inlineequation><alt>$\vec{f}_{NP} = 0$</alt></inlineequation>). (2) Die kinetische
+        (<inlineequation><alt>$\vec{f}_{\mathrm{NP}} = 0$</alt></inlineequation>). (2) Die kinetische
         und potentielle Energie hängen nicht explizit von der Zeit ab. (3) Die kinetische
         Energie ist eine rein quadratische Form in den generalisierten Geschwindigkeiten:
         <inlineequation><alt>$T = \frac{1}{2}\,\dot{\vec{q}}^T M(\vec{q})\,\dot{\vec{q}}$</alt></inlineequation>.</para>
