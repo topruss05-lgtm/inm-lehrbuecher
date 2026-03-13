@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<title>SVG Cleanup – Validierung</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: system-ui, -apple-system, sans-serif; background: #f0f0f0; padding: 1rem; }
+  h1 { text-align: center; margin: 1rem 0 0.5rem; font-size: 1.5rem; color: #333; }
+  .info { text-align: center; color: #666; margin-bottom: 1rem; font-size: 0.9rem; }
+  .card {
+    background: white; border: 1px solid #ddd; border-radius: 8px;
+    margin: 1rem auto; max-width: 1400px; overflow: hidden;
+  }
+  .card-header {
+    background: #f8f8f8; padding: 0.75rem 1rem; border-bottom: 1px solid #ddd;
+  }
+  .card-header h3 { font-size: 1rem; color: #333; }
+  .compare {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 0;
+  }
+  .compare > div {
+    padding: 1rem; display: flex; flex-direction: column; align-items: center;
+  }
+  .compare > div:first-child { border-right: 1px solid #eee; background: #fafafa; }
+  .compare > div:last-child { background: #fff; }
+  .compare label {
+    font-size: 0.75rem; color: #999; text-transform: uppercase; letter-spacing: 0.05em;
+    margin-bottom: 0.5rem;
+  }
+  .compare img {
+    max-width: 100%; height: auto; display: block;
+  }
+</style>
+</head>
+<body>
+<h1>SVG Cleanup – Vorher / Nachher</h1>
+<p class="info">55 Zeichnungen – Links: Original (Pfad-Glyphen) | Rechts: Bereinigt (echte Text-Elemente, CSS-Klassen, normalisierte Koordinaten)</p>
+
+<div id="cards"></div>
+
+<script>
+const files = [
+  "aufgabe_1_1","aufgabe_1_4","aufgabe_1_5","aufgabe_1_6","aufgabe_1_7","aufgabe_1_8","aufgabe_1_9",
+  "aufgabe_1_11","aufgabe_1_12","aufgabe_1_13","aufgabe_1_14","aufgabe_1_15",
+  "aufgabe_2_1","aufgabe_2_4","aufgabe_2_5","aufgabe_2_6","aufgabe_2_7",
+  "aufgabe_3_1","aufgabe_3_2","aufgabe_3_3","aufgabe_3_4","aufgabe_3_6","aufgabe_3_7","aufgabe_3_8",
+  "aufgabe_3_10","aufgabe_3_11","aufgabe_3_12","aufgabe_3_13","aufgabe_3_14","aufgabe_3_15",
+  "aufgabe_4_1","aufgabe_4_3","aufgabe_4_4",
+  "aufgabe_5_1","aufgabe_5_2","aufgabe_5_3","aufgabe_5_4","aufgabe_5_5","aufgabe_5_6","aufgabe_5_7",
+  "aufgabe_5_8","aufgabe_5_9","aufgabe_5_10_a","aufgabe_5_10_b","aufgabe_5_11","aufgabe_5_13",
+  "aufgabe_a_1","aufgabe_a_2","aufgabe_a_5","aufgabe_a_6","aufgabe_a_8","aufgabe_a_9","aufgabe_a_10",
+  "aufgabe_b_1","aufgabe_page21_0"
+];
+
+const container = document.getElementById("cards");
+for (const f of files) {
+  const card = document.createElement("div");
+  card.className = "card";
+
+  const header = document.createElement("div");
+  header.className = "card-header";
+  const h3 = document.createElement("h3");
+  h3.textContent = f + ".svg";
+  header.appendChild(h3);
+
+  const compare = document.createElement("div");
+  compare.className = "compare";
+
+  const left = document.createElement("div");
+  const leftLabel = document.createElement("label");
+  leftLabel.textContent = "Original";
+  const leftImg = document.createElement("img");
+  leftImg.src = "svg/" + f + ".svg";
+  leftImg.alt = "Original";
+  left.appendChild(leftLabel);
+  left.appendChild(leftImg);
+
+  const right = document.createElement("div");
+  const rightLabel = document.createElement("label");
+  rightLabel.textContent = "Bereinigt";
+  const rightImg = document.createElement("img");
+  rightImg.src = "svg_clean/" + f + ".svg";
+  rightImg.alt = "Bereinigt";
+  right.appendChild(rightLabel);
+  right.appendChild(rightImg);
+
+  compare.appendChild(left);
+  compare.appendChild(right);
+  card.appendChild(header);
+  card.appendChild(compare);
+  container.appendChild(card);
+}
+</script>
+</body>
+</html>

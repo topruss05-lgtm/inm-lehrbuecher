@@ -1,0 +1,8 @@
+---
+import PlatformLayout from '../layouts/PlatformLayout.astro';
+import SvgEditor from '../components/svg-editor/SvgEditor.svelte';
+---
+
+<PlatformLayout title="SVG-Editor">
+  <SvgEditor client:only="svelte" />
+</PlatformLayout>

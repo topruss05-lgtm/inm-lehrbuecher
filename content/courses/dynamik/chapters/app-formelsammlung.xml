@@ -5,87 +5,205 @@
           xml:id="ch.formelsammlung">
   <title>Formelsammlung</title>
 
-  <para>Klausuroptimierte Zusammenstellung aller zentralen Formeln, Definitionen und Methoden.</para>
-
   <!-- ═══════════════════════════════════════════════════════════════════════ -->
-  <!--  TEIL I: FORMELN                                                       -->
+  <!--  TEIL A: KOCHREZEPT LAGRANGE II (aus offiziellem PDF, 1:1)           -->
   <!-- ═══════════════════════════════════════════════════════════════════════ -->
 
-  <section xml:id="sec.fs-math-grundlagen">
-    <title>Mathematische Grundlagen</title>
+  <section xml:id="sec.fs-kochrezept-lagrange-ii">
+    <title>Kochrezept: Lagrange II für MKS aus Starrkörpern</title>
 
-    <para><emphasis role="bold">Gradient</emphasis> (Zeilenvektor):</para>
-    <informalequation><alt>\[ \frac{\partial f}{\partial \vec{x}} = \left(\frac{\partial f}{\partial x_1}, \ldots, \frac{\partial f}{\partial x_n}\right) \in \mathbb{R}^{1 \times n} \]</alt></informalequation>
+    <section xml:id="sec.fs-lag-vorarbeit">
+      <title>Vorarbeit: Problem verstehen</title>
+      <orderedlist>
+        <listitem><para>Identifiziere Starrkörper, wähle geeignete Koordinatensysteme und lege geeignete Minimalkoordinaten <inlineequation><alt>$\vec{q}$</alt></inlineequation> fest</para></listitem>
+        <listitem><para>Identifiziere alle Kraftelemente mit Potential, z.B. Federn und notiere Potential. Identifiziere alle weiteren Kraftelemente, schneide sie frei und notiere die Kraftgesetze</para></listitem>
+        <listitem><para>Identifiziere alle weiteren Potentiale, z.B. Gewicht, und Nichtpotentialkräfte und notiere deren Kraftgesetze</para></listitem>
+        <listitem><para>Berechne benötigte Transformationsmatrizen <inlineequation><alt>$A_{DB}$</alt></inlineequation> und Drehgeschwindigkeiten <inlineequation><alt>${}_B\vec{\omega}_{DB}$</alt></inlineequation>, wobei <inlineequation><alt>$D$</alt></inlineequation> und <inlineequation><alt>$B$</alt></inlineequation> zwei beliebige Koordinatensysteme sind</para></listitem>
+      </orderedlist>
+    </section>
 
-    <para><emphasis role="bold">Jacobi-Matrix</emphasis>
-      (<inlineequation><alt>$\vec{f}: \mathbb{R}^n \to \mathbb{R}^m$</alt></inlineequation>):</para>
-    <informalequation><alt>\[ \frac{\partial \vec{f}}{\partial \vec{x}} := \begin{pmatrix} \frac{\partial f_1}{\partial x_1} &amp; \cdots &amp; \frac{\partial f_1}{\partial x_n} \\ \vdots &amp; \ddots &amp; \vdots \\ \frac{\partial f_m}{\partial x_1} &amp; \cdots &amp; \frac{\partial f_m}{\partial x_n} \end{pmatrix} \in \mathbb{R}^{m \times n} \]</alt></informalequation>
+    <section xml:id="sec.fs-lag-energien">
+      <title>I — Energien aufstellen</title>
+      <para><emphasis>Koordinatensystem <inlineequation><alt>$B$</alt></inlineequation> je Starrkörper frei wählbar.</emphasis></para>
+      <para>Für jeden Starrkörper <inlineequation><alt>$j = 1\ldots N$</alt></inlineequation>:</para>
+      <orderedlist>
+        <listitem><para>Berechne die Translationsgeschwindigkeit <inlineequation><alt>${}_B\vec{v}_S$</alt></inlineequation> und die Winkelgeschwindigkeit <inlineequation><alt>${}_B\vec{\Omega}$</alt></inlineequation></para></listitem>
+        <listitem><para>Bestimme die kinetische Energie des Körpers
+          <inlineequation><alt>$T^j = \tfrac{1}{2}m\|{}_B\vec{v}_S\|^2 + \tfrac{1}{2}{}_B\vec{\Omega}^T\,{}_B\bar{\Theta}_S\,{}_B\vec{\Omega}$</alt></inlineequation></para></listitem>
+        <listitem><para>Bestimme das Schwerepotential des Körpers
+          <inlineequation><alt>$V^j = -m\,{}_B\vec{r}_{OS}^T\,{}_B\vec{g}$</alt></inlineequation>, wobei <inlineequation><alt>${}_B\vec{g}$</alt></inlineequation> der Vektor der Erdbeschleunigung im <inlineequation><alt>$B$</alt></inlineequation>-System ist</para></listitem>
+      </orderedlist>
+      <para>Stelle alle weiteren Potentiale auf und berechne die Gesamtenergie als Summe über alle Potentiale <inlineequation><alt>$V = \sum V^j$</alt></inlineequation>. Berechne die kinetische Gesamtenergie <inlineequation><alt>$T = \sum_{j=1}^{N} T^j$</alt></inlineequation>.</para>
+    </section>
 
-    <para><emphasis role="bold">Kettenregel:</emphasis>
-      <inlineequation><alt>$\frac{\partial \vec{z}}{\partial \vec{x}} = \frac{\partial \vec{z}}{\partial \vec{y}} \cdot \frac{\partial \vec{y}}{\partial \vec{x}}$</alt></inlineequation></para>
+    <section xml:id="sec.fs-lag-differenzieren">
+      <title>II — Differenzieren</title>
+      <orderedlist>
+        <listitem><para>Berechne <inlineequation><alt>$\frac{d}{dt}\!\left(\frac{\partial T}{\partial\dot{\vec{q}}}\right)^{\!T}$</alt></inlineequation>, <inlineequation><alt>$\left(\frac{\partial T}{\partial\vec{q}}\right)^{\!T}$</alt></inlineequation></para></listitem>
+        <listitem><para>Berechne <inlineequation><alt>$\left(\frac{\partial V}{\partial\vec{q}}\right)^{\!T}$</alt></inlineequation></para></listitem>
+      </orderedlist>
+    </section>
 
-    <para><emphasis role="bold">Tilde-Operator</emphasis> (schiefsymmetrische Kreuzprodukt-Matrix):</para>
-    <informalequation><alt>\[ \tilde{\vec{a}} = \begin{pmatrix} 0 &amp; -a_3 &amp; a_2 \\ a_3 &amp; 0 &amp; -a_1 \\ -a_2 &amp; a_1 &amp; 0 \end{pmatrix}, \quad \tilde{\vec{a}}\,\vec{b} = \vec{a} \times \vec{b} = -\tilde{\vec{b}}\,\vec{a}, \quad \tilde{\vec{a}}^T = -\tilde{\vec{a}} \]</alt></informalequation>
+    <section xml:id="sec.fs-lag-nichtpotential">
+      <title>III — Nichtpotentialkräfte</title>
+      <para>Für jede Nichtpotentialkraft <inlineequation><alt>$k = 1\ldots K$</alt></inlineequation>:</para>
+      <orderedlist>
+        <listitem><para>Berechne <inlineequation><alt>${}_B\vec{v}_P$</alt></inlineequation> zum Kraftangriffspunkt <inlineequation><alt>$P$</alt></inlineequation> (für Kräfte), bzw. <inlineequation><alt>${}_B\vec{\Omega}$</alt></inlineequation> (für Momente)</para></listitem>
+        <listitem><para>Lies die Jacobimatrix <inlineequation><alt>${}_B\bar{J}_P$</alt></inlineequation> bzw. <inlineequation><alt>${}_B\bar{J}_R$</alt></inlineequation> ab</para></listitem>
+        <listitem><para>Bestimme die generalisierte Kraft
+          <inlineequation><alt>$\vec{f}^k = {}_B\bar{J}_P^T\,{}_B\vec{F}$</alt></inlineequation>, bzw.
+          <inlineequation><alt>$\vec{f}^k = {}_B\bar{J}_R^T\,{}_B\vec{M}$</alt></inlineequation></para></listitem>
+      </orderedlist>
+      <para>Summiere über alle Nichtpotentialkräfte <inlineequation><alt>$\vec{f} = \sum_{k=1}^{K}\vec{f}^k$</alt></inlineequation></para>
+    </section>
 
+    <section xml:id="sec.fs-lag-summieren">
+      <title>IV — Summieren und Formalisieren</title>
+      <informalequation><alt>\[ \frac{d}{dt}\!\left(\frac{\partial T}{\partial\dot{\vec{q}}}\right)^{\!T} - \left(\frac{\partial T}{\partial\vec{q}}\right)^{\!T} + \left(\frac{\partial V}{\partial\vec{q}}\right)^{\!T} = \vec{f} \]</alt></informalequation>
+    </section>
   </section>
 
   <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <!--  TEIL B: KOCHREZEPT PROJIZIERTE NEWTON-EULER (aus offiziellem PDF)    -->
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
 
-  <section xml:id="sec.fs-kinematik">
-    <title>Kinematik starrer Körper</title>
+  <section xml:id="sec.fs-kochrezept-proj-ne">
+    <title>Kochrezept: Projizierte Newton-Euler-Gleichungen</title>
 
-    <section xml:id="sec.fs-trafo-matrizen">
-      <title>Transformationsmatrizen</title>
+    <section xml:id="sec.fs-ne-vorarbeit">
+      <title>Vorarbeit: Problem verstehen</title>
+      <orderedlist>
+        <listitem><para>Identifiziere Starrkörper, wähle geeignete Koordinatensysteme und lege Minimalkoordinaten fest</para></listitem>
+        <listitem><para>Schneide alle Kraftelemente (Feder, Dämpfer, …) frei. Notiere die Kraftgesetze.</para></listitem>
+        <listitem><para>Identifiziere alle eingeprägten Kräfte (z.B. Gewichtskräfte)</para></listitem>
+        <listitem><para>Berechne benötigte Transformationsmatrizen <inlineequation><alt>$A_{DB}$</alt></inlineequation> und Drehgeschwindigkeiten <inlineequation><alt>${}_B\vec{\omega}_{DB}$</alt></inlineequation></para></listitem>
+      </orderedlist>
+    </section>
 
-      <para>Elementardrehungen um die Koordinatenachsen:</para>
+    <section xml:id="sec.fs-ne-rotation">
+      <title>I — Rotation</title>
+      <para><emphasis>Koordinatensystem <inlineequation><alt>$B$</alt></inlineequation> je Starrkörper frei wählbar.</emphasis></para>
+      <para>Für jeden Starrkörper <inlineequation><alt>$j = 1\ldots N$</alt></inlineequation>:</para>
+      <orderedlist>
+        <listitem><para>Berechne die Winkelgeschwindigkeit des Körpers <inlineequation><alt>${}_B\vec{\Omega}$</alt></inlineequation></para></listitem>
+        <listitem><para>Lies die Jacobimatrix der Rotation <inlineequation><alt>${}_B\bar{J}_R$</alt></inlineequation> ab (<inlineequation><alt>$\dot{\vec{q}}$</alt></inlineequation> ausklammern)</para></listitem>
+        <listitem><para>Berechne den Spin <inlineequation><alt>${}_B\vec{N}_S = {}_B\bar{\Theta}_S\,{}_B\vec{\Omega}$</alt></inlineequation>, dessen Zeitableitung <inlineequation><alt>${}_B(\dot{\vec{N}}_S)$</alt></inlineequation> und die Projektion <inlineequation><alt>${}_B\bar{J}_R^T\,{}_B(\dot{\vec{N}}_S)$</alt></inlineequation>. <emphasis>(Nutze Euler'sche Differentiationsregel!)</emphasis></para></listitem>
+        <listitem><para>Falls eingeprägte Momente <inlineequation><alt>${}_B\vec{M}^a$</alt></inlineequation> angreifen, berechne die Projektion <inlineequation><alt>${}_B\bar{J}_R^T\,{}_B\vec{M}^a$</alt></inlineequation></para></listitem>
+      </orderedlist>
+    </section>
+
+    <section xml:id="sec.fs-ne-translation">
+      <title>II — Translation</title>
+      <para><emphasis>Koordinatensystem <inlineequation><alt>$B$</alt></inlineequation> je Punkt frei wählbar.</emphasis></para>
+      <para>Für relevante Punkte (z.B. Schwerpunkte, Kraftangriffspunkte) auf jedem Starrkörper <inlineequation><alt>$j = 1\ldots N$</alt></inlineequation>:</para>
+      <orderedlist>
+        <listitem><para>Berechne <inlineequation><alt>${}_B\vec{v}_P$</alt></inlineequation> aus <inlineequation><alt>${}_B\vec{r}_{OP}$</alt></inlineequation> (Euler'sche Differentiationsregel) oder über die Starrkörperformel, wenn es auf dem Starrkörper <inlineequation><alt>$j$</alt></inlineequation> einen Punkt <inlineequation><alt>$Q$</alt></inlineequation> mit bekannter Geschwindigkeit <inlineequation><alt>${}_B\vec{v}_Q$</alt></inlineequation> gibt</para></listitem>
+        <listitem><para>Lies die Jacobimatrix der Translation im Punkt <inlineequation><alt>$P$</alt></inlineequation> ab (<inlineequation><alt>$\dot{\vec{q}}$</alt></inlineequation> ausklammern)</para></listitem>
+        <listitem><para>Falls <inlineequation><alt>$P = S$</alt></inlineequation> ein Schwerpunkt eines Körpers ist: Stelle den Impuls <inlineequation><alt>${}_B\vec{p} = m\,{}_B\vec{v}_S$</alt></inlineequation> auf, bestimme die Impulsänderung <inlineequation><alt>${}_B(\dot{\vec{p}})$</alt></inlineequation> (Euler'sche Differentiationsregel!) und die Projektion <inlineequation><alt>${}_B\bar{J}_S^T\,{}_B(\dot{\vec{p}})$</alt></inlineequation></para></listitem>
+        <listitem><para>Falls in <inlineequation><alt>$P$</alt></inlineequation> eine Kraft <inlineequation><alt>$\vec{F}^a$</alt></inlineequation> angreift: Bestimme <inlineequation><alt>${}_B\vec{F}^a$</alt></inlineequation> und berechne die Projektion <inlineequation><alt>${}_B\bar{J}_P^T\,{}_B\vec{F}^a$</alt></inlineequation></para></listitem>
+      </orderedlist>
+    </section>
+
+    <section xml:id="sec.fs-ne-summieren">
+      <title>III — Summieren und Formalisieren</title>
+      <orderedlist>
+        <listitem><para><inlineequation><alt>$\vec{0} = \sum_{j=1}^{N}$</alt></inlineequation> Trägheitsterme <inlineequation><alt>$-$</alt></inlineequation> generalisierte Kräfte für alle <inlineequation><alt>$N$</alt></inlineequation> Körper</para></listitem>
+        <listitem><para>Ausklammern von <inlineequation><alt>$\ddot{\vec{q}}$</alt></inlineequation>, identifiziere die Massenmatrix <inlineequation><alt>$M$</alt></inlineequation>, gyroskopische Kräfte <inlineequation><alt>$\vec{g}$</alt></inlineequation> und äußere generalisierte Kräfte <inlineequation><alt>$\vec{f}$</alt></inlineequation>:</para></listitem>
+      </orderedlist>
+      <informalequation><alt>\[ \vec{0} = \sum_{j=1}^{N}\Bigl[\underbrace{\bigl({}_A\bar{J}_S^T\,{}_A(\dot{\vec{p}}) + {}_B\bar{J}_R^T\,{}_B(\dot{\vec{N}}_S)\bigr)}_{(M\ddot{\vec{q}}+\vec{g})_j} - \underbrace{\bigl({}_C\bar{J}_P^T\,{}_C\vec{F}^a + {}_D\bar{J}_R^T\,{}_D\vec{M}_P^a\bigr)}_{\vec{f}_j}\Bigr]_j \]</alt></informalequation>
+    </section>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <!--  TEIL C: ERGÄNZENDE BERECHNUNGSFORMELN                               -->
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+
+  <section xml:id="sec.fs-ergaenzung">
+    <title>Ergänzende Berechnungsformeln</title>
+
+    <section xml:id="sec.fs-kinematik-formeln">
+      <title>Kinematik</title>
+
+      <para><emphasis role="bold">Elementardrehungen</emphasis> um die Koordinatenachsen:</para>
       <informalequation><alt>\[ A_1(\alpha) = \begin{pmatrix} 1 &amp; 0 &amp; 0 \\ 0 &amp; \cos\alpha &amp; \sin\alpha \\ 0 &amp; -\sin\alpha &amp; \cos\alpha \end{pmatrix}, \quad
 A_2(\beta) = \begin{pmatrix} \cos\beta &amp; 0 &amp; -\sin\beta \\ 0 &amp; 1 &amp; 0 \\ \sin\beta &amp; 0 &amp; \cos\beta \end{pmatrix}, \quad
 A_3(\gamma) = \begin{pmatrix} \cos\gamma &amp; \sin\gamma &amp; 0 \\ -\sin\gamma &amp; \cos\gamma &amp; 0 \\ 0 &amp; 0 &amp; 1 \end{pmatrix} \]</alt></informalequation>
 
       <para>Eigenschaften:
-        <inlineequation><alt>$A^{-1} = A^T$</alt></inlineequation> (orthogonal),
+        <inlineequation><alt>$A^{-1} = A^T$</alt></inlineequation>,
         Verkettung: <inlineequation><alt>$A_{DB} = A_{DC}\cdot A_{CB}$</alt></inlineequation>,
-        Transformation: <inlineequation><alt>${}_{D}\vec{c} = A_{DB}\,{}_{B}\vec{c}$</alt></inlineequation>.</para>
-    </section>
+        Transformation: <inlineequation><alt>${}_D\vec{c} = A_{DB}\,{}_B\vec{c}$</alt></inlineequation>.</para>
 
-    <section xml:id="sec.fs-drehgeschwindigkeit">
-      <title>Drehgeschwindigkeit</title>
+      <para><emphasis role="bold">Tilde-Operator</emphasis> (Kreuzproduktmatrix):</para>
+      <informalequation><alt>\[ \tilde{\vec{a}} = \begin{pmatrix} 0 &amp; -a_3 &amp; a_2 \\ a_3 &amp; 0 &amp; -a_1 \\ -a_2 &amp; a_1 &amp; 0 \end{pmatrix}, \quad \tilde{\vec{a}}\,\vec{b} = \vec{a} \times \vec{b} = -\tilde{\vec{b}}\,\vec{a} \]</alt></informalequation>
 
-      <para>Aus Transformationsmatrix:
-        <inlineequation><alt>${}_{B}\tilde{\vec{\omega}}_{BD} = \dot{A}_{BD}\,A_{BD}^T$</alt></inlineequation>.
-        Addition elementarer Drehgeschwindigkeiten:</para>
-
-      <equation xml:id="eq.fs-omega-addition">
-        <alt>\[ {}_{C}\vec{\omega}_{BD} = {}_{C}\vec{\omega}_{B1} + {}_{C}\vec{\omega}_{12} + \ldots + {}_{C}\vec{\omega}_{nD} \]</alt>
-      </equation>
-
-    </section>
-
-    <section xml:id="sec.fs-starrkoerperformel">
-      <title>Starrkörperformeln</title>
-
-      <para><emphasis role="bold">Geschwindigkeit:</emphasis></para>
-      <equation xml:id="eq.fs-v-starr">
-        <alt>\[ \vec{v}_Q = \vec{v}_P + \vec{\Omega} \times \vec{r}_{PQ} \]</alt>
-      </equation>
-
-      <para><emphasis role="bold">Beschleunigung:</emphasis></para>
-      <equation xml:id="eq.fs-a-starr">
-        <alt>\[ \vec{a}_Q = \vec{a}_P + \vec{\Psi} \times \vec{r}_{PQ} + \vec{\Omega} \times (\vec{\Omega} \times \vec{r}_{PQ}) \]</alt>
-      </equation>
-
-      <para>mit <inlineequation><alt>$\vec{\Psi} = \dot{\vec{\Omega}}$</alt></inlineequation>.
-        <emphasis role="bold">Virtuelle Verschiebung:</emphasis>
-        <inlineequation><alt>$\delta\vec{r}_Q = \delta\vec{r}_P + \delta\vec{\varphi} \times \vec{r}_{PQ}$</alt></inlineequation>.</para>
+      <para><emphasis role="bold">Starrkörperformel</emphasis> (Geschwindigkeit):</para>
+      <informalequation><alt>\[ \vec{v}_Q = \vec{v}_P + \vec{\Omega} \times \vec{r}_{PQ} \]</alt></informalequation>
 
       <para><emphasis role="bold">Euler'sche Differentiationsregel:</emphasis></para>
-      <equation xml:id="eq.fs-euler-diff">
-        <alt>\[ {}_B(\dot{\vec{c}}) = ({}_B\vec{c})^{\boldsymbol{\cdot}} + {}_B\tilde{\vec{\omega}}_{IB}\,{}_B\vec{c} \]</alt>
-      </equation>
+      <informalequation><alt>\[ {}_B(\dot{\vec{c}}) = ({}_B\vec{c})^{\boldsymbol{\cdot}} + {}_B\tilde{\vec{\omega}}_{IB}\,{}_B\vec{c} \]</alt></informalequation>
 
+      <para><emphasis role="bold">Drehgeschwindigkeit</emphasis> durch Addition elementarer Drehgeschwindigkeiten:</para>
+      <informalequation><alt>\[ {}_C\vec{\omega}_{BD} = {}_C\vec{\omega}_{B1} + {}_C\vec{\omega}_{12} + \ldots + {}_C\vec{\omega}_{nD} \]</alt></informalequation>
+    </section>
+
+    <section xml:id="sec.fs-impuls-spin">
+      <title>Impuls- und Spinänderung im bewegten System</title>
+
+      <para><emphasis role="bold">Impulsänderung</emphasis> (Euler-Diff. auf <inlineequation><alt>$\vec{p} = m\vec{v}_S$</alt></inlineequation>):</para>
+      <informalequation><alt>\[ {}_B(\dot{\vec{p}}) = ({}_B\vec{p})^{\boldsymbol{\cdot}} + {}_B\tilde{\vec{\omega}}_{IB}\,{}_B\vec{p} \]</alt></informalequation>
+
+      <para><emphasis role="bold">Spinänderung</emphasis> im körperfesten System (<inlineequation><alt>${}_K\bar{\Theta}_S = \text{const.}$</alt></inlineequation>):</para>
+      <informalequation><alt>\[ {}_K(\dot{\vec{N}}_S) = {}_K\bar{\Theta}_S\,{}_K\vec{\Psi} + {}_K\vec{\Omega}\times{}_K\bar{\Theta}_S\,{}_K\vec{\Omega} \]</alt></informalequation>
+    </section>
+
+    <section xml:id="sec.fs-kraftelemente">
+      <title>Kraftelemente</title>
+
+      <para>Kraftelement zwischen <inlineequation><alt>$P$</alt></inlineequation> und <inlineequation><alt>$Q$</alt></inlineequation>:</para>
+      <para>Auslenkung <inlineequation><alt>$g = \vec{n}\cdot\vec{r}_{PQ}$</alt></inlineequation>,
+        generalisierte Kraftrichtung <inlineequation><alt>$\vec{w} = (\bar{J}_Q - \bar{J}_P)^T\vec{n}$</alt></inlineequation>,
+        generalisierte Kraft <inlineequation><alt>$\vec{f} = \vec{w}\lambda$</alt></inlineequation>.</para>
+      <informalequation><alt>\[ \dot{g} = \vec{w}^T\dot{\vec{q}} + \chi, \qquad \delta g = \vec{w}^T\delta\vec{q}, \qquad \vec{w}^T = \frac{\partial g}{\partial\vec{q}} = \frac{\partial\dot{g}}{\partial\dot{\vec{q}}} \]</alt></informalequation>
+
+      <para><emphasis role="bold">Kraftgesetze:</emphasis>
+        Feder: <inlineequation><alt>$-\lambda = cg$</alt></inlineequation>,
+        Dämpfer: <inlineequation><alt>$-\lambda = d\dot{g}$</alt></inlineequation>.</para>
+    </section>
+
+    <section xml:id="sec.fs-bindungen">
+      <title>Bindungen</title>
+
+      <para><emphasis role="bold">Geometrisch:</emphasis>
+        <inlineequation><alt>$\vec{g}(\vec{q},t) = 0$</alt></inlineequation>,
+        <inlineequation><alt>$W^T = \frac{\partial\vec{g}}{\partial\vec{q}}$</alt></inlineequation>.
+        <emphasis role="bold">Kinematisch:</emphasis>
+        <inlineequation><alt>$\vec{w}^T\dot{\vec{q}} + \chi = 0$</alt></inlineequation>.</para>
+
+      <para><emphasis role="bold">Nichtholonomie-Test:</emphasis>
+        <inlineequation><alt>$\frac{\partial\vec{w}^T}{\partial\vec{q}}$</alt></inlineequation> nicht symmetrisch → nichtholonom.</para>
+
+      <para><emphasis role="bold">Lagrange I — Sattelpunktsystem</emphasis> (Beschleunigungsebene):</para>
+      <informalequation><alt>\[ \begin{pmatrix} M &amp; -W \\ W^T &amp; 0 \end{pmatrix} \begin{pmatrix} \ddot{\vec{q}} \\ \vec{\lambda} \end{pmatrix} = \begin{pmatrix} \vec{h} \\ -\vec{\bar{s}} \end{pmatrix} \]</alt></informalequation>
+
+      <para><emphasis role="bold">Minimalgeschwindigkeiten:</emphasis>
+        <inlineequation><alt>$\dot{\vec{q}} = B(\vec{q},t)\,\vec{u} + \vec{\beta}$</alt></inlineequation> mit
+        <inlineequation><alt>$W^T B = 0$</alt></inlineequation>.</para>
+
+      <para><emphasis role="bold">Verträgliche virtuelle Verschiebungen:</emphasis>
+        <inlineequation><alt>$V_\text{vertr.} = \operatorname{Kern}(W^T)$</alt></inlineequation>.</para>
+    </section>
+
+    <section xml:id="sec.fs-linearisierung">
+      <title>Linearisierung</title>
+
+      <para>Aus nichtlinearen BGL <inlineequation><alt>$\vec{a}(\ddot{\vec{q}},\dot{\vec{q}},\vec{q}) = 0$</alt></inlineequation> um GGL <inlineequation><alt>$\vec{q}_0$</alt></inlineequation>:</para>
+      <informalequation><alt>\[ M\ddot{\bar{\vec{q}}} + B\dot{\bar{\vec{q}}} + C\bar{\vec{q}} = \vec{b}(t), \qquad M = \frac{\partial\vec{a}}{\partial\ddot{\vec{q}}}\bigg|_0 \]</alt></informalequation>
     </section>
   </section>
 
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <!--  TEIL D: VARIATIONSRECHNUNG (kompakt)                                -->
   <!-- ═══════════════════════════════════════════════════════════════════════ -->
 
   <section xml:id="sec.fs-variationsrechnung">
@@ -93,436 +211,24 @@ A_3(\gamma) = \begin{pmatrix} \cos\gamma &amp; \sin\gamma &amp; 0 \\ -\sin\gamma
 
     <para>Funktional: <inlineequation><alt>$I(y) = \int_{x_0}^{x_1} F(x,y,y')\,dx \to \text{stat.}$</alt></inlineequation></para>
 
-    <section xml:id="sec.fs-euler-gleichung">
-      <title>Euler-Gleichung und Sonderfälle</title>
-
-      <para><emphasis role="bold">Euler-Gleichung:</emphasis></para>
-      <equation xml:id="eq.fs-euler">
-        <alt>\[ \frac{\partial F}{\partial y} - \frac{d}{dx}\left(\frac{\partial F}{\partial y'}\right) = 0 \]</alt>
-      </equation>
-
-      <para>ODE 2. Ordnung. Lösungen heißen Extremalen.</para>
-
-      <para><emphasis role="bold">Sonderfall (a):</emphasis>
-        <inlineequation><alt>$F = F(x,y')$</alt></inlineequation> (kein <inlineequation><alt>$y$</alt></inlineequation>):
-        <inlineequation><alt>$F_{y'} = \text{const.}$</alt></inlineequation></para>
-
-      <para><emphasis role="bold">Sonderfall (b):</emphasis>
-        <inlineequation><alt>$F = F(x,y)$</alt></inlineequation> (kein <inlineequation><alt>$y'$</alt></inlineequation>):
-        <inlineequation><alt>$F_y(x,y(x)) = 0$</alt></inlineequation></para>
-
-      <para><emphasis role="bold">Sonderfall (c) — Beltrami-Identität:</emphasis>
-        <inlineequation><alt>$F = F(y,y')$</alt></inlineequation> (kein expl. <inlineequation><alt>$x$</alt></inlineequation>):</para>
-      <equation xml:id="eq.fs-beltrami">
-        <alt>\[ F - y'\frac{\partial F}{\partial y'} = \text{const.} \]</alt>
-      </equation>
-    </section>
-
-    <section xml:id="sec.fs-randbedingungen">
-      <title>Randbedingungen</title>
-
-      <para><emphasis role="bold">Natürliche RB</emphasis> (freies Ende bei <inlineequation><alt>$x_1$</alt></inlineequation>):</para>
-      <equation xml:id="eq.fs-nat-rb">
-        <alt>\[ F_{y'}(x_1, y(x_1), y'(x_1)) = 0 \]</alt>
-      </equation>
-
-      <para><emphasis role="bold">Transversalitätsbedingung</emphasis> (Ende auf Kurve <inlineequation><alt>$f(x)$</alt></inlineequation> bei unbekanntem <inlineequation><alt>$b$</alt></inlineequation>):</para>
-      <informalequation><alt>\[ F_{y'}\big|_b + \frac{F\big|_b}{f'(b) - y'(b)} = 0 \]</alt></informalequation>
-
-      <para><emphasis role="bold">Modifizierte RB</emphasis> (mit Randterm <inlineequation><alt>$H(y(x_1))$</alt></inlineequation>):
-        <inlineequation><alt>$F_{y'}\big|_{x_1} = H'(y(x_1))$</alt></inlineequation></para>
-    </section>
-
-    <section xml:id="sec.fs-erweiterungen-var">
-      <title>Erweiterungen</title>
-
-      <para><emphasis role="bold">Höhere Ableitungen</emphasis> (<inlineequation><alt>$F(x,y,y',y'',\ldots,y^{(n)})$</alt></inlineequation>):</para>
-      <informalequation><alt>\[ F_y - \frac{d}{dx}F_{y'} + \frac{d^2}{dx^2}F_{y''} - \ldots + (-1)^n\frac{d^n}{dx^n}F_{y^{(n)}} = 0 \]</alt></informalequation>
-
-      <para>ODE der Ordnung <inlineequation><alt>$2n$</alt></inlineequation>, benötigt <inlineequation><alt>$2n$</alt></inlineequation> RB.</para>
-
-      <para><emphasis role="bold">Mehrere Funktionen</emphasis> (<inlineequation><alt>$\vec{q}(t)$</alt></inlineequation>):</para>
-      <equation xml:id="eq.fs-euler-vektor">
-        <alt>\[ \frac{\partial L}{\partial \vec{q}} - \frac{d}{dt}\left(\frac{\partial L}{\partial \dot{\vec{q}}}\right) = 0 \]</alt>
-      </equation>
-    </section>
-  </section>
-
-  <!-- ═══════════════════════════════════════════════════════════════════════ -->
-
-  <section xml:id="sec.fs-newton-euler">
-    <title>Projizierte Newton-Euler-Gleichungen</title>
-
-    <section xml:id="sec.fs-virtuelle-arbeit">
-      <title>Virtuelle Verschiebungen und Arbeit</title>
-
-      <para><emphasis role="bold">Virtuelle Verschiebung:</emphasis>
-        <inlineequation><alt>$\delta\vec{q}(t) = \hat{\vec{q}}_\varepsilon(\varepsilon_0,t)\,\delta\varepsilon$</alt></inlineequation>
-        — infinitesimal, zu festem Zeitpunkt, beliebige Richtung.</para>
-
-      <para><emphasis role="bold">Virtuelle Arbeit:</emphasis>
-        <inlineequation><alt>$\delta W_F = \vec{F}\cdot\delta\vec{r}_P$</alt></inlineequation>,
-        <inlineequation><alt>$\delta W_M = \vec{M}\cdot\delta\vec{\varphi}$</alt></inlineequation>,
-        <inlineequation><alt>$\delta W_f = \vec{f}^T\delta\vec{q}$</alt></inlineequation>.</para>
-    </section>
-
-    <section xml:id="sec.fs-impuls-drall">
-      <title>Impuls, Drall, Massenintegrale</title>
-
-      <para><emphasis role="bold">Massenintegrale:</emphasis>
-        <inlineequation><alt>$\int_K dm = m$</alt></inlineequation>,
-        <inlineequation><alt>$\int_K \vec{\rho}\,dm = m\vec{r}_{PS}$</alt></inlineequation>,
-        <inlineequation><alt>$\int_K \tilde{\vec{\rho}}\tilde{\vec{\rho}}^T dm = \bar{\Theta}_P$</alt></inlineequation>.</para>
-
-      <para><emphasis role="bold">Impuls:</emphasis>
-        <inlineequation><alt>$\vec{p} = m\vec{v}_S$</alt></inlineequation></para>
-
-      <para><emphasis role="bold">Newton-Euler-Gleichungen:</emphasis></para>
-
-      <para>Impulssatz:</para>
-      <equation xml:id="eq.fs-impulssatz">
-        <alt>\[ \dot{\vec{p}} = m\vec{a}_S = \vec{F}^{a,K} \]</alt>
-      </equation>
-
-      <para>Drallsatz (bzgl. Punkt <inlineequation><alt>$P$</alt></inlineequation>):</para>
-      <equation xml:id="eq.fs-drallsatz">
-        <alt>\[ \bar{\Theta}_P\vec{\Psi} + \vec{\Omega}\times\bar{\Theta}_P\vec{\Omega} + m\vec{r}_{PS}\times\vec{a}_P = \vec{M}_P^{a,K} \]</alt>
-      </equation>
-
-      <para>Wahl <inlineequation><alt>$P = S$</alt></inlineequation> vereinfacht zu:
-        <inlineequation><alt>$\bar{\Theta}_S\vec{\Psi} + \vec{\Omega}\times\bar{\Theta}_S\vec{\Omega} = \vec{M}_S^{a,K}$</alt></inlineequation>.</para>
-
-      <para><emphasis role="bold">Auswertung im körperfesten K-System</emphasis>
-        (<inlineequation><alt>${}_K\bar{\Theta}_S = \text{const.}$</alt></inlineequation>).
-        Zeitableitungen über Euler'sche Differentiationsregel:</para>
-      <informalequation><alt>\[ {}_K(\dot{\vec{p}}) = ({}_K\vec{p})^{\boldsymbol{\cdot}} + {}_K\tilde{\vec{\omega}}_{IK}\,{}_K\vec{p}, \qquad {}_K(\dot{\vec{N}}_S) = {}_K\bar{\Theta}_S\,{}_K\vec{\Psi} + {}_K\vec{\Omega}\times{}_K\bar{\Theta}_S\,{}_K\vec{\Omega} \]</alt></informalequation>
-    </section>
-
-    <section xml:id="sec.fs-kinematik-minimal">
-      <title>Kinematik in Minimalkoordinaten</title>
-
-      <para><emphasis role="bold">Translation:</emphasis></para>
-      <informalequation><alt>\[ \vec{v}_P = \bar{J}_P\dot{\vec{q}} + \bar{v}_P, \quad \delta\vec{r}_P = \bar{J}_P\delta\vec{q}, \quad \vec{a}_P = \bar{J}_P\ddot{\vec{q}} + \bar{k}_P \]</alt></informalequation>
-
-      <para><emphasis role="bold">Rotation:</emphasis></para>
-      <informalequation><alt>\[ \vec{\Omega} = \bar{J}_R\dot{\vec{q}} + \bar{v}_R, \quad \delta\vec{\varphi} = \bar{J}_R\delta\vec{q}, \quad \vec{\Psi} = \bar{J}_R\ddot{\vec{q}} + \bar{k}_R \]</alt></informalequation>
-
-      <para>mit <inlineequation><alt>$\bar{J}_P = \frac{\partial\vec{r}_{OP}}{\partial\vec{q}}$</alt></inlineequation>,
-        <inlineequation><alt>$\bar{k}_P = \dot{\bar{J}}_P\dot{\vec{q}} + \dot{\bar{v}}_P$</alt></inlineequation>.
-        Transformation: <inlineequation><alt>${}_D\bar{J}_P = A_{DB}\,{}_B\bar{J}_P$</alt></inlineequation>.</para>
-    </section>
-
-    <section xml:id="sec.fs-proj-ne">
-      <title>Projizierte Gleichungen</title>
-
-      <equation xml:id="eq.fs-proj-ne">
-        <alt>\[ 0 = \sum_{j=1}^{n}\left[\bar{J}_{S,j}^T\dot{\vec{p}}_j + \bar{J}_{R,j}^T\bigl(\dot{\vec{L}}_{O,j} + \vec{r}_{PO}\times\dot{\vec{p}}_j\bigr) - \bar{J}_{Q,j}^T\vec{F}_j^a - \bar{J}_{R,j}^T\vec{M}_{Q,j}^a\right] \]</alt>
-      </equation>
-
-      <para>Struktur: <inlineequation><alt>$M(\vec{q},t)\ddot{\vec{q}} + \vec{g}(\vec{q},\dot{\vec{q}},t) - \vec{f} = 0$</alt></inlineequation>
-        mit <inlineequation><alt>$M = M^T > 0$</alt></inlineequation>.</para>
-
-      <para><emphasis role="bold">Generalisierte Kraft:</emphasis>
-        <inlineequation><alt>$\vec{f}_j = \bar{J}_Q^T\vec{F} + \bar{J}_R^T\vec{M}$</alt></inlineequation>
-        (Jacobi am jeweiligen Angriffspunkt!).</para>
-
-    </section>
-  </section>
-
-  <!-- ═══════════════════════════════════════════════════════════════════════ -->
-
-  <section xml:id="sec.fs-lagrange">
-    <title>Lagrange'sche Dynamik</title>
-
-    <section xml:id="sec.fs-lagrange-ii">
-      <title>Lagrange-Gleichungen 2. Art</title>
-
-      <equation xml:id="eq.fs-lagrange-ii">
-        <alt>\[ \frac{d}{dt}\left(\frac{\partial T}{\partial\dot{\vec{q}}}\right)^T - \left(\frac{\partial T}{\partial\vec{q}}\right)^T + \left(\frac{\partial V}{\partial\vec{q}}\right)^T = \vec{f}_{NP} \]</alt>
-      </equation>
-
-    </section>
-
-    <section xml:id="sec.fs-kinetische-energie">
-      <title>Kinetische Energie</title>
-
-      <para>Starrkörper (Wahl <inlineequation><alt>$P = S$</alt></inlineequation>):</para>
-      <equation xml:id="eq.fs-T-starr">
-        <alt>\[ T = \frac{1}{2}m\vec{v}_S^T\vec{v}_S + \frac{1}{2}\vec{\Omega}^T\bar{\Theta}_S\vec{\Omega} \]</alt>
-      </equation>
-
-      <para>MKS: <inlineequation><alt>$T = \sum_j T_j$</alt></inlineequation></para>
-    </section>
-
-    <section xml:id="sec.fs-potentielle-energie">
-      <title>Potentielle Energie</title>
-
-      <para><emphasis role="bold">Gravitation:</emphasis>
-        <inlineequation><alt>$V = -m\vec{r}_{OS}\cdot\vec{g}$</alt></inlineequation>
-        bzw. <inlineequation><alt>$V = mgh$</alt></inlineequation>.
-        Schiefe Ebene: <inlineequation><alt>$V = mg\,x\sin\alpha$</alt></inlineequation>.</para>
-
-      <para><emphasis role="bold">Federn:</emphasis>
-        linear: <inlineequation><alt>$V = \frac{1}{2}c(x-x_E)^2$</alt></inlineequation>,
-        Drehfeder: <inlineequation><alt>$V = \frac{1}{2}c(\varphi-\varphi_E)^2$</alt></inlineequation>,
-        Abstandsfeder: <inlineequation><alt>$V = \frac{1}{2}c(\|\vec{r}_{AB}\|-l_0)^2$</alt></inlineequation>.</para>
-
-      <para>MKS: <inlineequation><alt>$V = \sum_k V_k$</alt></inlineequation></para>
-    </section>
-
-    <section xml:id="sec.fs-nichtpotentialkraefte">
-      <title>Nichtpotentialkräfte</title>
-
-      <para><inlineequation><alt>$\vec{f}_{NP} = \bar{J}_Q^T\vec{F}_{NP} + \bar{J}_R^T\vec{M}_{NP}$</alt></inlineequation>
-        oder via virtuelle Arbeit: <inlineequation><alt>$\delta W_{NP} = \vec{f}_{NP}^T\delta\vec{q}$</alt></inlineequation> → Koeffizientenvergleich.</para>
-    </section>
-
-    <section xml:id="sec.fs-hamel-boltzmann">
-      <title>Hamel-Boltzmann-Gleichung</title>
-
-      <para>Für umparametrisierte Geschwindigkeiten <inlineequation><alt>$\dot{\vec{q}} = B(\vec{q},t)\vec{v} + \vec{\beta}$</alt></inlineequation>:</para>
-
-      <equation xml:id="eq.fs-hamel-boltzmann">
-        <alt>\[ \frac{d}{dt}\left(\frac{\partial\bar{T}}{\partial\vec{v}}\right)^T - B^T\left(\frac{\partial T}{\partial\vec{q}}\right)^T + C^T\left(\frac{\partial\bar{T}}{\partial\vec{v}}\right)^T = B^T\vec{f} \]</alt>
-      </equation>
-
-      <para>mit <inlineequation><alt>$\bar{T}(\vec{q},\vec{v},t) = T(\vec{q},B\vec{v}+\vec{\beta},t)$</alt></inlineequation>,
-        <inlineequation><alt>$C$</alt></inlineequation> = Hamel-Übergangsmatrix.
-        Für <inlineequation><alt>$B = E$</alt></inlineequation>, <inlineequation><alt>$\vec{\beta} = 0$</alt></inlineequation>:
-        <inlineequation><alt>$C = 0$</alt></inlineequation> → Lagrange II.</para>
-    </section>
-
-    <section xml:id="sec.fs-erhaltung">
-      <title>Erhaltungsgrößen</title>
-
-      <para><emphasis role="bold">Zyklische Koordinate</emphasis> <inlineequation><alt>$q_k$</alt></inlineequation>:
-        <inlineequation><alt>$\frac{\partial T}{\partial q_k} = \frac{\partial V}{\partial q_k} = f_{NP,k} = 0$</alt></inlineequation>
-        → verallgemeinerter Impuls <inlineequation><alt>$\pi_k = \frac{\partial T}{\partial\dot{q}_k} = \text{const.}$</alt></inlineequation></para>
-
-      <para><emphasis role="bold">Energieerhaltung</emphasis> (konservatives System):
-        Falls (i) <inlineequation><alt>$\vec{f}_{NP} = 0$</alt></inlineequation>,
-        (ii) <inlineequation><alt>$T, V$</alt></inlineequation> nicht expl. zeitabhängig,
-        (iii) <inlineequation><alt>$T = \frac{1}{2}\dot{\vec{q}}^T M\dot{\vec{q}}$</alt></inlineequation>, dann:</para>
-      <equation xml:id="eq.fs-energieerhaltung">
-        <alt>\[ E = T + V = \text{const.} \]</alt>
-      </equation>
-    </section>
-  </section>
-
-  <!-- ═══════════════════════════════════════════════════════════════════════ -->
-
-  <section xml:id="sec.fs-kraftgesetze">
-    <title>Kraftgesetze</title>
-
-    <section xml:id="sec.fs-kraftelement-kinematik">
-      <title>Kraftelement-Kinematik</title>
-
-      <para>Kraftelement zwischen <inlineequation><alt>$P$</alt></inlineequation> und <inlineequation><alt>$Q$</alt></inlineequation>:
-        Auslenkung <inlineequation><alt>$g = \vec{n}\cdot\vec{r}_{PQ}$</alt></inlineequation>,
-        gen. Kraftrichtung <inlineequation><alt>$\vec{w} = (\bar{J}_Q - \bar{J}_P)^T\vec{n}$</alt></inlineequation>,
-        gen. Kraft <inlineequation><alt>$\vec{f} = \vec{w}\lambda$</alt></inlineequation>.</para>
-
-      <informalequation><alt>\[ \dot{g} = \vec{w}^T\dot{\vec{q}} + \chi, \qquad \ddot{g} = \vec{w}^T\ddot{\vec{q}} + \xi, \qquad \delta g = \vec{w}^T\delta\vec{q} \]</alt></informalequation>
-
-      <para>Schlüsselidentität:
-        <inlineequation><alt>$\vec{w}^T = \frac{\partial g}{\partial\vec{q}} = \frac{\partial\dot{g}}{\partial\dot{\vec{q}}} = \frac{\partial\ddot{g}}{\partial\ddot{\vec{q}}}$</alt></inlineequation></para>
-
-    </section>
-
-    <section xml:id="sec.fs-kraftgesetze-tabelle">
-      <title>Übersicht Kraftgesetze</title>
-
-      <para><emphasis role="bold">Auf Lageebene</emphasis>
-        (<inlineequation><alt>$-\lambda \in \mathcal{F}(g)$</alt></inlineequation>):
-        Lineare Feder <inlineequation><alt>$-\lambda = cg$</alt></inlineequation>,
-        Potential <inlineequation><alt>$V = \frac{1}{2}cg^2$</alt></inlineequation>.
-        Zweiseitige Bindung: <inlineequation><alt>$g = 0$</alt></inlineequation>.
-        Einseitige Bindung: <inlineequation><alt>$g \geq 0, \lambda \geq 0, \lambda g = 0$</alt></inlineequation>.</para>
-
-      <para><emphasis role="bold">Auf Geschwindigkeitsebene</emphasis>
-        (<inlineequation><alt>$-\lambda \in \mathcal{F}(\dot{g})$</alt></inlineequation>):
-        Linearer Dämpfer <inlineequation><alt>$-\lambda = d\dot{g}$</alt></inlineequation>,
-        Dissipationsfkt. <inlineequation><alt>$\Phi = \frac{1}{2}d\dot{g}^2$</alt></inlineequation>.
-        Zweiseitige kin. Bindung: <inlineequation><alt>$\dot{g} = 0$</alt></inlineequation>.</para>
-
-      <para><emphasis role="bold">Coulomb-Reibung:</emphasis>
-        Gleiten: <inlineequation><alt>$-\lambda_T = \mu\lambda_N\operatorname{sgn}(\dot{g})$</alt></inlineequation>.
-        Haften: <inlineequation><alt>$-\lambda_T \in [-\mu\lambda_N, \mu\lambda_N]$</alt></inlineequation> für <inlineequation><alt>$\dot{g} = 0$</alt></inlineequation>.</para>
-
-      <para><emphasis role="bold">Rayleigh-Dissipationsfunktion:</emphasis>
-        <inlineequation><alt>$-\vec{f}^T = \frac{\partial\Phi}{\partial\dot{\vec{q}}}$</alt></inlineequation></para>
-
-    </section>
-  </section>
-
-  <!-- ═══════════════════════════════════════════════════════════════════════ -->
-
-  <section xml:id="sec.fs-bindungen">
-    <title>Bindungen und Zwangsbedingungen</title>
-
-    <section xml:id="sec.fs-klassifikation">
-      <title>Klassifikation</title>
-
-      <table xml:id="tab.fs-bindungsklassifikation">
-        <title>Bindungsklassifikation</title>
-        <tgroup cols="3">
-          <thead>
-            <row>
-              <entry></entry>
-              <entry>skleronom</entry>
-              <entry>rheonom</entry>
-            </row>
-          </thead>
-          <tbody>
-            <row>
-              <entry>geometrisch</entry>
-              <entry><inlineequation><alt>$g(\vec{q}) = 0$</alt></inlineequation></entry>
-              <entry><inlineequation><alt>$g(\vec{q},t) = 0$</alt></inlineequation></entry>
-            </row>
-            <row>
-              <entry>kinematisch</entry>
-              <entry><inlineequation><alt>$\vec{w}^T(\vec{q})\dot{\vec{q}} = 0$</alt></inlineequation></entry>
-              <entry><inlineequation><alt>$\vec{w}^T(\vec{q},t)\dot{\vec{q}} + \chi = 0$</alt></inlineequation></entry>
-            </row>
-          </tbody>
-        </tgroup>
-      </table>
-
-      <para><emphasis role="bold">Holonom:</emphasis> geometrisch oder integrierbar kinematisch.
-        <emphasis role="bold">Nichtholonom:</emphasis> nicht integrierbar.
-        Test: <inlineequation><alt>$\frac{\partial\vec{w}^T}{\partial\vec{q}}$</alt></inlineequation> nicht symmetrisch → nichtholonom.</para>
-
-      <para><emphasis role="bold">Überführung:</emphasis>
-        Lage → Geschw.: <inlineequation><alt>$\dot{\vec{g}} = W^T\dot{\vec{q}} + \vec{\chi} = 0$</alt></inlineequation>,
-        <inlineequation><alt>$W^T = \frac{\partial\vec{g}}{\partial\vec{q}}$</alt></inlineequation>.
-        Geschw. → Beschl.: <inlineequation><alt>$\ddot{\vec{g}} = W^T\ddot{\vec{q}} + \vec{\bar{s}} = 0$</alt></inlineequation>.</para>
-
-    </section>
-
-    <section xml:id="sec.fs-lagrange-i">
-      <title>Lagrange-Gleichungen 1. Art</title>
-
-      <para>Verträgliche virtuelle Verschiebungen:
-        <inlineequation><alt>$V_\text{vertr.} = \operatorname{Kern}(W^T)$</alt></inlineequation>.
-        Ideale Bindung: <inlineequation><alt>$\vec{f}^z = W\vec{\lambda}$</alt></inlineequation>.</para>
-
-      <para><emphasis role="bold">Lagrange I</emphasis> (DAE Index 3):</para>
-      <equation xml:id="eq.fs-lagrange-i">
-        <alt>\[ M\ddot{\vec{q}} - \vec{h} - W\vec{\lambda} = 0, \qquad \vec{g}(\vec{q},t) = 0 \]</alt>
-      </equation>
-
-      <para><emphasis role="bold">Sattelpunktsystem</emphasis> (Beschleunigungsebene, Index 1):</para>
-      <equation xml:id="eq.fs-sattelpunkt">
-        <alt>\[ \begin{pmatrix} M &amp; -W \\ W^T &amp; 0 \end{pmatrix} \begin{pmatrix} \ddot{\vec{q}} \\ \vec{\lambda} \end{pmatrix} = \begin{pmatrix} \vec{h} \\ -\vec{\bar{s}} \end{pmatrix} \]</alt>
-      </equation>
-
-      <para><emphasis role="bold">Zwangskraftberechnung:</emphasis>
-        <inlineequation><alt>$G = W^T M^{-1} W$</alt></inlineequation> (Delassus-Matrix),
-        <inlineequation><alt>$\vec{\lambda} = -G^{-1}(W^T M^{-1}\vec{h} + \vec{\bar{s}})$</alt></inlineequation>.</para>
-    </section>
-
-    <section xml:id="sec.fs-minimalkoordinaten">
-      <title>Übergang zu Minimalkoordinaten/-geschwindigkeiten</title>
-
-      <para><emphasis role="bold">Neue Minimalkoordinaten</emphasis> <inlineequation><alt>$\vec{z} \in \mathbb{R}^n$</alt></inlineequation>,
-        <inlineequation><alt>$n = f - \operatorname{Rg}(W)$</alt></inlineequation>:</para>
-      <informalequation><alt>\[ \dot{\vec{q}} = B\dot{\vec{z}} + \vec{\beta}, \quad B = \frac{\partial\vec{q}}{\partial\vec{z}}, \quad W^T B = 0 \]</alt></informalequation>
-
-      <para><emphasis role="bold">Neue Minimalgeschwindigkeiten</emphasis> <inlineequation><alt>$\vec{u} \in \mathbb{R}^n$</alt></inlineequation>:</para>
-      <informalequation><alt>\[ \dot{\vec{q}} = B(\vec{q},t)\vec{u} + \vec{\beta}(\vec{q},t), \quad W^T B = 0 \]</alt></informalequation>
-
-      <para>Reduzierte Gleichungen:</para>
-      <equation xml:id="eq.fs-reduziert">
-        <alt>\[ \tilde{M}\dot{\vec{u}} - \tilde{\vec{h}} = 0, \qquad \tilde{M} = B^T M B, \quad \tilde{\vec{h}} = B^T\vec{h} - B^T M\vec{\nu} \]</alt>
-      </equation>
-
-      <para>Projizierte N-E mit Minimalgeschwindigkeiten:
-        <inlineequation><alt>$\vec{v}_P = \tilde{J}_P\vec{u} + \tilde{v}_P$</alt></inlineequation> mit
-        <inlineequation><alt>$\tilde{J}_P = \bar{J}_P B$</alt></inlineequation>,
-        <inlineequation><alt>$\vec{\Omega} = \tilde{J}_R\vec{u} + \tilde{v}_R$</alt></inlineequation> mit
-        <inlineequation><alt>$\tilde{J}_R = \bar{J}_R B$</alt></inlineequation>.</para>
-    </section>
-  </section>
-
-  <!-- ═══════════════════════════════════════════════════════════════════════ -->
-  <!--  TEIL II: KLAUSUR-REZEPTE                                             -->
-  <!-- ═══════════════════════════════════════════════════════════════════════ -->
-
-  <section xml:id="sec.fs-rezepte">
-    <title>Klausur-Rezepte</title>
-
-    <section xml:id="sec.fs-rezept-lagrange-ii">
-      <title>Rezept: Lagrange-II-Aufgabe</title>
-      <orderedlist>
-        <listitem><para>Generalisierte Koordinaten <inlineequation><alt>$\vec{q}$</alt></inlineequation> wählen (minimal, unabhängig).</para></listitem>
-        <listitem><para>Kinematik: Geschwindigkeiten <inlineequation><alt>$\vec{v}_S$</alt></inlineequation>, <inlineequation><alt>$\vec{\Omega}$</alt></inlineequation> aller Körper als Funktion von <inlineequation><alt>$\vec{q}, \dot{\vec{q}}$</alt></inlineequation> berechnen.</para></listitem>
-        <listitem><para>Kinetische Energie <inlineequation><alt>$T = \sum_j \frac{1}{2}m_j\vec{v}_{S,j}^T\vec{v}_{S,j} + \frac{1}{2}\vec{\Omega}_j^T\bar{\Theta}_{S,j}\vec{\Omega}_j$</alt></inlineequation> aufstellen.</para></listitem>
-        <listitem><para>Potentielle Energie <inlineequation><alt>$V = \sum_k V_k$</alt></inlineequation> aufstellen (Gravitation + Federn).</para></listitem>
-        <listitem><para>Nichtpotentialkräfte <inlineequation><alt>$\vec{f}_{NP}$</alt></inlineequation> bestimmen (Dämpfer, äußere Kräfte/Momente via Jacobi: <inlineequation><alt>$\vec{f}_{NP} = \bar{J}_Q^T\vec{F} + \bar{J}_R^T\vec{M}$</alt></inlineequation>).</para></listitem>
-        <listitem><para>Lagrange II anwenden:
-          <inlineequation><alt>$\frac{d}{dt}\frac{\partial T}{\partial\dot{q}_i} - \frac{\partial T}{\partial q_i} + \frac{\partial V}{\partial q_i} = f_{NP,i}$</alt></inlineequation> für jedes <inlineequation><alt>$i$</alt></inlineequation>.</para></listitem>
-      </orderedlist>
-    </section>
-
-    <section xml:id="sec.fs-rezept-newton-euler">
-      <title>Rezept: Projizierte Newton-Euler-Aufgabe</title>
-      <orderedlist>
-        <listitem><para>Koordinatensysteme und Transformationsmatrizen <inlineequation><alt>$A$</alt></inlineequation> definieren.</para></listitem>
-        <listitem><para>Drehgeschwindigkeit <inlineequation><alt>$\vec{\Omega}$</alt></inlineequation> durch Addition elementarer Drehgeschwindigkeiten berechnen.</para></listitem>
-        <listitem><para>Schwerpunktsgeschwindigkeit <inlineequation><alt>$\vec{v}_S$</alt></inlineequation> über Starrkörperformel bestimmen.</para></listitem>
-        <listitem><para>Jacobi-Matrizen <inlineequation><alt>$\bar{J}_S$</alt></inlineequation>, <inlineequation><alt>$\bar{J}_R$</alt></inlineequation> ablesen: <inlineequation><alt>$\vec{v}_S = \bar{J}_S\dot{\vec{q}} + \ldots$</alt></inlineequation>, <inlineequation><alt>$\vec{\Omega} = \bar{J}_R\dot{\vec{q}} + \ldots$</alt></inlineequation></para></listitem>
-        <listitem><para>Impuls <inlineequation><alt>$\vec{p} = m\vec{v}_S$</alt></inlineequation> und Drall <inlineequation><alt>$\vec{N}_S = \bar{\Theta}_S\vec{\Omega}$</alt></inlineequation> berechnen.</para></listitem>
-        <listitem><para>Zeitableitungen <inlineequation><alt>$\dot{\vec{p}}$</alt></inlineequation>, <inlineequation><alt>$\dot{\vec{N}}_S$</alt></inlineequation> bilden (Euler-Diff. oder im Inertialsystem). Im körperfesten System: <inlineequation><alt>${}_K\dot{\vec{N}}_S = {}_K\bar{\Theta}_S{}_K\vec{\Psi} + {}_K\vec{\Omega}\times{}_K\bar{\Theta}_S{}_K\vec{\Omega}$</alt></inlineequation>.</para></listitem>
-        <listitem><para>Äußere Kräfte <inlineequation><alt>$\vec{F}^a$</alt></inlineequation> und Momente <inlineequation><alt>$\vec{M}^a$</alt></inlineequation> identifizieren.</para></listitem>
-        <listitem><para>Projizierte Gleichung aufstellen: <inlineequation><alt>$\sum_j[\bar{J}_S^T\dot{\vec{p}} + \bar{J}_R^T\dot{\vec{N}}_S - \bar{J}_Q^T\vec{F}^a - \bar{J}_R^T\vec{M}^a]_j = 0$</alt></inlineequation>.</para></listitem>
-      </orderedlist>
-    </section>
-
-    <section xml:id="sec.fs-rezept-bindungen">
-      <title>Rezept: Bindungsgleichungen und Lagrange I</title>
-      <orderedlist>
-        <listitem><para>BGL in überzähligen Koordinaten <inlineequation><alt>$\vec{q}$</alt></inlineequation> aufstellen (<inlineequation><alt>$f > n$</alt></inlineequation> Koordinaten für <inlineequation><alt>$n$</alt></inlineequation> Freiheitsgrade).</para></listitem>
-        <listitem><para>Bindungsgleichungen <inlineequation><alt>$\vec{g}(\vec{q},t) = 0$</alt></inlineequation> formulieren, <inlineequation><alt>$W = \frac{\partial\vec{g}}{\partial\vec{q}}^T$</alt></inlineequation> bestimmen.</para></listitem>
-        <listitem><para>Auf Beschleunigungsebene überführen: <inlineequation><alt>$W^T\ddot{\vec{q}} + \vec{\bar{s}} = 0$</alt></inlineequation>.</para></listitem>
-        <listitem><para>Sattelpunktsystem lösen:
-          <inlineequation><alt>$\bigl(\begin{smallmatrix}M &amp; -W \\ W^T &amp; 0\end{smallmatrix}\bigr)\bigl(\begin{smallmatrix}\ddot{\vec{q}} \\ \vec{\lambda}\end{smallmatrix}\bigr) = \bigl(\begin{smallmatrix}\vec{h} \\ -\vec{\bar{s}}\end{smallmatrix}\bigr)$</alt></inlineequation>.</para></listitem>
-        <listitem><para>Alternativ: <inlineequation><alt>$\vec{\lambda} = -G^{-1}\vec{\eta}$</alt></inlineequation> mit <inlineequation><alt>$G = W^T M^{-1}W$</alt></inlineequation>.</para></listitem>
-      </orderedlist>
-    </section>
-
-    <section xml:id="sec.fs-rezept-nichtholonom">
-      <title>Rezept: Nicht-holonome Systeme</title>
-      <orderedlist>
-        <listitem><para>Bindungsgleichung auf Geschwindigkeitsebene formulieren: <inlineequation><alt>$\vec{w}^T\dot{\vec{q}} + \chi = 0$</alt></inlineequation>.</para></listitem>
-        <listitem><para>Nichtholonomie prüfen: <inlineequation><alt>$\frac{\partial\vec{w}^T}{\partial\vec{q}}$</alt></inlineequation> symmetrisch? Nein → nichtholonom.</para></listitem>
-        <listitem><para>Minimalgeschwindigkeiten <inlineequation><alt>$\vec{u}$</alt></inlineequation> wählen mit <inlineequation><alt>$\dot{\vec{q}} = B(\vec{q},t)\vec{u} + \vec{\beta}$</alt></inlineequation> und <inlineequation><alt>$W^T B = 0$</alt></inlineequation>.</para></listitem>
-        <listitem><para>Jacobi-Matrizen neu berechnen: <inlineequation><alt>$\tilde{J} = \bar{J}\cdot B$</alt></inlineequation>.</para></listitem>
-        <listitem><para>Projizierte N-E-Gleichungen oder Hamel-Boltzmann in <inlineequation><alt>$\vec{u}$</alt></inlineequation> aufstellen.</para></listitem>
-      </orderedlist>
-    </section>
-
-    <section xml:id="sec.fs-rezept-variationsrechnung">
-      <title>Rezept: Variationsrechnung / Euler-Lagrange</title>
-      <orderedlist>
-        <listitem><para>Funktional identifizieren: <inlineequation><alt>$I(y) = \int F(x,y,y')\,dx \to \text{stat.}$</alt></inlineequation></para></listitem>
-        <listitem><para>Sonderfall prüfen: (a) kein <inlineequation><alt>$y$</alt></inlineequation>? (b) kein <inlineequation><alt>$y'$</alt></inlineequation>? (c) kein <inlineequation><alt>$x$</alt></inlineequation> → Beltrami?</para></listitem>
-        <listitem><para>Euler-Gleichung aufstellen: <inlineequation><alt>$F_y - \frac{d}{dx}F_{y'} = 0$</alt></inlineequation>.</para></listitem>
-        <listitem><para>Randbedingungen formulieren (fest, natürlich, Transversalität, modifiziert).</para></listitem>
-        <listitem><para>ODE lösen.</para></listitem>
-      </orderedlist>
-    </section>
-
-    <section xml:id="sec.fs-warnungen">
-      <title>Häufige Fehler und Warnungen</title>
-      <orderedlist>
-        <listitem><para><emphasis role="bold">Drehgeschwindigkeit:</emphasis> <inlineequation><alt>$\vec{\omega}$</alt></inlineequation> NIE als <inlineequation><alt>$\dot{A}A^T$</alt></inlineequation> berechnen — immer elementare Drehgeschwindigkeiten addieren.</para></listitem>
-        <listitem><para><emphasis role="bold">Nichtholonome Bindung:</emphasis> NIE in <inlineequation><alt>$T$</alt></inlineequation> einsetzen vor Lagrange II / Hamel-Boltzmann — gibt falsche BGL.</para></listitem>
-        <listitem><para><emphasis role="bold">Lagrange II</emphasis> nur mit Minimalkoordinaten bzgl. <emphasis>idealer</emphasis> Bindungen. Nicht-minimale Koordinaten → falsche Ergebnisse.</para></listitem>
-        <listitem><para><emphasis role="bold">Rollkontakt:</emphasis> Kontaktpunkt ist kein materieller Punkt — <inlineequation><alt>$\vec{r}_{AP}$</alt></inlineequation> korrekt parametrisieren.</para></listitem>
-        <listitem><para><emphasis role="bold">Jacobi-Matrix:</emphasis> Am jeweiligen Kraftangriffspunkt berechnen, nicht am Schwerpunkt.</para></listitem>
-        <listitem><para><emphasis role="bold">Potentialenergie:</emphasis> Vorzeichen beachten: <inlineequation><alt>$V = -m\vec{r}_{OS}\cdot\vec{g}$</alt></inlineequation>.</para></listitem>
-      </orderedlist>
-    </section>
+    <para><emphasis role="bold">Euler-Gleichung:</emphasis></para>
+    <informalequation><alt>\[ \frac{\partial F}{\partial y} - \frac{d}{dx}\!\left(\frac{\partial F}{\partial y'}\right) = 0 \]</alt></informalequation>
+
+    <para><emphasis role="bold">Sonderfälle:</emphasis></para>
+    <para>(a) <inlineequation><alt>$F = F(x,y')$</alt></inlineequation> (kein <inlineequation><alt>$y$</alt></inlineequation>):
+      <inlineequation><alt>$F_{y'} = \text{const.}$</alt></inlineequation></para>
+    <para>(b) <inlineequation><alt>$F = F(x,y)$</alt></inlineequation> (kein <inlineequation><alt>$y'$</alt></inlineequation>):
+      <inlineequation><alt>$F_y = 0$</alt></inlineequation></para>
+    <para>(c) <inlineequation><alt>$F = F(y,y')$</alt></inlineequation> (kein expl. <inlineequation><alt>$x$</alt></inlineequation>) — <emphasis role="bold">Beltrami:</emphasis>
+      <inlineequation><alt>$F - y'\frac{\partial F}{\partial y'} = \text{const.}$</alt></inlineequation></para>
+
+    <para><emphasis role="bold">Randbedingungen:</emphasis></para>
+    <para>Natürliche RB (freies Ende bei <inlineequation><alt>$x_1$</alt></inlineequation>):
+      <inlineequation><alt>$F_{y'}(x_1, y(x_1), y'(x_1)) = 0$</alt></inlineequation></para>
+
+    <para><emphasis role="bold">Erweiterungen:</emphasis></para>
+    <para>Höhere Ableitungen: <inlineequation><alt>$F_y - (F_{y'})' + (F_{y''})'' - \ldots = 0$</alt></inlineequation></para>
+    <para>Mehrere Funktionen: <inlineequation><alt>$\frac{\partial L}{\partial q_i} - \frac{d}{dt}\!\left(\frac{\partial L}{\partial\dot{q}_i}\right) = 0$</alt></inlineequation> für jedes <inlineequation><alt>$i$</alt></inlineequation></para>
   </section>
 
 </appendix>

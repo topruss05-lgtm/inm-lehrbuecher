@@ -10,10 +10,12 @@
     "build:pdf": "node scripts/build-pdf.mjs"
   },
   "dependencies": {
+    "@astrojs/svelte": "^7.2.5",
     "@astrojs/tailwind": "^6.0.2",
     "@xmldom/xmldom": "^0.8.11",
     "astro": "^5.17.3",
     "katex": "^0.16.32",
+    "svelte": "^5.53.11",
     "tailwindcss": "^3.4.19"
   },
   "devDependencies": {
