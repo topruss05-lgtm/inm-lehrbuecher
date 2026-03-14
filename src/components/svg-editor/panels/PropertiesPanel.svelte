@@ -84,6 +84,19 @@
           <input type="number" step="0.1" value={single.rx} on:change={e => updateProp('rx', e.currentTarget.value)} />
           <label>RY</label>
           <input type="number" step="0.1" value={single.ry} on:change={e => updateProp('ry', e.currentTarget.value)} />
+        {:else if single.type === 'wall'}
+          <label>Start X</label>
+          <input type="number" step="0.1" value={single.x} on:change={e => updateProp('x', e.currentTarget.value)} />
+          <label>Start Y</label>
+          <input type="number" step="0.1" value={single.y} on:change={e => updateProp('y', e.currentTarget.value)} />
+          <label>Ende X</label>
+          <input type="number" step="0.1" value={single.x2} on:change={e => updateProp('x2', e.currentTarget.value)} />
+          <label>Ende Y</label>
+          <input type="number" step="0.1" value={single.y2} on:change={e => updateProp('y2', e.currentTarget.value)} />
+          <label>Tiefe</label>
+          <input type="number" step="0.5" value={single.hatchDepth ?? 8} on:change={e => updateProp('hatchDepth', e.currentTarget.value)} />
+          <label>Abstand</label>
+          <input type="number" step="0.5" value={single.hatchSpacing ?? 2} on:change={e => updateProp('hatchSpacing', e.currentTarget.value)} />
         {/if}
       </div>
     </div>

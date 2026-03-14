@@ -11,6 +11,7 @@
   import { createArrowTool } from './tools/ArrowTool';
   import { createTextTool } from './tools/TextTool';
   import { createHatchTool } from './tools/HatchTool';
+  import { createWallTool } from './tools/WallTool';
   import { KeyboardManager } from './lib/keyboard';
   import { exportSvg } from './io/svg-export';
   import { importSvg } from './io/svg-import';
@@ -32,6 +33,7 @@
   registerTool(createArrowTool());
   registerTool(createTextTool());
   registerTool(createHatchTool());
+  registerTool(createWallTool());
 
   // ── File Operations ─────────────────────────────────────────────────────
   async function handleExport() {
@@ -110,6 +112,7 @@
     { key: 'w', action: () => activeTool.set('arrow'), label: 'Pfeil' },
     { key: 't', action: () => activeTool.set('text'), label: 'Text' },
     { key: 'h', action: () => activeTool.set('hatch'), label: 'Schraffur' },
+    { key: 'g', action: () => activeTool.set('wall'), label: 'Wand' },
     { key: 'z', ctrl: true, action: () => undoManager.undo(), label: 'Rückgängig' },
     { key: 'z', ctrl: true, shift: true, action: () => undoManager.redo(), label: 'Wiederholen' },
     { key: 'y', ctrl: true, action: () => undoManager.redo(), label: 'Wiederholen' },

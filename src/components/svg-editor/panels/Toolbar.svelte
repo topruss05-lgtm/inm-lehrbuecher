@@ -12,6 +12,7 @@
     { id: 'arrow', label: 'Pfeil', icon: '→', shortcut: 'W' },
     { id: 'text', label: 'Text', icon: 'T', shortcut: 'T' },
     { id: 'hatch', label: 'Schraffur', icon: '▤', shortcut: 'H' },
+    { id: 'wall', label: 'Wand', icon: '▥', shortcut: 'G' },
   ];
 
   function selectTool(id: ToolType) {

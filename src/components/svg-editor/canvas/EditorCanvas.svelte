@@ -5,6 +5,7 @@
   import type { ToolEvent } from '../tools/tool-registry';
   import { getTool } from '../tools/tool-registry';
   import type { Point } from '../lib/geometry';
+  import { generateWallHatch, wallHatchPathD } from '../lib/wall-geometry';
   import GridOverlay from './GridOverlay.svelte';
   import SelectionHandles from './SelectionHandles.svelte';
 
@@ -196,6 +197,20 @@
             font-size={obj.fontSize ?? 12}
             style={obj.fontStyle ? `font-style:${obj.fontStyle}` : ''}
           >{obj.text}</text>
+        {:else if obj.type === 'wall'}
+          {@const wallStart = { x: obj.x ?? 0, y: obj.y ?? 0 }}
+          {@const wallEnd = { x: obj.x2 ?? 0, y: obj.y2 ?? 0 }}
+          {@const hatchLines = generateWallHatch(wallStart, wallEnd, obj.hatchSide ?? 'right', obj.hatchDepth ?? 8, obj.hatchSpacing ?? 2)}
+          <!-- Wall surface line -->
+          <line
+            x1={wallStart.x}
+            y1={wallStart.y}
+            x2={wallEnd.x}
+            y2={wallEnd.y}
+            class="line-thick"
+          />
+          <!-- Hatch lines -->
+          <path d={wallHatchPathD(hatchLines)} class="hatch" />
         {/if}
       {/each}
     </g>
@@ -226,6 +241,12 @@
           cy={preview.attrs.cy}
           rx={preview.attrs.rx}
           ry={preview.attrs.ry}
+          class={preview.cssClass}
+          opacity="0.6"
+        />
+      {:else if preview.type === 'path'}
+        <path
+          d={preview.attrs.d}
           class={preview.cssClass}
           opacity="0.6"
         />

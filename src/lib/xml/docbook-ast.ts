@@ -57,6 +57,7 @@ export type ContentNode =
 
 export interface ParagraphNode {
   type: 'para';
+  role?: string;
   children: InlineNode[];
 }
 
@@ -99,6 +100,8 @@ export interface FigureNode {
   number: number;
   title: string;
   altText: string;
+  imageUrl?: string;
+  jsxFigureId?: string;
 }
 
 export interface TableNode {

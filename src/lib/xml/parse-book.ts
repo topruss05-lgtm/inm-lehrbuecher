@@ -177,8 +177,10 @@ function parseContentNodes(parent: Element): ContentNode[] {
 }
 
 function parseParagraph(el: Element): ParagraphNode {
+  const role = el.getAttribute('role') || undefined;
   return {
     type: 'para',
+    ...(role && { role }),
     children: parseInlineNodes(el),
   };
 }
@@ -233,6 +235,12 @@ function parseFormalPara(el: Element): FormalParaNode {
       bodyContent.push(parseInformalEquation(child));
     } else if (child.localName === 'equation') {
       bodyContent.push(parseEquation(child));
+    } else if (child.localName === 'itemizedlist') {
+      bodyContent.push(parseUnorderedList(child));
+    } else if (child.localName === 'orderedlist') {
+      bodyContent.push(parseOrderedList(child));
+    } else if (child.localName === 'figure') {
+      bodyContent.push(parseFigure(child));
     }
   }
 
@@ -293,12 +301,21 @@ function parseFigure(el: Element): FigureNode {
     altText = getTextContent(phrases[0] as Element);
   }
 
+  // Find <imagedata fileref="..."> inside <imageobject> inside <mediaobject>
+  let imageUrl: string | undefined;
+  const imageDataEls = el.getElementsByTagNameNS(DB, 'imagedata');
+  if (imageDataEls.length > 0) {
+    const fileref = (imageDataEls[0] as Element).getAttribute('fileref');
+    if (fileref) imageUrl = fileref;
+  }
+
   return {
     type: 'figure',
     id: getId(el),
     number: figureCounter,
     title,
     altText,
+    ...(imageUrl && { imageUrl }),
   };
 }
 

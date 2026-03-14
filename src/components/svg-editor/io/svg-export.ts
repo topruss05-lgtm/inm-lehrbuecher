@@ -1,6 +1,7 @@
 import type { EditorObject } from '../stores/editor-state';
 import type { Rect } from '../lib/geometry';
 import { roundCoord } from '../lib/geometry';
+import { generateWallHatch, wallHatchPathD } from '../lib/wall-geometry';
 import { loadFontBase64 } from './font-embed';
 
 function r(v: number | undefined): string {
@@ -23,6 +24,20 @@ function objectToSvg(obj: EditorObject): string {
       const style = obj.fontStyle ? ` style="font-style:${obj.fontStyle}"` : '';
       const fs = obj.fontSize ? ` font-size="${r(obj.fontSize)}"` : '';
       return `    <text x="${r(obj.x)}" y="${r(obj.y)}" class="label"${fs}${style}>${escapeXml(obj.text ?? '')}</text>`;
+    }
+    case 'wall': {
+      // Wall exports as separate line-thick + hatch paths (matching clean SVG format)
+      const start = { x: obj.x ?? 0, y: obj.y ?? 0 };
+      const end = { x: obj.x2 ?? 0, y: obj.y2 ?? 0 };
+      const hatchLines = generateWallHatch(
+        start, end,
+        obj.hatchSide ?? 'right',
+        obj.hatchDepth ?? 8,
+        obj.hatchSpacing ?? 2,
+      );
+      const wallLine = `    <path d="M ${r(start.x)} ${r(start.y)} ${r(end.x)} ${r(end.y)}" class="line-thick" />`;
+      const hatchPath = `    <path d="${wallHatchPathD(hatchLines)}" class="hatch" />`;
+      return `${wallLine}\n${hatchPath}`;
     }
     default:
       return '';

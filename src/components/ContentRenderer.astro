@@ -8,6 +8,7 @@ interface Props {
 }
 
 const { nodes, xrefMap } = Astro.props;
+const base = import.meta.env.BASE_URL;
 
 function renderInlineNode(n: InlineNode): string {
   if (n.type === 'text') return n.content;
@@ -39,7 +40,7 @@ function escAttr(s: string): string {
 {nodes.map((node) => {
   if (node.type === 'para') {
     const html = node.children.map(renderInlineNode).join('');
-    return <p><Fragment set:html={html} /></p>;
+    return <p class={node.role ? `para-${node.role}` : undefined}><Fragment set:html={html} /></p>;
   }
 
   if (node.type === 'display-math') {
@@ -101,9 +102,13 @@ function escAttr(s: string): string {
   if (node.type === 'figure') {
     return (
       <figure class="figure-block" id={node.id || undefined}>
-        <div class="figure-placeholder">
-          <p class="figure-description">{node.altText}</p>
-        </div>
+        {node.imageUrl ? (
+          <img src={`${base}${node.imageUrl}`} alt={node.altText} class="figure-image" />
+        ) : (
+          <div class="figure-placeholder">
+            <p class="figure-description">{node.altText}</p>
+          </div>
+        )}
         <figcaption class="figure-caption">
           <span class="figure-caption-number">Abb. {node.number}: </span>
           {node.title}

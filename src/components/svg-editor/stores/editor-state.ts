@@ -14,7 +14,7 @@ export type SvgStyleClass =
   | 'label';
 
 // ── Editor Object Types ─────────────────────────────────────────────────
-export type EditorObjectType = 'line' | 'rect' | 'ellipse' | 'path' | 'arc' | 'arrow' | 'text' | 'group';
+export type EditorObjectType = 'line' | 'rect' | 'ellipse' | 'path' | 'arc' | 'arrow' | 'text' | 'group' | 'wall';
 
 export interface EditorObject {
   id: string;
@@ -39,9 +39,13 @@ export interface EditorObject {
   fontStyle?: string;
   // Group children
   children?: EditorObject[];
+  // Wall-specific
+  hatchSide?: 'left' | 'right'; // relative to start→end direction
+  hatchDepth?: number;
+  hatchSpacing?: number;
 }
 
-export type ToolType = 'select' | 'line' | 'rect' | 'ellipse' | 'pen' | 'arc' | 'arrow' | 'text' | 'hatch';
+export type ToolType = 'select' | 'line' | 'rect' | 'ellipse' | 'pen' | 'arc' | 'arrow' | 'text' | 'hatch' | 'wall';
 
 export interface GridSettings {
   enabled: boolean;

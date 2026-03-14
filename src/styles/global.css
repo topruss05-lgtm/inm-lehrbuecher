@@ -503,6 +503,14 @@ p {
   margin: 0.35rem 0;
 }
 
+.formalpara-body p.para-examples {
+  margin-top: 0.6rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+  font-size: 0.88em;
+  color: var(--text-muted, #555);
+}
+
 .fp-definition {
   background: var(--def-bg);
   border-left-color: var(--def-border);
@@ -705,6 +713,13 @@ p {
   line-height: 1.5;
   font-size: 0.88rem;
   margin: 0;
+}
+
+.figure-image {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto 0.75rem;
 }
 
 .figure-caption {

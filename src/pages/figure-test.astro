@@ -1,0 +1,230 @@
+---
+// Standalone test page for JSXGraph 3D coordinate system figure
+---
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <title>Figure Test — KOS mit JSXGraph</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jsxgraph/distrib/jsxgraph.css" />
+  <style>
+    body {
+      font-family: 'DM Sans', system-ui, sans-serif;
+      background: #faf8f5;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem;
+    }
+    h1 { font-size: 1.3rem; margin-bottom: 1rem; }
+    #jxgbox {
+      width: 560px;
+      height: 480px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      background: white;
+    }
+    figcaption {
+      font-size: 0.85rem;
+      color: #666;
+      margin-top: 0.75rem;
+      text-align: center;
+    }
+    figcaption strong { color: #2563eb; }
+  </style>
+</head>
+<body>
+  <h1>Prototyp: JSXGraph 3D-Koordinatensystem</h1>
+  <figure>
+    <div id="jxgbox"></div>
+    <figcaption><strong>Abb. 1:</strong> Koordinatendarstellung eines Vektors — interaktiv (Maus ziehen zum Drehen)</figcaption>
+  </figure>
+
+  <script is:inline src="https://cdn.jsdelivr.net/npm/jsxgraph/distrib/jsxgraphcore.js"></script>
+  <script is:inline>
+    // ── Board & 3D-View ──────────────────────────────────────────
+    const board = JXG.JSXGraph.initBoard('jxgbox', {
+      boundingbox: [-8, 8, 8, -8],
+      axis: false,
+      showcopyright: false,
+      shownavigation: false,
+      pan: { enabled: false }
+    });
+
+    const axLen = 2.8;   // Länge der Achsen
+    const vecA = [2.0, 1.2, 2.2]; // Vektor a in KOS I
+
+    const view = board.create('view3d', [
+      [-6, -3],      // 2D-Offset im Board
+      [12, 12],      // 2D-Größe im Board
+      [[-0.5, axLen], [-0.5, axLen], [-0.5, axLen]]  // 3D-Ranges x,y,z
+    ], {
+      // Achsen konfigurieren
+      xPlaneRear: { visible: false },
+      yPlaneRear: { visible: false },
+      zPlaneRear: { visible: false },
+      xPlaneRearYAxis: { visible: false },
+      xPlaneRearZAxis: { visible: false },
+      yPlaneRearXAxis: { visible: false },
+      yPlaneRearZAxis: { visible: false },
+      zPlaneRearXAxis: { visible: false },
+      zPlaneRearYAxis: { visible: false },
+      xPlaneFront: { visible: false },
+      yPlaneFront: { visible: false },
+      zPlaneFront: { visible: false },
+      xPlaneFrontYAxis: { visible: false },
+      xPlaneFrontZAxis: { visible: false },
+      yPlaneFrontXAxis: { visible: false },
+      yPlaneFrontZAxis: { visible: false },
+      zPlaneFrontXAxis: { visible: false },
+      zPlaneFrontYAxis: { visible: false },
+
+      // Eigene Achsen zeichnen wir selbst
+      axis: false,
+
+      // Blickwinkel
+      az: { val: 1.1, slider: { visible: false } },
+      el: { val: 1.4, slider: { visible: false } },
+      bank: { val: 0, slider: { visible: false } },
+
+      projection: 'parallel'
+    });
+
+    // ── Stil-Konstanten ──────────────────────────────────────────
+    const black = '#1a1a1a';
+    const blue  = '#2563eb';
+    const gray  = '#888';
+    const axisStyle = {
+      strokeColor: black,
+      strokeWidth: 2,
+      straightFirst: false,
+      straightLast: false,
+      lastArrow: { type: 2, size: 6 },
+      point1: { visible: false },
+      point2: { visible: false }
+    };
+    const dashStyle = {
+      strokeColor: gray,
+      strokeWidth: 1,
+      dash: 3,
+      straightFirst: false,
+      straightLast: false,
+      point1: { visible: false },
+      point2: { visible: false }
+    };
+    const labelStyle = {
+      fontSize: 16,
+      anchorX: 'left',
+      cssClass: 'jsx-label',
+      highlightCssClass: 'jsx-label'
+    };
+
+    // ── Ursprung ─────────────────────────────────────────────────
+    const O = view.create('point3d', [0, 0, 0], {
+      visible: false
+    });
+
+    // ── Achsen (als Segments mit Pfeil) ──────────────────────────
+    const axX = view.create('line3d', [[0,0,0], [axLen, 0, 0]], axisStyle);
+    const axY = view.create('line3d', [[0,0,0], [0, axLen, 0]], axisStyle);
+    const axZ = view.create('line3d', [[0,0,0], [0, 0, axLen]], axisStyle);
+
+    // ── Achsen-Labels ────────────────────────────────────────────
+    const mkLabel = (coords, html) => {
+      const p = view.create('point3d', coords, { visible: false });
+      return view.create('text3d', [coords, html], {
+        fontSize: 15,
+        anchorX: 'left',
+        parse: false
+      });
+    };
+    mkLabel([axLen + 0.15, 0, 0], '<b><i>e</i></b><sub>x</sub><sup style="font-size:9px"><i>I</i></sup>');
+    mkLabel([0, axLen + 0.15, 0], '<b><i>e</i></b><sub>y</sub><sup style="font-size:9px"><i>I</i></sup>');
+    mkLabel([0, 0, axLen + 0.15], '<b><i>e</i></b><sub>z</sub><sup style="font-size:9px"><i>I</i></sup>');
+
+    // Ursprung-Label
+    view.create('text3d', [[-0.25, -0.25, 0], '<i>O</i>'], {
+      fontSize: 15,
+      parse: false
+    });
+
+    // ── Vektor a (blau, Pfeil) ───────────────────────────────────
+    const vecStyle = {
+      strokeColor: blue,
+      strokeWidth: 2.5,
+      straightFirst: false,
+      straightLast: false,
+      lastArrow: { type: 2, size: 7 },
+      point1: { visible: false },
+      point2: { visible: false }
+    };
+    view.create('line3d', [[0,0,0], vecA], vecStyle);
+
+    // Vektor-Label
+    view.create('text3d', [[vecA[0]+0.12, vecA[1]+0.08, vecA[2]+0.12], '<b style="color:#2563eb"><i>a</i></b>'], {
+      fontSize: 17,
+      parse: false
+    });
+
+    // ── Projektionen (gestrichelt) ───────────────────────────────
+    const ax = vecA[0], ay = vecA[1], az = vecA[2];
+
+    // Fußpunkt in der xy-Ebene
+    const foot = [ax, ay, 0];
+
+    // Vom Fußpunkt zu den Achsen
+    view.create('line3d', [foot, [ax, 0, 0]], dashStyle);  // Fußpunkt → x-Achse
+    view.create('line3d', [foot, [0, ay, 0]], dashStyle);  // Fußpunkt → y-Achse
+
+    // Vertikal: Spitze → Fußpunkt
+    view.create('line3d', [vecA, foot], dashStyle);
+
+    // Horizontal: Spitze → z-Achse
+    view.create('line3d', [vecA, [0, 0, az]], dashStyle);
+
+    // z-Achse → Fußpunkt auf z-Achse nach foot-Höhe
+    view.create('line3d', [[0, 0, az], vecA], { ...dashStyle, visible: false }); // schon durch vorherige abgedeckt
+
+    // ── Achsen-Basisvektoren gestrichelt verlängern ──────────────
+    // Einheitsvektoren = 1, Achsen gehen bis axLen
+    // Gestrichelte Linie von 1 bis zum Projektionspunkt
+    if (ax > 1) {
+      view.create('line3d', [[1, 0, 0], [ax, 0, 0]], {
+        ...dashStyle,
+        strokeColor: '#bbb',
+        dash: 2
+      });
+    }
+    if (ay > 1) {
+      view.create('line3d', [[0, 1, 0], [0, ay, 0]], {
+        ...dashStyle,
+        strokeColor: '#bbb',
+        dash: 2
+      });
+    }
+    if (az > 1) {
+      view.create('line3d', [[0, 0, 1], [0, 0, az]], {
+        ...dashStyle,
+        strokeColor: '#bbb',
+        dash: 2
+      });
+    }
+
+    // ── Projektionspunkte (kleine Kreise) ────────────────────────
+    const dotStyle = { visible: true, size: 2, strokeWidth: 0, fillColor: black, withLabel: false };
+    view.create('point3d', [ax, 0, 0], dotStyle);
+    view.create('point3d', [0, ay, 0], dotStyle);
+    view.create('point3d', [0, 0, az], dotStyle);
+
+    // ── Komponenten-Labels ───────────────────────────────────────
+    view.create('text3d', [[ax + 0.1, -0.3, 0], '<i>a</i><sub>x</sub>'], {
+      fontSize: 13, parse: false
+    });
+    view.create('text3d', [[-0.3, ay + 0.1, 0], '<i>a</i><sub>y</sub>'], {
+      fontSize: 13, parse: false
+    });
+    view.create('text3d', [[-0.35, 0, az], '<i>a</i><sub>z</sub>'], {
+      fontSize: 13, parse: false
+    });
+  </script>
+</body>
+</html>
